@@ -1,11 +1,25 @@
-import React, { Component } from 'react';
-import auth from 'firebase';
+import React, { Component ,  useState } from 'react';
+import firebase from 'firebase';
 
+export const  SignUp = () => {
+        const [email, setEmail] : any[] = useState("");
+        const [password, setPassword] : any[] = useState("");
+        const [confirmPassword, setConfirmPassword] : any[] = useState("");
+    
 const signUp = (e : any) => {
-               e.preventDefault();
+
+    const auth = firebase.auth;
+    e.preventDefault();
+    if(password.value !== confirmPassword.value){
+        alert("Password does not match")
+    }          
+    else{
+        console.log(auth());
+        
+    //   const   promise = auth.signUpWithEmailAndPassword(email, password);
+    }
+    
 }
-export class SignUp extends Component {
-    render() {
         return (
             <form onSubmit={signUp}>
                 <label className="text-dark">Email :</label>
@@ -17,5 +31,4 @@ export class SignUp extends Component {
                 <button  className="btn btn-outline-warning" type="submit">SignUp</button>
             </form>
         )
-    }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import auth from 'firebase';
 
 export class SignIn extends Component {
+    
     render() {
         return (
             <form>

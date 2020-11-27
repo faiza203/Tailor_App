@@ -12,6 +12,7 @@ export class SignUp extends Component {
                 <input type="password" placeholder="Enter password here" required />
                 <label>Confirm Password :</label>
                 <input type="password" placeholder="Rewrite password here" required />
+                <button type="submit">SignUp</button>
             </form>
         )
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router';
 import { createBrowserHistory as createHistory } from 'history'
-import { Home, SignUp } from './components/index';
+import { Home, SignUp , SignIn} from './components/index';
 import './App.css';
 
 const history = createHistory()
@@ -13,6 +13,7 @@ function App() {
         <Switch>
           <Route path="/" component={Home} exact></Route>
           <Route path="/SignUp" component={SignUp}></Route>
+          <Route path="/SignIn" component={SignIn}></Route>
         </Switch>
       </Router>
     </div>

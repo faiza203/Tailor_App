@@ -8,14 +8,13 @@ const signUp = (e : any) => {
     e.preventDefault();
     const[email , password , confirmPassword] : any[] = e.target;
 const auth  = firebase.auth();
-e.preventDefault();
 if(password.value !== confirmPassword.value){
     alert("Password does not match");
 }          
 else{
   const   promise = auth.createUserWithEmailAndPassword(email.value, password.value)
   .then(() => {
-    alert("Acount is created successfully !!!");
+    alert("Account is created successfully !!!");
     history.push('/SignIn')  
 })
   .catch((err) => {

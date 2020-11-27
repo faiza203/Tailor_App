@@ -1,25 +1,31 @@
-import React, { Component ,  useState } from 'react';
+import React, { Component } from 'react';
 import firebase from 'firebase';
-
-export const  SignUp = () => {
-        const [email, setEmail] : any[] = useState("");
-        const [password, setPassword] : any[] = useState("");
-        const [confirmPassword, setConfirmPassword] : any[] = useState("");
-    
+import { configFirebase } from './firebase';
+import { createBrowserHistory as createHistory } from 'history'
+const history = createHistory();
+configFirebase();
 const signUp = (e : any) => {
-
-    const auth = firebase.auth;
     e.preventDefault();
-    if(password.value !== confirmPassword.value){
-        alert("Password does not match")
-    }          
-    else{
-        console.log(auth());
-        
-    //   const   promise = auth.signUpWithEmailAndPassword(email, password);
-    }
-    
+    const[email , password , confirmPassword] : any[] = e.target;
+const auth  = firebase.auth();
+e.preventDefault();
+if(password.value !== confirmPassword.value){
+    alert("Password does not match");
+}          
+else{
+  const   promise = auth.createUserWithEmailAndPassword(email.value, password.value)
+  .then(() => {
+    alert("Acount is created successfully !!!");
+    history.push('/SignIn')  
+})
+  .catch((err) => {
+    alert(err.message);
+    })
 }
+}
+
+export class  SignUp extends Component {
+    render(){
         return (
             <form onSubmit={signUp}>
                 <label className="text-dark">Email :</label>
@@ -31,4 +37,5 @@ const signUp = (e : any) => {
                 <button  className="btn btn-outline-warning" type="submit">SignUp</button>
             </form>
         )
+    }
 }

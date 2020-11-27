@@ -1,6 +1,4 @@
 import firebase from 'firebase';
-import "https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"
-import "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js";
 
 export const configFirebase = () =>{
 const  firebaseConfig = {

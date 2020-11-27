@@ -6,9 +6,9 @@ export class SignIn extends Component {
         console.log(auth);
         return (
             <form>
-                <label>Email :</label>
+                <label className="text-muted">Email :</label>
                 <input className="form-control" type="email" placeholder="Please write email here" required />
-                <label>Password :</label>
+                <label className="text-muted">Password :</label>
                 <input  className="form-control" type="password" placeholder="Enter password here" required />
                 <button  className="btn btn-outline-danger"type="submit">Sign In</button>
              </form>

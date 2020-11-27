@@ -1,3 +1,11 @@
 .App {
   text-align: center;
 }
+
+.btn{
+   margin: 10px;
+}
+
+#welcome{
+   color: aqua;
+}

@@ -7,10 +7,10 @@ export class SignIn extends Component {
         return (
             <form>
                 <label>Email :</label>
-                <input type="email" placeholder="Please write email here" required />
+                <input className="form-control" type="email" placeholder="Please write email here" required />
                 <label>Password :</label>
-                <input type="password" placeholder="Enter password here" required />
-                <button type="submit">Sign In</button>
+                <input  className="form-control" type="password" placeholder="Enter password here" required />
+                <button  className="btn btn-outline-danger"type="submit">Sign In</button>
              </form>
         )
     }

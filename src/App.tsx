@@ -1,12 +1,19 @@
-
 import React, { Component } from 'react';
-import { Router} from 'react-router'
+import { Router, Route } from 'react-router';
+import { createBrowserHistory as createHistory } from 'history'
+import { Home } from './components/Home';
+import auth from 'firebase';
 import './App.css';
-import auth from 'firebase' 
+
+const history = createHistory()
+
 function App() {
-console.log(auth)
+  console.log(auth);
   return (
     <div className="App">
+      <Router history={history}>
+        <Route path="/" component={Home}></Route>
+      </Router>
     </div>
   );
 }

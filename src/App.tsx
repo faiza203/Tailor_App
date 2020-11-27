@@ -1,7 +1,7 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
+import { Router, Route, Switch } from 'react-router';
 import { createBrowserHistory as createHistory } from 'history'
-import { Home } from './components/index';
+import { Home, SignUp } from './components/index';
 import './App.css';
 
 const history = createHistory()
@@ -10,7 +10,10 @@ function App() {
   return (
     <div className="App">
       <Router history={history}>
-        <Route path="/" component={Home}></Route>
+        <Switch>
+          <Route path="/" component={Home} exact></Route>
+          <Route path="/SignUp" component={SignUp}></Route>
+        </Switch>
       </Router>
     </div>
   );

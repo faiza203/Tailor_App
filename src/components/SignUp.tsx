@@ -7,12 +7,12 @@ export class SignUp extends Component {
         return (
             <form>
                 <label>Email :</label>
-                <input type="email" placeholder="Please write email here" required />
+                <input  className="form-control" type="email" placeholder="Please write email here" required />
                 <label>Password :</label>
-                <input type="password" placeholder="Enter password here" required />
+                <input  className="form-control" type="password" placeholder="Enter password here" required />
                 <label>Confirm Password :</label>
-                <input type="password" placeholder="Rewrite password here" required />
-                <button type="submit">SignUp</button>
+                <input  className="form-control" type="password" placeholder="Rewrite password here" required />
+                <button  className="btn btn-outline-warning" type="submit">SignUp</button>
             </form>
         )
     }

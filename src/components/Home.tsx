@@ -6,8 +6,8 @@ export class Home extends Component {
         return (
             <div>
                 <h1 className="h1 font-italic text-muted">Welcome to Tailor App</h1>
-                <Link className="btn btn-outline-success" to="/SignUp">Sign Up</Link>
-                <Link className="btn btn-outline-primary" to="/SignIn">Sign In</Link>
+                <Link className="btn btn-outline-dark" to="/SignUp">Sign Up</Link>
+                <Link className="btn btn-outline-dark" to="/SignIn">Sign In</Link>
             </div>
         )
     }

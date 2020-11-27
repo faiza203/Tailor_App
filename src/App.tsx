@@ -12,11 +12,11 @@ function App() {
     <div className="App">
       <Router history={history}>
         <Nav />
-        <Switch>
-          <Route path="/" component={Home} exact></Route>
-          <Route path="/SignUp" component={SignUp}></Route>
-          <Route path="/SignIn" component={SignIn}></Route>
-        </Switch>
+          <Switch>
+            <Route path="/" component={Home} exact></Route>
+            <Route path="/SignUp" component={SignUp}></Route>
+            <Route path="/SignIn" component={SignIn}></Route>
+          </Switch>
       </Router>
     </div>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router';
 import { createBrowserHistory as createHistory } from 'history'
 import { Home, SignUp, SignIn, Nav } from './components/index';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const history = createHistory()

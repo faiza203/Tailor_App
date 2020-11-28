@@ -14,15 +14,25 @@ if(password.value !== confirmPassword.value){
 else{
   const   promise = auth.createUserWithEmailAndPassword(email.value, password.value)
   .then(() => {
-    alert("Account is created successfully !!!");
-    history.push('/SignIn')  
+      sendToFirebaseTailor(e);
 })
-  .catch((err) => {
+  .catch((err : any) => {
     alert(err.message);
     })
 }
 }
-
+const sendToFirebaseTailor = (e : any)=>{
+    const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').add({
+        id1 : "id1"
+    });
+    promise.then(() => {
+      alert("Account is created successfully !!!");
+      history.push('/SignIn')  
+  })
+    .catch((err : any) => {
+      alert(err.message);
+      })
+}
 export class  SignUp extends Component {
     render(){
         return (

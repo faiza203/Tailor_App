@@ -5,7 +5,6 @@ export class DashBoard extends Component {
         return (
             <div >
                 <h1 className="h1 font-italic text-muted">DashBoard</h1>
-                 
             </div>
         )
     }

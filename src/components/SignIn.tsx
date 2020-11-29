@@ -17,6 +17,14 @@ const auth  = firebase.auth();
     })
 }
 
+const sendToFirebaseSignUp = (e: any) => {
+    console.log(e);
+    const database = firebase.database().ref();
+    console.log(database);
+
+}
+
+
 export class SignIn extends Component {
     
     render() {

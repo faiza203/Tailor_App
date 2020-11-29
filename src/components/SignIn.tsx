@@ -18,9 +18,9 @@ const auth  = firebase.auth();
 }
 
 const sendToFirebaseTailor = (e : any)=>{
-    const promise = firebase.database().ref().set({signUp : e.target[0].value})
+    const promise = firebase.database().ref().set({signIn : e.target[0].value})
     promise.then(() => {
-      alert("Account is created successfully !!!");
+      alert("Account is login successfully !!!");
       history.push('/DashBoard')  ;  
   })
     .catch((err : any) => {

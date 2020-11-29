@@ -22,7 +22,10 @@ else{
 }
 }
 const sendToFirebaseTailor = (e : any)=>{
-    const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').add({
+    // const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').add({
+    //     id1 : "id1"
+    // });
+     const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').add({
         id1 : "id1"
     });
     promise.then(() => {

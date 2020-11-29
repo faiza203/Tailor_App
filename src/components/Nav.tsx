@@ -19,6 +19,9 @@ export class Nav extends Component {
                         </li>
                         <li className="nav-item">
                             <Link to="/SignIn" className="nav-link">Sign In</Link>
+                        </li>                       
+                         <li className="nav-item">
+                            <Link to="/DashBoard" className="nav-link">DashBoard</Link>
                         </li>
                     </ul>
                 </div>

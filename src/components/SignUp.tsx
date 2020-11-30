@@ -4,7 +4,7 @@ import { configFirebase } from './firebase';
 import { createBrowserHistory as createHistory } from 'history'
 const history = createHistory();
 configFirebase();
-const signUp = (e: any) => {
+const signUpFun = (e: any) => {
     e.preventDefault();
     const [email, password, confirmPassword]: any[] = e.target;
     const auth = firebase.auth();
@@ -14,9 +14,9 @@ const signUp = (e: any) => {
     else {
         const promise = auth.createUserWithEmailAndPassword(email.value, password.value)
             .then(() => {
-                sendToFirebaseSignUp(e);
-                alert("Account is created successfully !!!");
-                history.push('/SignIn')
+                sendToFirebaseTailor(e);
+                history.push('/SignIn');
+                history.replace('/SignIn');
             })
             .catch((err) => {
                 alert(err.message);
@@ -24,16 +24,24 @@ const signUp = (e: any) => {
     }
 }
 
-const sendToFirebaseSignUp = (e: any) => {
-    console.log(e);
-    const database = firebase.database().ref();
-    console.log(database);
 
+const sendToFirebaseTailor = (e : any)=>{
+     const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').add({
+        id1 : "id1"
+    });
+    promise.then(() => {
+      alert("Account is created successfully !!!");
+      history.push('/SignIn')  ;
+      history.replace('./SignIn') 
+  })
+    .catch((err : any) => {
+      alert(err.message);
+      })
 }
 export class SignUp extends Component {
     render() {
         return (
-            <form onSubmit={signUp}>
+            <form onSubmit={signUpFun}>
                 <label className="text-dark">Email :</label>
                 <input className="form-control" type="email" placeholder="Please write email here" required />
                 <label className="text-dark">Password :</label>

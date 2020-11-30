@@ -9,21 +9,25 @@ const signIn = (e : any) => {
 const auth  = firebase.auth();
   const   promise = auth.signInWithEmailAndPassword(email.value, password.value)
   .then(() => {
-    alert("Account is login successfully !!!");
-    history.push('/')  
+    sendToFirebaseTailor(e)
 })
   .catch((err) => {
     alert(err.message);
     })
 }
 
-const sendToFirebaseSignUp = (e: any) => {
-    console.log(e);
-    const database = firebase.database().ref();
-    console.log(database);
 
+
+const sendToFirebaseTailor = (e : any)=>{
+    const promise = firebase.database().ref().set({signIn : e.target[0].value})
+    promise.then(() => {
+      alert("Account is login successfully !!!");
+      history.push('/DashBoard')  ;
+      history.replace('/DashBoard')  ;  })
+    .catch((err : any) => {
+      alert(err.message);
+      })
 }
-
 
 export class SignIn extends Component {
     

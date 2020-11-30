@@ -10,8 +10,8 @@ export class Customers extends Component {
     render() {
         return (
             <div>
-                <h1 className="h1">Customers</h1>
-                <h1 className="h1">Customer name</h1>
+                <h2 className="h2 text-muted">Customers</h2>
+                <p className="p text-muted">Customer name</p>
                 <button className="btn btn-outline-primary">
                 Measurement
                 </button>

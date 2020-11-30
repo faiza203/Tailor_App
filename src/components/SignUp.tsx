@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { configFirebase } from './firebase';
-import { createBrowserHistory as createHistory } from 'history'
+import { createBrowserHistory as createHistory } from 'history';
+import { v4 as uuid } from 'uuid';
 const history = createHistory();
 configFirebase();
 const signUpFun = (e: any) => {
@@ -24,10 +25,9 @@ const signUpFun = (e: any) => {
     }
 }
 
-
 const sendToFirebaseTailor = (e : any)=>{
      const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').add({
-        id1 : "id1"
+        id : "customer"
     });
     promise.then(() => {
       alert("Account is created successfully !!!");

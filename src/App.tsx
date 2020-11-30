@@ -1,12 +1,8 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router';
-import { createBrowserHistory as createHistory } from 'history'
-import { Nav, Home, SignUp, SignIn, DashBoard, NotFound } from './components/index';
+import { Nav, Home, SignUp, SignIn, DashBoard, NotFound , history } from './components/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
 
 function App() {
   return (

@@ -20,20 +20,16 @@ export const getFromFirebase = (tailor : any) => {
 }
 
 export const addCustomer = (e : any) => {
-    const id = uuid();
     e.preventDefault();
     const customer : String = e.target[0].value ;
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();  
-        const firestore = firebase.firestore();
-        firestore
-            .collection("tailors")
-            .doc(tailor)
-            .collection("customers")
-            .doc()
-            .update({
-                id : customer
-             } )
+        const promise = firebase.firestore().collection('tailors').doc(tailor).collection('customers').add({
+            id : customer
+        })
+        .then(() =>{
+           alert("customer is added")
+        })
             .catch((err) => {
                 alert(err.message)
             })

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { createBrowserHistory as createHistory } from 'history'
+import {history} from './history';
 
-const history = createHistory();
 const signIn = (e : any) => {
     e.preventDefault();
     const[email , password ] : any[] = e.target;

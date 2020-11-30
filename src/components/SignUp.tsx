@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { configFirebase } from './firebase';
-import { createBrowserHistory as createHistory } from 'history';
 import { v4 as uuid } from 'uuid';
-const history = createHistory();
+import {history} from './history';
+
 configFirebase();
 const signUpFun = (e: any) => {
     e.preventDefault();

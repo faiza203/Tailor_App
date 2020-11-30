@@ -26,8 +26,7 @@ const signUpFun = (e: any) => {
 }
 
 const sendToFirebaseTailor = (e : any)=>{
-     const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').add({
-        id : "customer"
+     const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').doc(uuid()).set({
     });
     promise.then(() => {
       alert("Account is created successfully !!!");

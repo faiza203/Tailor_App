@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { createBrowserHistory as createHistrory } from 'history';
-import { Customers, getFromFirebase, addCustomer } from './index';
+import { Customers, addCustomer } from './index';
 // import uuid from 'uuid';
 
 const history = createHistrory();
@@ -12,8 +12,6 @@ export class DashBoard extends Component {
             firebase.database().ref().on("child_added", snap => {
                 const tailor = snap.val();
                 this.setState = tailor;
-                if (typeof (this.setState) !== typeof (() => { })) { getFromFirebase(this.setState); }
-                
             });
         }
         promise();
@@ -31,7 +29,7 @@ export class DashBoard extends Component {
                                 <button className="btn btn-outline-danger">Add customer
             </button>
                             </form>
-                            <Customers />
+                            <Customers name={tailor} />
                         </div>
                         : <h1 className="h1 font-italic text-muted">
                             loading

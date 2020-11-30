@@ -24,7 +24,8 @@ export const addCustomer = (e : any) => {
     const customer : String = e.target[0].value ;
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();  
-        const promise = firebase.firestore().collection('tailors').doc(tailor).collection('customers').add({
+        const id = uuid();
+        const promise = firebase.firestore().collection('tailors').doc(tailor).collection('customers').doc(uuid()).set({
             id : customer
         })
         .then(() =>{

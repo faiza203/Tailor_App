@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { createBrowserHistory as createHistrory } from 'history';
-import { Customers, addCustomer } from './index';
-// import uuid from 'uuid';
+import { Customers } from './index';
+import { v4 as uuid } from 'uuid';
+import { useDispatch } from 'react-redux';
+import { addCustomerR } from './store'
+export function DashBoard (){
+    const dispatch = useDispatch();
+    const addCustomer = (e: any) => {
+        e.preventDefault();
+        const customer: String = e.target[0].value;
+        firebase.database().ref().on("child_added", snap => {
+            const tailor = snap.val();
+            const id = uuid();
+            const promise = firebase.firestore().collection('tailors').doc(tailor).collection('customers').doc(uuid()).set({
+                id: customer
+            })
+                .then(() => {
+                    alert("customer is added");
+                    dispatch(addCustomerR(customer))
+                })
+                .catch((err) => {
+                    alert(err.message)
+                })
+        });
+    }
 
-const history = createHistrory();
 
-export class DashBoard extends Component {
-    render() {
+
         const promise = () => {
             firebase.database().ref().on("child_added", snap => {
                 const tailor = snap.val();
-                this.setState = tailor;
+                localStorage.setItem("tailor" , tailor)
             });
         }
         promise();
-        const tailor = this.setState;
+        const tailor = localStorage.getItem("tailor");
         return (
             <div>
                 {
@@ -38,4 +57,3 @@ export class DashBoard extends Component {
             </div>
         )
     }
-}

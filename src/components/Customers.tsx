@@ -1,47 +1,46 @@
-import React, { Component } from 'react';
-import firebase from 'firebase';
-import { createBrowserHistory as createHistrory } from 'history';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-// import uuid from 'uuid';
+import React, { Component } from "react";
+import firebase from "firebase";
+import { createBrowserHistory as createHistrory } from "history";
+import { v4 as uuid } from 'uuid';
+import {addMeasurment} from './index';
 
 const history = createHistrory();
 
-
 export const Customers = (props: any) => {
     let customers: any[] = [];
-    let customersData: any[] = [];
+    let customersData: any[] = [123, 321, 231];
     {
-        firebase.firestore().collection("tailors")
+        firebase
+            .firestore()
+            .collection("tailors")
             .doc(props.name)
-            .collection('customers')
+            .collection("customers")
             .get()
             .then((querySnapshot: any) => {
                 querySnapshot.forEach(function (doc: any) {
                     const customersData = doc.data().id;
-                    customers.push(customersData);
-                });
+                    customers.push(customersData)
+                })
             })
             .catch((err: any) => {
-                alert(err.message)
-            })
+                alert(err.message);
+            });
     }
-
+    const id = uuid();
     return (
         <div>
             <h2 className="h2 text-muted">Customers</h2>
-            {
-                customers.forEach(function( i , customer){
-                    return (
-                        <div key={i}>
-                            <p className="p text-muted">{customer}</p>
-                            <button className="btn btn-outline-primary">
-                                Measurement
-                </button>
-                        </div>
-                    )
-                })
-            }
-        </div >
-    )
-}
+            {customers.forEach((customer, i) => {
+                <div>
+                    <p key={i + customer} className="p text-muted">{customer}</p>
+                    <button className="btn btn-outline-primary">Measurement</button>
+                </div>;
+            })}
+            <div>
+                <p className="p text-muted">{props.name}</p>
+                <button className="btn btn-outline-primary" id={uuid() + "measBtn"} onClick={addMeasurment}>Measurement</button>
+            </div>
 
+        </div>
+    );
+};

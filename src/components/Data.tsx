@@ -36,3 +36,7 @@ export const addCustomer = (e : any) => {
             })
     });
 }
+
+export const addMeasurment = () => {
+
+}

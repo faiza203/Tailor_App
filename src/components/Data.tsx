@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import firebase from 'firebase';
 import {v4 as uuid} from 'uuid';
 
@@ -37,6 +37,20 @@ export const addCustomer = (e : any) => {
     });
 }
 
-export const addMeasurment = () => {
 
+export class addMeasurment extends Component {
+           render(){
+               return (
+                   <form onClick={saveMeasurment}>
+                       <label className="text-dark">Measurment</label>
+                       <input className="form-control" type="text" placeholder="Length" required/>
+                       <input className="form-control mt-1" type="number" placeholder="Width" required/>
+                       <input className="form-control mt-1" type="number" placeholder="Neck" required/>
+                       <input className="form-control mt-1" type="number" placeholder="Waist" required/>
+                       <input className="form-control mt-1" type="number" placeholder="Middle" required/>
+                       <input className="form-control mt-1" type="number" placeholder="Leg Lenght" required/>
+                       <button id="saveMeasurment" type="submit"></button>
+                   </form>
+               )
+           }
 }

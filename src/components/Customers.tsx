@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import firebase from "firebase";
 import { createBrowserHistory as createHistrory } from "history";
 import { v4 as uuid } from 'uuid';
-import {addMeasurment} from './index';
 
 const history = createHistrory();
 
@@ -38,7 +37,9 @@ export const Customers = (props: any) => {
             })}
             <div>
                 <p className="p text-muted">{props.name}</p>
-                <button className="btn btn-outline-primary" id={uuid() + "measBtn"} onClick={addMeasurment}>Measurement</button>
+                <button className="btn btn-outline-primary" id={uuid() + "measBtn"} onClick={() => {
+                    history.push("/addMeasurment")
+                }}>Measurement</button>
             </div>
 
         </div>

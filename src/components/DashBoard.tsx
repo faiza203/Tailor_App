@@ -3,9 +3,10 @@ import firebase from 'firebase';
 import { Customers } from './index';
 import { v4 as uuid } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
+import { addCustomerR } from './store';
 
 export function DashBoard() {
-
+    const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
     const addCustomer = (e: any) => {
         e.preventDefault();
@@ -19,7 +20,7 @@ export function DashBoard() {
             });
             promise.then(() => {
                 alert("customer is added");
-                customerState.clients.push(customer);
+                customerState.clients.push(customer)
             })
             promise.catch((err) => {
                 alert(err.message)

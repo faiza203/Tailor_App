@@ -6,6 +6,6 @@ export { configFirebase } from './firebase';
 export { NotFound } from './NotFound';
 export { DashBoard } from './DashBoard';
 export { Customers } from './Customers';
-export { addMeasurment } from './AddMeasurment';
+export { AddMeasurment } from './AddMeasurment';
 export { history } from './history';
-export { addTailor, store, addCustomerR, fecthCustomer } from './store';
+export { addTailor, store, addCustomerR, fecthCustomer , addMeasurmentR } from './store';

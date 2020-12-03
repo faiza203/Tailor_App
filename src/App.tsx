@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router';
-import { Nav, Home, SignUp, SignIn, DashBoard, NotFound, history, addMeasurment } from './components/index';
+import { Nav, Home, SignUp, SignIn, DashBoard, NotFound, history, AddMeasurment } from './components/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
           <Route path="/SignUp" component={SignUp}></Route>
           <Route path="/SignIn" component={SignIn}></Route>
           <Route path="/DashBoard" component={DashBoard}></Route>
-          <Route path="/AddMeasurment" component={addMeasurment}></Route>
+          <Route path="/AddMeasurment" component={AddMeasurment}></Route>
           <Route path="" component={NotFound}></Route>
         </Switch>
       </Router>

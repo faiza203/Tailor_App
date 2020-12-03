@@ -4,7 +4,6 @@ import { configFirebase } from './firebase';
 import { v4 as uuid } from 'uuid';
 import { history } from './history';
 import { useSelector, useDispatch } from 'react-redux';
-import { initialState } from "./reducer";
 import { addTailor } from './store';
 
 configFirebase();
@@ -24,7 +23,6 @@ export function SignUp() {
                 .then((user) => {
                     alert("Account is created successfully !!!");
                     customerState.tailors.push(user.user?.email);
-                    dispatch(addTailor(user.user?.email))
                     history.push('/SignIn');
                     history.replace('./SignIn')
                 })

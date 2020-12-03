@@ -9,12 +9,19 @@ export function addTailor(tailor: any) {
 }
 export function addCustomerR(customer: any) {
     return {
-        type: "Add_Tailor",
+        type: "Add_Customer",
         customer
     }
 }
 export function fecthCustomer(type: any) {
     return {
         type
+    }
+}
+export function addMeasurmentR(client: any, measurment: number[]) {
+    return {
+        type: "Add_Measurment",
+        client,
+        measurment
     }
 }

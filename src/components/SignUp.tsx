@@ -3,12 +3,15 @@ import firebase from 'firebase';
 import { configFirebase } from './firebase';
 import { v4 as uuid } from 'uuid';
 import { history } from './history';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { initialState } from "./reducer";
 import { addTailor } from './store';
+
 configFirebase();
 
 export function SignUp  (){
     const dispatch = useDispatch();
+    const customerState = useSelector((state: any) => state);
     const signUpFun = (e: any) => {
         e.preventDefault();
         const [email, password, confirmPassword]: any[] = e.target;
@@ -19,28 +22,16 @@ export function SignUp  (){
         else {
             const promise = auth.createUserWithEmailAndPassword(email.value, password.value)
                 .then((user) => {
-                    sendToFirebaseTailor(e);
-                    history.push('/SignIn');
-                    history.replace('/SignIn');
+                    alert("Account is created successfully !!!");
+                    customerState.tailors.push(user.user?.email);
                     dispatch(addTailor(user.user?.email))
+                    history.push('/SignIn');
+                    history.replace('./SignIn')
                 })
                 .catch((err) => {
                     alert(err.message);
                 })
         }
-    }
-
-    const sendToFirebaseTailor = (e: any) => {
-        const promise = firebase.firestore().collection('tailors').doc(e.target[0].value).collection('customers').doc(uuid()).set({
-        });
-        promise.then(() => {
-            alert("Account is created successfully !!!");
-            history.push('/SignIn');
-            history.replace('./SignIn')
-        })
-            .catch((err: any) => {
-                alert(err.message);
-            })
     }
     return (
         <form onSubmit={signUpFun}>

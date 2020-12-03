@@ -1,59 +1,59 @@
-import React, { Component } from 'react';
+import React from 'react';
 import firebase from 'firebase';
 import { Customers } from './index';
 import { v4 as uuid } from 'uuid';
-import { useDispatch } from 'react-redux';
-import { addCustomerR } from './store'
-export function DashBoard (){
-    const dispatch = useDispatch();
+import { useDispatch, useSelector } from 'react-redux';
+
+export function DashBoard() {
+
+    const customerState = useSelector((state: any) => state);
     const addCustomer = (e: any) => {
         e.preventDefault();
         const customer: String = e.target[0].value;
+        e.target[0].value = "";
         firebase.database().ref().on("child_added", snap => {
             const tailor = snap.val();
             const id = uuid();
-            const promise = firebase.firestore().collection('tailors').doc(tailor).collection('customers').doc(uuid()).set({
+            const promise = firebase.firestore().collection('tailors').doc(tailor).collection('customers').doc(id).set({
                 id: customer
+            });
+            promise.then(() => {
+                alert("customer is added");
+                customerState.clients.push(customer);
             })
-                .then(() => {
-                    alert("customer is added");
-                    dispatch(addCustomerR(customer))
-                })
-                .catch((err) => {
-                    alert(err.message)
-                })
+            promise.catch((err) => {
+                alert(err.message)
+            })
         });
     }
 
-
-
-        const promise = () => {
-            firebase.database().ref().on("child_added", snap => {
-                const tailor = snap.val();
-                localStorage.setItem("tailor" , tailor)
-            });
-        }
-        promise();
-        const tailor = localStorage.getItem("tailor");
-        return (
-            <div>
-                {
-                    typeof (tailor) !== typeof (() => { }) ?
-                        <div>
-                            <h1 className="h1 font-italic text-muted">
-                                {tailor}
-                            </h1>
-                            <form onSubmit={addCustomer}>
-                                <input type="text" className="form-control" placeholder="Add Customer Name Here" required />
-                                <button className="btn btn-outline-danger">Add customer
-            </button>
-                            </form>
-                            <Customers name={tailor} />
-                        </div>
-                        : <h1 className="h1 font-italic text-muted">
-                            loading
-                        </h1>
-                }
-            </div>
-        )
+    const promise = () => {
+        firebase.database().ref().on("child_added", snap => {
+            const tailor = snap.val();
+            localStorage.setItem("tailor", tailor)
+        });
     }
+    promise();
+    const tailor = localStorage.getItem("tailor");
+    return (
+        <div>
+            {
+                typeof (tailor) !== typeof (() => { }) ?
+                    <div>
+                        <h1 className="h1 font-italic text-muted">
+                            {tailor}
+                        </h1>
+                        <form onSubmit={addCustomer}>
+                            <input type="text" className="form-control" placeholder="Add Customer Name Here" required />
+                            <button className="btn btn-outline-danger">Add customer
+            </button>
+                        </form>
+                        <Customers name={tailor} />
+                    </div>
+                    : <h1 className="h1 font-italic text-muted">
+                        loading
+                        </h1>
+            }
+        </div>
+    )
+}

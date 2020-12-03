@@ -13,3 +13,8 @@ export function addCustomerR (customer : any){
         customer
 }
 }
+export function fecthCustomer(type : any){
+    return { 
+        type
+    }
+}

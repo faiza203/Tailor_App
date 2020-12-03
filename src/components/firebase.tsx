@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 
-export const configFirebase = () =>{
-const  firebaseConfig = {
+export const configFirebase = () => {
+  const firebaseConfig = {
     apiKey: "AIzaSyAZX5VgMVNTyz-J_UUoCFuXIFK48pk7mzU",
     authDomain: "common-50c43.firebaseapp.com",
     databaseURL: "https://common-50c43.firebaseio.com",

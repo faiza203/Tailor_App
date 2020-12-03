@@ -1,8 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router';
-import { Nav, Home, SignUp, SignIn, DashBoard, NotFound , history , addMeasurment} from './components/index';
+import { Nav, Home, SignUp, SignIn, DashBoard, NotFound, history, addMeasurment } from './components/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 
 function App() {
   return (

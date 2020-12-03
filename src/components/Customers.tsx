@@ -28,14 +28,15 @@ export const Customers = (props: any) => {
 
     return (
         <div>
-            <h2 className="h2 text-muted">Customers</h2>         {
+            <h2 className="h2 text-muted">Customers</h2>  
+         {
                 customerState.clients.length !== 0 ?
                     customerState.clients.map((customer: any, index: number) => {
-                        console.log(customer)
                         return (<div key={index}><h3 className="h3 text-muted d-inline mt-2">{customer}</h3>
-                            <button id={customer + "measurment"} className="btn btn-outline-success d-inline" onClick={function () {
-                                history.push('/AddMeasurment')
-                            }} >Measurment</button>
+                            <button id={customer + "measurment"} className="btn btn-outline-success d-inline" onClick={() => {
+                                history.push("/AddMeasurment");
+                                history.replace("/AddMeasurment");
+                            }}>Measurment</button>
                         </div>)
                     }) :
                     null

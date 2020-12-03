@@ -8,4 +8,4 @@ export { DashBoard } from './DashBoard';
 export { Customers } from './Customers';
 export { addMeasurment } from './AddMeasurment';
 export { history } from './history';
-export {addTailor , store  , addCustomerR , fecthCustomer} from './store';
+export { addTailor, store, addCustomerR, fecthCustomer } from './store';

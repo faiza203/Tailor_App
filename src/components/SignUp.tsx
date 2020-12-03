@@ -9,7 +9,7 @@ import { addTailor } from './store';
 
 configFirebase();
 
-export function SignUp  (){
+export function SignUp() {
     const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
     const signUpFun = (e: any) => {

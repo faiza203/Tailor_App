@@ -1,20 +1,20 @@
 import { createStore } from 'redux';
 import TailorReducer from './reducer';
 export const store = createStore(TailorReducer);
-export function addTailor (tailor : any){
+export function addTailor(tailor: any) {
     return {
         type: "Add_Tailor",
         tailor
+    }
 }
-}
-export function addCustomerR (customer : any){
+export function addCustomerR(customer: any) {
     return {
         type: "Add_Tailor",
         customer
+    }
 }
-}
-export function fecthCustomer(type : any){
-    return { 
+export function fecthCustomer(type: any) {
+    return {
         type
     }
 }

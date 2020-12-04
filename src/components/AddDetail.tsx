@@ -3,7 +3,7 @@ import { AddMeasurment, addMeasurmentR, AddOrder } from './index';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-import { addOrder } from './store';
+import { checkOrder } from './store';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
@@ -31,9 +31,9 @@ export const AddDetail = () => {
                 NewOrders.value > 0 ? firebase.firestore().collection('clients').doc(tailor).collection('customers').doc(client).set({
                     measurment: measurmentEle
                 }).then(() => {
-                    dispatch(addOrder(client, NewOrders.value))
+                    checkOrder(client, NewOrders.value, customerState, dispatch)
                     console.log(customerState);
-                    
+
                 }).catch((err) => {
                     alert(err);
                 }) : console.log(0);

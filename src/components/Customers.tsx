@@ -37,7 +37,7 @@ export const Customers = (props: any) => {
                                 localStorage.setItem("customer" , customer);
                                 history.push("/AddMeasurment");
                                 history.replace("/AddMeasurment")
-                            }}>Measurment</button>
+                            }}>Edit Detail</button>
                         </div>)
                     }) :
                     null

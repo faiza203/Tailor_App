@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
 import TailorReducer from './reducer';
-import { useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 export const store = createStore(TailorReducer);
 export function addTailor(tailor: any) {
     return {
@@ -28,30 +28,31 @@ export function addMeasurmentR(client: any, measurment: number[]) {
 }
 
 
-export function addOrder(client: any, orders : number) {
+export function addOrder(client: any, orders: number) {
     return {
         type: "Add_Order",
         client,
         orders
     }
 }
-export function updateOrder (client : any, orders : any , customerStateValue : any){
+export function updateOrder(client: any, orders: number, index : any,customerStateValue: any) {
     return {
-        type : "Update_Order",
+        type: "Update_Order",
         client,
         orders,
-        customerStateValue
+        customerStateValue,
+        index
     }
 }
-export function checkOrder(client: any, orders : number , customerState: any , dispatch : any) {
-    if(customerState.orders.lenght > 0 ){
-        customerState.orders.forEach((customer: any , index : number) => {
-               if( customerState.orders[index][0] === customer ){
-                const clientNu = customer.orders[index];
-                dispatch(updateOrder(client , orders , clientNu))
-               }
+export function checkOrder(client: any, orders: number, customerStateOrders: any, dispatch: any) {
+    if (customerStateOrders.length > 0) {
+        customerStateOrders.forEach((customer: any, index: number) => {
+            if (customer[0] === client) {
+                const customerStateValue = customerStateOrders[index];                
+                dispatch(updateOrder(client, orders, index , customerStateValue));    
+            }
         })
-    }else{
-             dispatch(addOrder(client , orders))
+    } else {
+        dispatch(addOrder(client, orders))
     }
 }

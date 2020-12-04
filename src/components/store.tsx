@@ -25,3 +25,12 @@ export function addMeasurmentR(client: any, measurment: number[]) {
         measurment
     }
 }
+
+
+export function addOrder(client: any, orders : number) {
+    return {
+        type: "Add_Order",
+        client,
+        orders
+    }
+}

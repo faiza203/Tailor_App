@@ -16,11 +16,7 @@ export function addCustomerR(customer: any) {
         customer
     }
 }
-export function fecthCustomer(type: any) {
-    return {
-        type
-    }
-}
+
 export function addMeasurmentR(client: any, measurment: measurment) {
     return {
         type: "Add_Measurment",

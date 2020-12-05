@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import firebase from 'firebase';
 import { configFirebase } from './firebase';
-import { v4 as uuid } from 'uuid';
 import { history } from './history';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addTailor } from './store';
 
 configFirebase();
 
 export function SignUp() {
     const dispatch = useDispatch();
-    const customerState = useSelector((state: any) => state);
     const signUpFun = (e: any) => {
         e.preventDefault();
         const [email, password, confirmPassword]: any[] = e.target;
@@ -22,7 +20,7 @@ export function SignUp() {
             const promise = auth.createUserWithEmailAndPassword(email.value, password.value)
                 .then((user) => {
                     alert("Account is created successfully !!!");
-                    customerState.tailors.push(user.user?.email);
+                    dispatch(addTailor(user.user?.email))
                     history.push('/SignIn');
                     history.replace('./SignIn')
                 })

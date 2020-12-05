@@ -13,25 +13,20 @@ type stateType = {
 
 export default function TailorReducer(state: any = initialState, action: any) {
     switch (action.type) {
-        case "Add_Talior":
+        case "Add_Tailor":
             return {
                 ...state,
-                tailors: state.tailors.push(action.tailor)
+                Tailors: state.tailors.push(action.tailor)
             }
         case "Add_Customer":
             return {
                 ...state,
-                clients: state.clients.push(action.customer)
-            }
-        case "Fecth_Customer":
-            return {
-                ...state,
-                state
+                Clients: state.clients.push(action.customer)
             }
         case "Add_Measurment":
             return {
                 ...state,
-                Measurment: state.measurment.push( action.measurment),
+                Measurment: state.measurment.push(action.measurment),
             }
         case "Add_Order":
             return {
@@ -41,7 +36,7 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Update_Order":
             return {
                 ...state,
-                orders: state.orders[action.index] = ([action.client , parseInt(state.orders[action.index][1]) + parseInt(action.orders)]),
+                orders: state.orders[action.index] = ([action.client, parseInt(state.orders[action.index][1]) + parseInt(action.orders)]),
             }
 
         default:

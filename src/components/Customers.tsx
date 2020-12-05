@@ -1,8 +1,11 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import firebase from 'firebase';
-import { history } from './index'
-const getClients = (tailor: string, customerState: any) => {
+import { history } from './index';
+import { useDispatch } from 'react-redux';
+import { addCustomerR } from "./store";
+const GetClients = (tailor: string) => {
+    const dispatch = useDispatch();
     const firestore = firebase.firestore();
     firestore
         .collection("tailors")
@@ -12,7 +15,7 @@ const getClients = (tailor: string, customerState: any) => {
         .then((querySnapshot) => {
             querySnapshot.forEach(function (doc) {
                 const customersData = doc.data().id;
-                customerState.clients.push(customersData);
+                dispatch(addCustomerR(customersData))
             });
         })
         .catch((err) => {
@@ -23,7 +26,7 @@ const getClients = (tailor: string, customerState: any) => {
 export const Customers = (props: any) => {
     const customerState = useSelector((state: any) => state);
 
-    getClients(props.tailor, customerState);
+    GetClients(props.tailor);
 
     return (
         <div>
@@ -34,7 +37,7 @@ export const Customers = (props: any) => {
                     customerState.clients.map((customer: any, index: number) => {
                         return (<div key={index}><h3 className="h3 text-muted d-inline mt-2">{customer}</h3>
                             <button id={customer + "measurment"} className="btn btn-outline-success d-inline" onClick={() => {
-                                localStorage.setItem("customer" , customer);
+                                localStorage.setItem("customer", customer);
                                 history.push("/AddDetail");
                                 history.replace("/AddDetail")
                             }}>Edit Detail</button>

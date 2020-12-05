@@ -7,7 +7,6 @@ import { addCustomerR } from './store';
 
 export function DashBoard() {
     const dispatch = useDispatch();
-    const customerState = useSelector((state: any) => state);
     const addCustomer = (e: any) => {
         e.preventDefault();
         const customer: String = e.target[0].value;
@@ -15,12 +14,12 @@ export function DashBoard() {
         firebase.database().ref().on("child_added", snap => {
             const tailor = snap.val();
             const id = uuid();
-            const promise = firebase.firestore().collection('tailors').doc(tailor).collection('customers').doc(id).set({
+            const promise = firebase.firestore().collection('Tailor App').doc('tailor').collection(tailor).doc(id).set({
                 id: customer
             });
             promise.then(() => {
                 alert("customer is added");
-                customerState.clients.push(customer)
+                dispatch(addCustomerR(customer))
             })
             promise.catch((err) => {
                 alert(err.message)

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddMeasurment, addMeasurmentR, AddOrder } from './index';
+import { AddMeasurment, checkMeasurment, AddOrder } from './index';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
@@ -13,6 +13,8 @@ export const AddDetail = () => {
 
     const saveDetail: any = (e: any) => {
         e.preventDefault();
+        console.log(customerState);
+        
         const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders] = e.target;
         const measurmentEle = {
             Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
@@ -27,7 +29,7 @@ export const AddDetail = () => {
 
             promise.then(() => {
                 alert("Data is updated");
-                dispatch(addMeasurmentR(client, measurmentEle));
+                checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
                 NewOrders.value > 0 ? firebase.firestore().collection('Tailor App').doc("clients").collection(tailor).doc(client).set({
                     measurment: measurmentEle
                 }).then(() => {

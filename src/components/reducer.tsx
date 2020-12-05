@@ -26,7 +26,7 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Measurment":
             return {
                 ...state,
-                Measurment: state.measurment.push(action.measurment),
+                Measurment: state.measurment.push([action.client, action.measurment]),
             }
         case "Add_Order":
             return {
@@ -36,9 +36,13 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Update_Order":
             return {
                 ...state,
-                orders: state.orders[action.index] = ([action.client, parseInt(state.orders[action.index][1]) + parseInt(action.orders)]),
+                Orders: state.orders[action.index][1] = (action.orders)
             }
-
+        case "Update_Measurment":
+            return {
+                ...state,
+                Measurment: state.measurment[action.index][1] = (action.measurment),
+            }
         default:
             return state
     }

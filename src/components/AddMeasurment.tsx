@@ -1,8 +1,4 @@
 import React from 'react';
-import { addMeasurmentR } from './index';
-import { useDispatch, useSelector } from 'react-redux';
-import firebase from 'firebase';
-import { v4 as uuid } from 'uuid';
 
 export function AddMeasurment() {
     return (

@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux';
 
 export const AddOrder = (props: any) => {
     const customerState = useSelector((state: any) => state);
-    console.log(customerState);
-    
     return (<div>
         <h1 className="h1 text-muted">Orders</h1>
         <p className="text-muted">If you want to stitch new dress : </p>

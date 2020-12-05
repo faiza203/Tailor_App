@@ -14,7 +14,9 @@ export const AddDetail = () => {
     const saveDetail: any = (e: any) => {
         e.preventDefault();
         const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders] = e.target;
-        const measurmentEle = [Length.value, Width.value, Neck.value, Waist.value, Middle.value, LegLenght.value];
+        const measurmentEle = {
+            Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
+        }
         firebase.database().ref().on("child_added", snap => {
             const tailor = snap.val();
             localStorage.setItem("tailor", tailor)
@@ -23,7 +25,7 @@ export const AddDetail = () => {
         firebase.database().ref().on("child_added", snap => {
             const id = uuid();
             const promise = firebase.firestore().collection('clients').doc(tailor).collection('customers').doc(client).set({
-                measurment: measurmentEle
+                measurmentEle
             });
 
             promise.then(() => {

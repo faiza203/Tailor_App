@@ -3,28 +3,17 @@ import firebase from 'firebase';
 import { Customers } from './index';
 import { v4 as uuid } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCustomerR } from './store';
+import { checkCustomer } from './store';
 
 export function DashBoard() {
+    const customerState = useSelector((state: any) => state);
     const dispatch = useDispatch();
     const addCustomer = (e: any) => {
         e.preventDefault();
         const customer: String = e.target[0].value;
+        checkCustomer(customer, customerState.clients, dispatch)
         e.target[0].value = "";
-        firebase.database().ref().on("child_added", snap => {
-            const tailor = snap.val();
-            const id = uuid();
-            const promise = firebase.firestore().collection('Tailor App').doc('tailor').collection(tailor).doc(id).set({
-                id: customer
-            });
-            promise.then(() => {
-                alert("customer is added");
-                dispatch(addCustomerR(customer))
-            })
-            promise.catch((err) => {
-                alert(err.message)
-            })
-        });
+
     }
 
     const promise = () => {

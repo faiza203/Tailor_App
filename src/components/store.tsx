@@ -1,8 +1,7 @@
 import { createStore } from 'redux';
 import TailorReducer from './reducer';
-import { useDispatch } from 'react-redux'
+import { v4 as uuid } from 'uuid';
 import firebase from 'firebase';
-import { parseIsolatedEntityName } from 'typescript';
 export const store = createStore(TailorReducer);
 export function addTailor(tailor: any) {
     return {
@@ -13,9 +12,10 @@ export function addTailor(tailor: any) {
 export function addCustomerR(customer: any) {
     return {
         type: "Add_Customer",
-        customer
+        customer,
     }
 }
+
 
 export function addMeasurmentR(client: any, measurment: measurment) {
     return {
@@ -69,5 +69,32 @@ export function checkOrder(client: any, orders: number, customerStateOrders: any
         })
     } else {
         dispatch(addOrder(client, orders))
+    }
+}
+
+export const checkCustomer = (client: any, customerStateClient: any, dispatch: any) => {
+    if (customerStateClient.length > 0) {
+        customerStateClient.forEach((customer: any, index: number) => {
+            if (customer === client) {
+                alert("You have already this user")
+            } else {
+                dispatch(addCustomerR(client));
+                firebase.database().ref().on("child_added", snap => {
+                    const tailor = snap.val();
+                    const id = uuid();
+                    const promise = firebase.firestore().collection('Tailor App').doc('tailor').collection(tailor).doc(id).set({
+                        id: customer
+                    });
+                    promise.then(() => {
+                        alert("customer is added");
+                    })
+                    promise.catch((err) => {
+                        alert(err.message)
+                    })
+                });
+            }
+        })
+    } else {
+        dispatch(addCustomerR(client))
     }
 }

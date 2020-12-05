@@ -1,12 +1,10 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router';
-import { Nav, Home, SignUp, SignIn, DashBoard, NotFound, history, AddDetail , fecthData } from './components/index';
+import { Nav, Home, SignUp, SignIn, DashBoard, NotFound, history, AddDetail } from './components/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch } from 'react-redux';
 
 function App() {
-  const dispatch = useDispatch();
-  fecthData(dispatch);
+
   return (
     <div className="App">
       <Router history={history}>

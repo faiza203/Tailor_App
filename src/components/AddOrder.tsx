@@ -1,5 +1,4 @@
 import React from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import { useSelector } from 'react-redux';
 
 export const AddOrder = (props: any) => {

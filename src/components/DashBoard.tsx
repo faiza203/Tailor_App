@@ -1,9 +1,8 @@
 import React from 'react';
 import firebase from 'firebase';
-import { Customers } from './index';
-import { v4 as uuid } from 'uuid';
+import { Customers, checkCustomer } from './index';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkCustomer } from './store';
+import { addTailor } from './store';
 
 export function DashBoard() {
     const customerState = useSelector((state: any) => state);
@@ -11,19 +10,22 @@ export function DashBoard() {
     const addCustomer = (e: any) => {
         e.preventDefault();
         const customer: String = e.target[0].value;
-        checkCustomer(customer, customerState.clients, dispatch)
+        checkCustomer(customer, customerState.clients, dispatch);
         e.target[0].value = "";
-
     }
-
-    const promise = () => {
+    const promiseOne = () => {
         firebase.database().ref().on("child_added", snap => {
             const tailor = snap.val();
-            localStorage.setItem("tailor", tailor)
+            localStorage.setItem("tailor", tailor);
         });
     }
-    promise();
+    promiseOne();
+
     const tailor = localStorage.getItem("tailor");
+    if (customerState.tailors.length === 0) {
+        dispatch(addTailor(tailor))
+    }
+     
     return (
         <div>
             {

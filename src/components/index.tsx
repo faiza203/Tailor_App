@@ -8,6 +8,6 @@ export { DashBoard } from './DashBoard';
 export { Customers } from './Customers';
 export { AddMeasurment } from './AddMeasurment';
 export { history } from './history';
-export { addTailor, store, checkCustomer, addMeasurmentR, addOrder, checkOrder , checkMeasurment} from './store';
+export { addTailor ,checkCustomer, checkOrder , checkMeasurment , checkCustomerFirebase,store} from './store';
 export { AddDetail } from './AddDetail';
 export { AddOrder } from './AddOrder';

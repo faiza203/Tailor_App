@@ -11,29 +11,29 @@ export function addTailor(tailor: any) {
 }
 
 export const checkCustomer = (client: any, customerStateClient: any, dispatch: any) => {
+    let arr = [];
     if (customerStateClient.length > 0) {
-        customerStateClient.forEach((customer: any, index: number) => {
-            if (customer === client) {
-                alert("You have already this user")
-            } else {
-                dispatch(addCustomerR(client));
+        customerStateClient.forEach((customer: any) => {
+            if(customer !== client) {
+                arr.push("yes");
             }
         })
-    } else {
+    }
+    if (arr.length === customerStateClient.length) {
         dispatch(addCustomerR(client))
     }
+    else{
+        alert("You have already this user")
+    }
 }
-
 
 export function addCustomerR(customer: any) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
-        const id = uuid();
-        const promise = firebase.firestore().collection('Tailor App').doc('tailor').collection(tailor).doc(id).set({
+        const promise = firebase.firestore().collection('Tailor App').doc('Tailor').collection(tailor).doc(uuid()).set({
             id: customer
         });
         promise.then(() => {
-            alert("customer is added");
         })
         promise.catch((err) => {
             alert(err.message)
@@ -42,6 +42,28 @@ export function addCustomerR(customer: any) {
     return {
         type: "Add_Customer",
         customer,
+    }
+}
+
+
+export function checkCustomerFirebase(client: any, customerStateClient: any, dispatch: any) {
+    let arr = [];
+    if (customerStateClient.length > 0) {
+        customerStateClient.forEach((customer: any) => {
+            if (customer !== client) {
+                arr.push("yes");
+            }
+        })
+    }
+    if (arr.length === customerStateClient.length) {
+        dispatch(addFirebaseCustomer(client))
+    }
+}
+
+export function addFirebaseCustomer(client: any) {
+    return {
+        type: "Fecth_Customer",
+        client
     }
 }
 
@@ -98,8 +120,8 @@ export function checkOrder(client: any, orders: string, customerStateOrders: any
     if (customerStateOrders.length > 0) {
         customerStateOrders.forEach((customer: any, index: number) => {
             if (customer[0] === client) {
-                const order : number = parseInt(customer[1]) + parseInt(orders);
-                dispatch(updateOrder(client,  index, order));
+                const order: number = parseInt(customer[1]) + parseInt(orders);
+                dispatch(updateOrder(client, index, order));
             }
         })
     } else {
@@ -107,11 +129,11 @@ export function checkOrder(client: any, orders: string, customerStateOrders: any
     }
 }
 
-export function updateOrder(client: any,  index: any, order: number) {
+export function updateOrder(client: any, index: any, order: number) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
         const promise = firebase.firestore().collection('Tailor App').doc("Clients").collection(tailor).doc(client + " Orders").set({
-            orders : order
+            orders: order
         }).then().catch();
     });
     return {

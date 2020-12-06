@@ -1,10 +1,7 @@
 import React from 'react';
-import { AddMeasurment, checkMeasurment, AddOrder } from './index';
+import { AddMeasurment, checkMeasurment, AddOrder, checkOrder, history } from './index';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuid } from 'uuid';
-import { checkOrder } from './store';
-import { history } from './index';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
@@ -13,8 +10,7 @@ export const AddDetail = () => {
 
     const saveDetail: any = (e: any) => {
         e.preventDefault();
-        console.log(customerState);
-        
+
         const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders] = e.target;
         const measurmentEle = {
             Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
@@ -22,7 +18,6 @@ export const AddDetail = () => {
 
         const tailor: any = localStorage.getItem("tailor");
         firebase.database().ref().on("child_added", snap => {
-            const id = uuid();
             const promise = firebase.firestore().collection('clients').doc(tailor).collection('customers').doc(client).set({
                 measurmentEle
             });
@@ -36,8 +31,6 @@ export const AddDetail = () => {
                     checkOrder(client, NewOrders.value, customerState.orders, dispatch);
                     history.push("/DashBoard");
                     history.replace("/DashBoard");
-                }).catch((err) => {
-                    alert(err);
                 }) : console.log(0);
             })
             promise.catch((err) => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { AddMeasurment } from './index';
-import { addMeasurmentR } from './store';
 export function AlreadyMeasurment(props: any) {
     const customerState = useSelector((state: any) => state);
     return (
@@ -19,11 +18,11 @@ export function AlreadyMeasurment(props: any) {
                                 <li className="text-muted"> Middle : {measurment[1].Middle}</li>
                                 <li className="text-muted"> Leg Lenght : {measurment[1].LegLenght}</li>
                             </ul>)
-                        }
-                    }) :
+                     }
+                     }) :
                     null
                 }
-                <AddMeasurment />
+                <AddMeasurment/>
             </div>
         </div>
     )

@@ -24,7 +24,8 @@ export function SignIn() {
   const sendToFirebaseTailor = (e: any) => {
     const promise = firebase.database().ref().set({ signIn: e.target[0].value })
     promise.then(() => {
-      dispatch(addTailor(e.target[0].value))
+      dispatch(addTailor(e.target[0].value));
+      localStorage.setItem("tailor" , e.target[0].value)
       alert("Account is login successfully !!!");
       history.push('/DashBoard');
       history.replace('/DashBoard');

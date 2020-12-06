@@ -18,13 +18,12 @@ export const AddDetail = () => {
 
         const tailor: any = localStorage.getItem("tailor");
         firebase.database().ref().on("child_added", snap => {
-            const promise = firebase.firestore().collection('clients').doc(tailor).collection('customers').doc(client).set({
+            const promise = firebase.firestore().collection('Tailor App').doc('Clients').collection(tailor).doc(client + " Measurment").set({
                 measurmentEle
             });
             promise.then(() => {
                 alert("Data is updated");
                 checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
-
                 NewOrders.value > 0 ? firebase.firestore().collection('Tailor App').doc("clients").collection(tailor).doc(client).set({
                     measurment: measurmentEle
                 }).then(() => {

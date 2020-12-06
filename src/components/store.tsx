@@ -14,7 +14,7 @@ export const checkCustomer = (client: any, customerStateClient: any, dispatch: a
     let arr = [];
     if (customerStateClient.length > 0) {
         customerStateClient.forEach((customer: any) => {
-            if(customer !== client) {
+            if (customer !== client) {
                 arr.push("yes");
             }
         })
@@ -22,7 +22,7 @@ export const checkCustomer = (client: any, customerStateClient: any, dispatch: a
     if (arr.length === customerStateClient.length) {
         dispatch(addCustomerR(client))
     }
-    else{
+    else {
         alert("You have already this user")
     }
 }
@@ -68,19 +68,39 @@ export function addFirebaseCustomer(client: any) {
 }
 
 export const checkMeasurment = (client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
-    if (customerStateMeasurment.length > 0) {
-        customerStateMeasurment.forEach((customer: any, index: number) => {
-            if (customer[0] === client) {
-                dispatch(updateMeasurmentR(client, measurment, index))
-            } else {
-                dispatch(addMeasurmentR(client, measurment));
-            }
-        })
-    } else {
-        dispatch(addMeasurmentR(client, measurment))
+    if (client !== undefined) {
+        if (customerStateMeasurment.length > 0) {
+            customerStateMeasurment.forEach((customer: any, index: number) => {
+                if (customer[0] === client) {
+                    dispatch(updateMeasurmentR(client, measurment, index))
+                } else {
+                    dispatch(addMeasurmentR(client, measurment));
+                }
+            })
+        } else {
+            dispatch(addMeasurmentR(client, measurment))
+        }
     }
 }
 
+export const checkFirebaseMeasurment = (client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
+    const arr = [];
+    if (customerStateMeasurment.length > 0) {
+        customerStateMeasurment.forEach((customer: any, index: number) => {
+            if (client !== undefined) {
+                if (customer[0] !== client) {
+                    arr.push("yes");
+                    console.log(customer[0] , client);              
+                }else{
+                    console.log(customer[0] , client); 
+                }
+            }
+        })
+    }
+    if (arr.length === customerStateMeasurment.length) {
+        checkMeasurment(client, measurment, dispatch, customerStateMeasurment)
+    }
+}
 
 export function addMeasurmentR(client: any, measurment: measurment) {
     return {
@@ -89,6 +109,7 @@ export function addMeasurmentR(client: any, measurment: measurment) {
         measurment
     }
 }
+
 export function updateMeasurmentR(client: any, measurment: measurment, index: number) {
     return {
         type: "Update_Measurment",
@@ -106,7 +127,7 @@ type measurment = {
 export function addOrder(client: any, orders: number) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
-        const promise = firebase.firestore().collection('Tailor App').doc('clients').collection(tailor).doc(client).set({
+        const promise = firebase.firestore().collection('Tailor App').doc('Clients').collection(tailor).doc(client + " Orders").set({
             orders: orders
         }).then().catch();
     });

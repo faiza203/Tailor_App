@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddMeasurment, checkMeasurment, AddOrder, checkOrder, history } from './index';
+import { AddMeasurment, checkMeasurment, AddOrder, checkOrder, AlreadyMeasurment ,history } from './index';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -40,9 +40,8 @@ export const AddDetail = () => {
     }
     return (
         <form onSubmit={saveDetail}>
-                <h1 className="h1 text-muted">Welcome {client}</h1>
             <div id="addDetail">
-                <AddMeasurment client={client} />
+                <AlreadyMeasurment client={client}/>
                 <AddOrder client={client} />
             </div>
             <button id="saveDetail" className="btn btn-outline-primary" type="submit">Save Detail</button>

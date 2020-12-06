@@ -8,6 +8,7 @@ export { DashBoard } from './DashBoard';
 export { Customers } from './Customers';
 export { AddMeasurment } from './AddMeasurment';
 export { history } from './history';
-export { addTailor ,checkCustomer, checkOrder , checkMeasurment , checkCustomerFirebase,store} from './store';
+export { addTailor, checkCustomer, checkOrder, checkMeasurment, checkCustomerFirebase, store } from './store';
 export { AddDetail } from './AddDetail';
 export { AddOrder } from './AddOrder';
+export { AlreadyMeasurment } from './AlreadyMeasurment';

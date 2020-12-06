@@ -6,11 +6,12 @@ export const AddOrder = (props: any) => {
     return (<div>
         <h1 className="h1 text-muted">Orders</h1>
         <p className="text-muted">If you want to stitch new dress : </p>
-        <input className="form-control" type="text" placeholder="Add number of orders here" />
+        <input className="d-inline form-control" type="text" placeholder="Add number of orders here" />
+        <p className="d-inline text-muted">Not required</p>
         {customerState.orders.length > 0 ?
             customerState.orders.map((order: any[], index: number) => {
                 if (order[0] === props.client) {
-                    return (<p key={index}>Already Orders are {order[1]}</p>)
+                    return (<p key={index} className="text-muted">Already Orders are {order[1]}</p>)
                 }
             }) :
             null

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddMeasurment, checkMeasurment, AddOrder, checkOrder, AlreadyMeasurment ,history } from './index';
+import { AddMeasurment, checkMeasurment, AddOrder, checkOrder, AlreadyMeasurment, history } from './index';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,17 +21,18 @@ export const AddDetail = () => {
             const promise = firebase.firestore().collection('clients').doc(tailor).collection('customers').doc(client).set({
                 measurmentEle
             });
-
             promise.then(() => {
                 alert("Data is updated");
                 checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
+
                 NewOrders.value > 0 ? firebase.firestore().collection('Tailor App').doc("clients").collection(tailor).doc(client).set({
                     measurment: measurmentEle
                 }).then(() => {
                     checkOrder(client, NewOrders.value, customerState.orders, dispatch);
-                    history.push("/DashBoard");
-                    history.replace("/DashBoard");
+
                 }) : console.log(0);
+                history.push("/DashBoard");
+                history.replace("/DashBoard");
             })
             promise.catch((err) => {
                 alert(err.message)
@@ -41,10 +42,11 @@ export const AddDetail = () => {
     return (
         <form onSubmit={saveDetail}>
             <div id="addDetail">
-                <AlreadyMeasurment client={client}/>
+                <AlreadyMeasurment client={client} />
                 <AddOrder client={client} />
             </div>
             <button id="saveDetail" className="btn btn-outline-primary" type="submit">Save Detail</button>
+            <button className="btn btn-outline-success" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Save Without Changing</button>
         </form>
     )
 }

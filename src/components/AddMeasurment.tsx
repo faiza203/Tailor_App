@@ -2,7 +2,6 @@ import React from 'react';
 export function AddMeasurment() {
     return (
         <div>
-            <label className="h1 text-muted text-dark"></label>
             <input className="form-control" type="text" placeholder="Length" required />
             <input className="form-control mt-1" type="number" placeholder="Width" required />
             <input className="form-control mt-1" type="number" placeholder="Neck" required />

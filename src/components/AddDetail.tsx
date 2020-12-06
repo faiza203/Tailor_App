@@ -40,8 +40,9 @@ export const AddDetail = () => {
     }
     return (
         <form onSubmit={saveDetail}>
+                <h1 className="h1 text-muted">Welcome {client}</h1>
             <div id="addDetail">
-                <AddMeasurment />
+                <AddMeasurment client={client} />
                 <AddOrder client={client} />
             </div>
             <button id="saveDetail" className="btn btn-outline-primary" type="submit">Save Detail</button>

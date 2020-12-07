@@ -1,9 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch} from 'react-redux';
 import firebase from 'firebase';
+import { checkConditionFirebase } from './store';
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);
+    const dispatch = useDispatch();
     const promise = () => {
         firebase.firestore().collection('Tailor App').doc(props.tailor).collection("Condition").get()
             .then(snapshot => {
@@ -11,8 +13,7 @@ export const Condition = (props: any) => {
                     const clientName = client.id;
                     const conditionAmount = client.data().condition.conditionAmount;
                     const conditionType = client.data().condition.conditionType;
-                    console.log(clientName , conditionType , conditionAmount);
-                    
+                    checkConditionFirebase(clientName, conditionType, conditionAmount, customerState.condition, dispatch)
                 })
             }).catch()
     }
@@ -28,6 +29,21 @@ export const Condition = (props: any) => {
                     <input className="d-inline form-control mt-1" type="text" placeholder="Add condition amount here" />
                 </div> :
                 null
+        }
+        {
+            customerState.orders.length > 0 ?
+                customerState.condition.length > 0 ?
+                    customerState.condition.map((condition: any[], index: number) => {
+                        if (condition[0] === props.client) {
+                            return (<ul key={index} className="mr-5">
+                                <li className="text-muted"> Condition Type : {condition[1]}</li>
+                                <li className="text-muted"> condition Amount : {condition[2]}</li>
+                            </ul>)
+                        }
+                    }) :
+                    console.log(customerState.condition)
+                    
+                : null
         }
     </div>
     )

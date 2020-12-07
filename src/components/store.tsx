@@ -209,7 +209,7 @@ export function addCondition(client: any, conditionType: any, conditionAmount: a
             condition
         }).then().catch();
     });
-    
+
     return {
         type: "Add_Condition",
         client,
@@ -225,5 +225,19 @@ export function updateCondition(client: any, conditionType: any, conditionAmount
     //         condition: [conditionType, conditionAmount]
     //     }).then().catch();
     // });
-
+}
+export function checkConditionFirebase(client: any, conditionType: any, conditionAmount: any, customerStateCondition: any, dispatch: any) {
+    const arr = [];
+    if (customerStateCondition.length > 0) {
+        customerStateCondition.forEach((customer: any, index: number) => {
+            if (client !== undefined) {
+                if (customer[0] !== client) {
+                    arr.push("yes");
+                }
+            }
+        })
+    }
+    if (arr.length === customerStateCondition.length) {
+        checkCondition(client, conditionType, conditionAmount, customerStateCondition, dispatch,)
+    }
 }

@@ -29,7 +29,7 @@ export function DashBoard() {
     return (
         <div>
             {
-                typeof (tailor) !== typeof (() => { }) ?
+                tailor ?
                     <div>
                         <h1 className="h1 font-italic text-muted">
                             {tailor}

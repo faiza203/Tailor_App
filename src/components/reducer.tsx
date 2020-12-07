@@ -41,7 +41,7 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Order":
             return {
                 ...state,
-                clientOrder: state.orders.push([action.client, parseInt(action.orders)]),
+                clientOrder: state.orders.push([action.client, action.orders]),
             }
         case "Update_Order":
             return {

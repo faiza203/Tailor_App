@@ -90,9 +90,6 @@ export const checkFirebaseMeasurment = (client: any, measurment: any, dispatch: 
             if (client !== undefined) {
                 if (customer[0] !== client) {
                     arr.push("yes");
-                    console.log(customer[0] , client);              
-                }else{
-                    console.log(customer[0] , client); 
                 }
             }
         })
@@ -124,43 +121,65 @@ type measurment = {
 
 }
 
-export function addOrder(client: any, orders: number) {
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        const promise = firebase.firestore().collection('Tailor App').doc('Clients').collection(tailor).doc(client + " Orders").set({
-            orders: orders
-        }).then().catch();
-    });
-    return {
-        type: "Add_Order",
-        client,
-        orders
-    }
-}
-export function checkOrder(client: any, orders: string, customerStateOrders: any, dispatch: any) {
+export function checkOrderFirebase(client: any, orders: string, customerStateOrders: any, dispatch: any) {
+    const arr = [];
     if (customerStateOrders.length > 0) {
         customerStateOrders.forEach((customer: any, index: number) => {
-            if (customer[0] === client) {
-                const order: number = parseInt(customer[1]) + parseInt(orders);
-                dispatch(updateOrder(client, index, order));
+            if (client !== undefined) {
+                if (customer[0] !== client) {
+                    arr.push("yes");
+                }
             }
         })
-    } else {
-        dispatch(addOrder(client, parseInt(orders)))
+    }
+    if (arr.length === customerStateOrders.length) {
+        checkOrder(client, orders,  customerStateOrders, dispatch,)
     }
 }
 
-export function updateOrder(client: any, index: any, order: number) {
+export function checkOrder(client: any, orders: string, customerStateOrders: any, dispatch: any) {
+    if (customerStateOrders.length > 0) {
+        customerStateOrders.forEach((customer: any, index: number) => {
+            if (client !== undefined && orders !== null) {
+                if (customer[0] === client) {
+                    const order: number = parseInt(customer[1]) + parseInt(orders);
+                    dispatch(updateOrder(client, index, order));
+                }
+            }
+        })
+    }
+    else {
+        if (orders !== undefined) {
+            dispatch(addOrder(client, orders))
+        }
+    }
+}
+export function addOrder(client: any, orders: string) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
-        const promise = firebase.firestore().collection('Tailor App').doc("Clients").collection(tailor).doc(client + " Orders").set({
-            orders: order
+        const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
+            orders: parseInt(orders)
+        }).then().catch();
+    });
+    const order = parseInt(orders)
+    return {
+        type: "Add_Order",
+        client,
+        orders : order
+    }
+}
+
+export function updateOrder(client: any, index: any, orders: number) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
+            orders: orders
         }).then().catch();
     });
     return {
         type: "Update_Order",
         client,
-        orders: order,
+        orders,
         index
     }
 }

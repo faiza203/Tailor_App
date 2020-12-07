@@ -260,3 +260,11 @@ export function addStitch (client : any , amount : any){
         amount
     }
 }
+
+export function updateStitch(index: any , amount : any){
+    return {
+        type: "Update_Stitch",
+        index,
+        amount
+    }
+}

@@ -53,13 +53,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Stitch":
             return {
                 ...state,
-                clientStitched: state.condition.push([action.client, action.amount]),
+                clientStitched: state.stitch.push([action.client, action.amount]),
             }
-        case "Update_Condition":
+        case "Update_Stitch":
             return {
                 ...state,
-                clientConditionType: state.condition[action.index][1] = (action.conditionType),
-                clientConditionAmount: state.condition[action.index][2] = (action.conditionAmount)
+                clientStitchedUpdate: state.stitch[action.index][1] = (action.amount),
             }
         default:
             return state

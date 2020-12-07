@@ -20,7 +20,7 @@ export function AddMeasurment(props: any) {
     promise();
     return (
 
-        <div>
+        <div className="mr-5">
             <input className="form-control" type="number" placeholder="Length" required />
             <input className="form-control mt-1" type="number" placeholder="Width" required />
             <input className="form-control mt-1" type="number" placeholder="Neck" required />

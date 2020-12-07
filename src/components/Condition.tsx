@@ -25,8 +25,8 @@ export const Condition = (props: any) => {
                 <div className="condition">
                     <h1 className="h1 text-muted">Condition</h1>
                     <p className="text-muted">If you want to add Condition : </p>
-                    <input className="d-inline form-control" type="text" placeholder="Add condition here" />
-                    <input className="d-inline form-control mt-1" type="number" placeholder="Add condition amount here" />
+                    <input className="w-75 d-inline form-control" type="text" placeholder="Add condition here" />
+                    <input className="w-75 d-inline form-control mt-1" type="number" placeholder="Add condition amount here" />
                 </div> :
                 null
         }

@@ -54,6 +54,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
             return {
                 ...state,
                 clientCondition: state.condition.push([action.client, action.conditionType , action.conditionAmount]),
+            }       
+             case "Update_Condition":
+            return {
+                ...state,
+                clientConditionType: state.condition[action.index][1] = (action.conditionType),
+                clientConditionAmount: state.condition[action.index][2] = (action.conditionAmount)
             }
         default:
             return state

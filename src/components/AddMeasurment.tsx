@@ -21,7 +21,7 @@ export function AddMeasurment(props: any) {
     return (
 
         <div>
-            <input className="form-control" type="text" placeholder="Length" required />
+            <input className="form-control" type="number" placeholder="Length" required />
             <input className="form-control mt-1" type="number" placeholder="Width" required />
             <input className="form-control mt-1" type="number" placeholder="Neck" required />
             <input className="form-control mt-1" type="number" placeholder="Waist" required />

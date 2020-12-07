@@ -26,7 +26,7 @@ export const Condition = (props: any) => {
                     <h1 className="h1 text-muted">Condition</h1>
                     <p className="text-muted">If you want to add Condition : </p>
                     <input className="d-inline form-control" type="text" placeholder="Add condition here" />
-                    <input className="d-inline form-control mt-1" type="text" placeholder="Add condition amount here" />
+                    <input className="d-inline form-control mt-1" type="number" placeholder="Add condition amount here" />
                 </div> :
                 null
         }
@@ -36,8 +36,7 @@ export const Condition = (props: any) => {
                     customerState.condition.map((condition: any[], index: number) => {
                         if (condition[0] === props.client) {
                             return (<ul key={index} className="mr-5">
-                                <li className="text-muted"> Condition Type : {condition[1]}</li>
-                                <li className="text-muted"> condition Amount : {condition[2]}</li>
+                                <li className="text-muted">  {condition[2]} orders has {condition[1]} .</li>
                             </ul>)
                         }
                     }) :

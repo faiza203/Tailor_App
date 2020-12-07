@@ -190,7 +190,7 @@ export function checkCondition(client: any, conditionType: any, conditionAmount:
     if (customerStateCondition.length > 0) {
         customerStateCondition.forEach((customer: any, index: number) => {
             if (customer[0] === client) {
-                dispatch(updateCondition(client, conditionType, conditionAmount, customerStateCondition))
+                dispatch(updateCondition(client, conditionType, conditionAmount, index))
             }
 
         })
@@ -214,17 +214,27 @@ export function addCondition(client: any, conditionType: any, conditionAmount: a
         type: "Add_Condition",
         client,
         conditionType,
-        conditionAmount
+        conditionAmount,
     }
 }
 
-export function updateCondition(client: any, conditionType: any, conditionAmount: any, customerStateCondition: any) {
-    // firebase.database().ref().on("child_added", snap => {
-    //     const tailor = snap.val();
-    //     firebase.firestore().collection('Tailor App').doc(tailor).collection("Condition").doc(client).set({
-    //         condition: [conditionType, conditionAmount]
-    //     }).then().catch();
-    // });
+export function updateCondition(client: any, conditionType: any, conditionAmount: any, index: any) {
+    const condition = {
+        conditionType, conditionAmount
+    }
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Condition").doc(client).set({
+            condition
+        }).then().catch();
+    });
+    return {
+        type: "Update_Condition",
+        client,
+        conditionType,
+        conditionAmount,
+        index
+    }
 }
 export function checkConditionFirebase(client: any, conditionType: any, conditionAmount: any, customerStateCondition: any, dispatch: any) {
     const arr = [];

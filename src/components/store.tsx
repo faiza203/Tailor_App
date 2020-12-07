@@ -251,3 +251,12 @@ export function checkConditionFirebase(client: any, conditionType: any, conditio
         checkCondition(client, conditionType, conditionAmount, customerStateCondition, dispatch,)
     }
 }
+
+
+export function addStitch (client : any , amount : any){
+    return {
+        type : "Add_Stitch",
+        client ,
+        amount
+    }
+}

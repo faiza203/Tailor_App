@@ -3,14 +3,14 @@ export const initialState: stateType = {
     tailors: [],
     measurment: [],
     orders: [],
-    condition: [],
+    stitch: [],
 }
 type stateType = {
     tailors: any[],
     clients: any[],
     measurment: any[],
     orders: any[],
-    condition: any[]
+    stitch: any[]
 }
 
 export default function TailorReducer(state: any = initialState, action: any) {
@@ -50,12 +50,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
                 ...state,
                 Orders: state.orders[action.index][1] = (action.orders)
             }
-            case "Add_Condition":
+        case "Add_Stitch":
             return {
                 ...state,
-                clientCondition: state.condition.push([action.client, action.conditionType , action.conditionAmount]),
-            }       
-             case "Update_Condition":
+                clientStitched: state.condition.push([action.client, action.amount]),
+            }
+        case "Update_Condition":
             return {
                 ...state,
                 clientConditionType: state.condition[action.index][1] = (action.conditionType),

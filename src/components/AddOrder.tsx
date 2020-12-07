@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import firebase from 'firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { checkOrderFirebase } from './index';
@@ -13,7 +13,6 @@ export const AddOrder = (props: any) => {
                     const clientName = client.id;
                     const orders = client.data().orders;
                     if (orders !== undefined) {
-                        console.log(orders);
                         checkOrderFirebase(clientName, orders, customerState.orders, dispatch)
                     }
                 })
@@ -23,7 +22,7 @@ export const AddOrder = (props: any) => {
 
     return (<div>
         <h1 className="h1 text-muted">Orders</h1>
-        <p className="text-muted">If you want to stitch new dress : </p>
+        <p className="text-muted">If you want to stitch new dress: </p>
         <input className="d-inline form-control" type="text" placeholder="Add number of orders here" />
         {customerState.orders.length > 0 ?
             customerState.orders.map((order: any[], index: number) => {

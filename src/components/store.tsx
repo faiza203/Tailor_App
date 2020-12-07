@@ -133,7 +133,7 @@ export function checkOrderFirebase(client: any, orders: string, customerStateOrd
         })
     }
     if (arr.length === customerStateOrders.length) {
-        checkOrder(client, orders,  customerStateOrders, dispatch,)
+        checkOrder(client, orders, customerStateOrders, dispatch,)
     }
 }
 
@@ -157,7 +157,7 @@ export function checkOrder(client: any, orders: string, customerStateOrders: any
 export function addOrder(client: any, orders: string) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
-        const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
             orders: parseInt(orders)
         }).then().catch();
     });
@@ -165,7 +165,7 @@ export function addOrder(client: any, orders: string) {
     return {
         type: "Add_Order",
         client,
-        orders : order
+        orders: order
     }
 }
 
@@ -184,3 +184,46 @@ export function updateOrder(client: any, index: any, orders: number) {
     }
 }
 
+
+
+export function checkCondition(client: any, conditionType: any, conditionAmount: any, customerStateCondition: any, dispatch: any) {
+    if (customerStateCondition.length > 0) {
+        customerStateCondition.forEach((customer: any, index: number) => {
+            if (customer[0] === client) {
+                dispatch(updateCondition(client, conditionType, conditionAmount, customerStateCondition))
+            }
+
+        })
+    }
+    else {
+        dispatch(addCondition(client, conditionType, conditionAmount))
+    }
+}
+export function addCondition(client: any, conditionType: any, conditionAmount: any) {
+    const condition = {
+        conditionType, conditionAmount
+    }
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Condition").doc(client).set({
+            condition
+        }).then().catch();
+    });
+    
+    return {
+        type: "Add_Condition",
+        client,
+        conditionType,
+        conditionAmount
+    }
+}
+
+export function updateCondition(client: any, conditionType: any, conditionAmount: any, customerStateCondition: any) {
+    // firebase.database().ref().on("child_added", snap => {
+    //     const tailor = snap.val();
+    //     firebase.firestore().collection('Tailor App').doc(tailor).collection("Condition").doc(client).set({
+    //         condition: [conditionType, conditionAmount]
+    //     }).then().catch();
+    // });
+
+}

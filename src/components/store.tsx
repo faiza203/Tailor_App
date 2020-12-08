@@ -229,6 +229,25 @@ export function updateStitch(client: any, index: any, amount: any) {
 }
 
 
+
+export function checkDelivered(client: any, orders: string, customerStateOrders: any, dispatch: any) {
+    if (customerStateOrders.length > 0) {
+        customerStateOrders.forEach((customer: any, index: number) => {
+            if (client !== undefined && orders !== null) {
+                if (customer[0] === client) {
+                    const order: number = parseInt(customer[1]) + parseInt(orders);
+                    dispatch(updateDelivered(client, index, order));
+                }
+            }
+        })
+    }
+    else {
+        if (orders !== undefined) {
+            dispatch(addDelivered(client, orders))
+        }
+    }
+}
+
 export function addDelivered(client: any, amount: any) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();

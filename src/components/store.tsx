@@ -168,7 +168,6 @@ export function addOrder(client: any, orders: string) {
         orders: order
     }
 }
-
 export function updateOrder(client: any, index: any, orders: number) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
@@ -184,87 +183,48 @@ export function updateOrder(client: any, index: any, orders: number) {
     }
 }
 
-
-
-export function checkCondition(client: any, conditionType: any, conditionAmount: any, customerStateCondition: any, dispatch: any) {
-    if (customerStateCondition.length > 0) {
-        customerStateCondition.forEach((customer: any, index: number) => {
-            if (customer[0] === client) {
-                dispatch(updateCondition(client, conditionType, conditionAmount, index))
-            }
-
-        })
-    }
-    else {
-        dispatch(addCondition(client, conditionType, conditionAmount))
-    }
-}
-export function addCondition(client: any, conditionType: any, conditionAmount: any) {
-    const condition = {
-        conditionType, conditionAmount
-    }
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Condition").doc(client).set({
-            condition
-        }).then().catch();
-    });
-
-    return {
-        type: "Add_Condition",
-        client,
-        conditionType,
-        conditionAmount,
-    }
-}
-
-export function updateCondition(client: any, conditionType: any, conditionAmount: any, index: any) {
-    const condition = {
-        conditionType, conditionAmount
-    }
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Condition").doc(client).set({
-            condition
-        }).then().catch();
-    });
-    return {
-        type: "Update_Condition",
-        client,
-        conditionType,
-        conditionAmount,
-        index
-    }
-}
-export function checkConditionFirebase(client: any, conditionType: any, conditionAmount: any, customerStateCondition: any, dispatch: any) {
-    const arr = [];
-    if (customerStateCondition.length > 0) {
-        customerStateCondition.forEach((customer: any, index: number) => {
-            if (client !== undefined) {
-                if (customer[0] !== client) {
-                    arr.push("yes");
+export function checkStitch(client: any, amount: any, customerStateStitch: any, dispatch: any) {
+    if (customerStateStitch.length > 0) {
+        customerStateStitch.forEach((customer: any, index: number) => {
+            if (client !== undefined && amount !== null) {
+                if (customer[0] === client) {
+                    dispatch(updateStitch(client, index, amount));
                 }
             }
         })
     }
-    if (arr.length === customerStateCondition.length) {
-        checkCondition(client, conditionType, conditionAmount, customerStateCondition, dispatch,)
+    else {
+        dispatch(addStitch(client, amount))
     }
 }
 
+export function addStitch(client: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Sticthed").doc(client).set({
+            sticthed: parseInt(amount)
+        }).then().catch();
+    });
 
-export function addStitch (client : any , amount : any){
     return {
-        type : "Add_Stitch",
-        client ,
+        type: "Add_Stitch",
+        client,
         amount
     }
 }
 
-export function updateStitch(index: any , amount : any){
+export function updateStitch(client: any, index: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Sticthed").doc(client).set({
+            sticthed: parseInt(amount)
+        }).then().catch();
+    });
+
     return {
         type: "Update_Stitch",
         index,
         amount
     }
 }
+

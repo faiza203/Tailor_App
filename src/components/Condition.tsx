@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector , useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import { checkConditionFirebase } from './store';
+import {  checkStitch } from './store';
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);
@@ -12,8 +12,7 @@ export const Condition = (props: any) => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const conditionAmount = client.data().condition.conditionAmount;
-                    const conditionType = client.data().condition.conditionType;
-                    checkConditionFirebase(clientName, conditionType, conditionAmount, customerState.condition, dispatch)
+                    checkStitch(clientName, conditionAmount , customerState.stitch, dispatch)
                 })
             }).catch()
     }
@@ -25,23 +24,20 @@ export const Condition = (props: any) => {
                 <div className="condition">
                     <h1 className="h1 text-muted">Condition</h1>
                     <p className="text-muted">If you want to add Condition : </p>
-                    <input className="w-75 d-inline form-control" type="text" placeholder="Add condition here" />
-                    <input className="w-75 d-inline form-control mt-1" type="number" placeholder="Add condition amount here" />
+                    <input className="w-75 d-inline form-control" type="text" placeholder="Add stitched dress number" />
                 </div> :
                 null
         }
         {
             customerState.orders.length > 0 ?
-                customerState.condition.length > 0 ?
-                    customerState.condition.map((condition: any[], index: number) => {
-                        if (condition[0] === props.client) {
+                customerState.stitch.length > 0 ?
+                    customerState.stitch.map((stitch: any[], index: number) => {
+                        if (stitch[0] === props.client) {
                             return (<ul key={index} className="mr-5">
-                                <li className="text-muted">  {condition[2]} orders has {condition[1]} .</li>
+                                <li className="text-muted">  {stitch[1]} orders has stitched.</li>
                             </ul>)
                         }
-                    }) :
-                    console.log(customerState.condition)
-                    
+                    }) : console.log(customerState)
                 : null
         }
     </div>

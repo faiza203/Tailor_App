@@ -43,7 +43,7 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Order":
             return {
                 ...state,
-                clientOrder: state.orders.push([action.client, action.orders]),
+                Orders: state.orders.push([action.client, action.orders]),
             }
         case "Update_Order":
             return {
@@ -53,12 +53,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Stitch":
             return {
                 ...state,
-                clientStitched: state.stitch.push([action.client, action.amount]),
+                Stitched: state.stitch.push([action.client, action.amount]),
             }
         case "Update_Stitch":
             return {
                 ...state,
-                clientStitchedUpdate: state.stitch[action.index][1] = (action.amount),
+                Stitched: state.stitch[action.index][1] = (action.amount),
             }
         default:
             return state

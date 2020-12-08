@@ -1,8 +1,9 @@
 import React from 'react';
-import { checkMeasurment, AddOrder, checkOrder, AlreadyMeasurment, checkCondition , history } from './index';
+import { checkMeasurment, AddOrder, checkOrder, AlreadyMeasurment , history } from './index';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
+import { checkStitch } from './store';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export const AddDetail = () => {
     const saveDetail: any = (e: any) => {
         e.preventDefault();
 
-        const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders , ConditionType , ConditionAmount] = e.target;
+        const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders , sticthed] = e.target;
         const measurmentEle = {
             Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
         }
@@ -26,8 +27,8 @@ export const AddDetail = () => {
                 alert("Data is updated");
                 checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
                 if (NewOrders.value > 0) { checkOrder(client, NewOrders.value, customerState.orders, dispatch) }
-                if(ConditionType.value && ConditionAmount.value > 0){
-                    checkCondition(client , ConditionType.value , ConditionAmount.value , customerState.condition , dispatch)
+                if(sticthed.value > 0){
+                    checkStitch(client  , sticthed.value , customerState.stitch , dispatch)
                 }
                 history.push("/DashBoard");
                 history.replace("/DashBoard");

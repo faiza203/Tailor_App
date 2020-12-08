@@ -12,11 +12,10 @@ export const AddOrder = (props: any) => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const orders = client.data().orders;
-                    if (orders !== undefined) {
-                        checkOrderFirebase(clientName, orders, customerState.orders, dispatch)
-                    }
+
+                    checkOrderFirebase(clientName, orders, customerState.orders, dispatch)
                 })
-            }).catch()
+            });
     }
     promise();
 
@@ -27,7 +26,9 @@ export const AddOrder = (props: any) => {
         {customerState.orders.length > 0 ?
             customerState.orders.map((order: any[], index: number) => {
                 if (order[0] === props.client) {
-                    return (<p key={index} className="text-muted">Already Orders are {order[1]}</p>)
+                    return (
+                        <p key={index} className="text-muted">Already Orders are {order[1]}</p>
+                    )
                 }
             }) :
             null

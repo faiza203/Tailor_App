@@ -293,6 +293,22 @@ export function updateDelivered(client: any, index: any, amount: any) {
     }
 }
 
+export function checkUnStitchFirebase(client: any, amount: string, customerStateUnStitch: any, dispatch: any) {
+    const arr = [];
+    if (customerStateUnStitch.length > 0) {
+        customerStateUnStitch.forEach((customer: any, index: number) => {
+            if (client !== undefined) {
+                if (customer[0] !== client) {
+                    arr.push("yes");
+                }
+            }
+        })
+    }
+    if (arr.length === customerStateUnStitch.length) {
+        checkUnStitch(client, amount, customerStateUnStitch, dispatch,)
+    }
+}
+
 
 export function checkUnStitch(client: any, amount: string, customerStateUnStitch: any, dispatch: any) {
     if (customerStateUnStitch.length > 0) {

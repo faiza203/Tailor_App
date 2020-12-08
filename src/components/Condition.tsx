@@ -34,6 +34,7 @@ export const Condition = (props: any) => {
                     <p className="text-muted">If you want to add Condition : </p>
                     <input className="w-75 d-inline form-control" type="text" placeholder="Add stitched dress number" />
                     <input className="w-75 d-inline mt-1 form-control" type="text" placeholder="Add develired dress number" />
+                    <input className="w-75 d-inline mt-1 form-control" type="text" placeholder="Add un stitched  dress number" />
                 </div> :
                 null
         }
@@ -56,6 +57,18 @@ export const Condition = (props: any) => {
                         if (deliver[0] === props.client) {
                             return (
                                 <p className="text-muted" key={index}>  {deliver[1]} orders has delivered.</p>
+                            )
+                        }
+                    }) : null
+                : null
+        }
+        {
+            customerState.orders.length > 0 ?
+                customerState.unStitch.length > 0 ?
+                    customerState.unStitch.map((deliver: any[], index: number) => {
+                        if (deliver[0] === props.client) {
+                            return (
+                                <p className="text-muted" key={index}>  {deliver[1]} orders are un stitched.</p>
                             )
                         }
                     }) : null

@@ -295,3 +295,18 @@ export function updateDelivered(client: any, index: any, amount: any) {
 }
 
 
+
+export function addUnstitched(client: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Delivered").doc(client).set({
+            unstitched: parseInt(amount)
+        }).then().catch();
+    });
+
+    return {
+        type: "Add_UnStitched",
+        client,
+        amount
+    }
+}

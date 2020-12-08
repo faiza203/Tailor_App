@@ -15,7 +15,7 @@ function App() {
           <Route path="/SignIn" component={SignIn}></Route>
           <Route path="/DashBoard" component={DashBoard}></Route>
           <Route path="/Measurment" component={AddMeasurment}></Route>
-          <Route path="/AddDetail" component={AddDetail}></Route>
+          <Route path="/Orders" component={AddDetail}></Route>
           <Route path="" component={NotFound}></Route>
         </Switch>
       </Router>

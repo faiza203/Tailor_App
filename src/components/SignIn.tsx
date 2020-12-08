@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import firebase from 'firebase';
 import { history } from './history';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ export function SignIn() {
     e.preventDefault();
     const [email, password]: any[] = e.target;
     const auth = firebase.auth();
-    const promise = auth.signInWithEmailAndPassword(email.value, password.value)
+    auth.signInWithEmailAndPassword(email.value, password.value)
       .then(() => {
         sendToFirebaseTailor(e)
       })
@@ -25,7 +25,7 @@ export function SignIn() {
     const promise = firebase.database().ref().set({ signIn: e.target[0].value })
     promise.then(() => {
       dispatch(addTailor(e.target[0].value));
-      localStorage.setItem("tailor" , e.target[0].value)
+      localStorage.setItem("tailor", e.target[0].value)
       alert("Account is login successfully !!!");
       history.push('/DashBoard');
       history.replace('/DashBoard');

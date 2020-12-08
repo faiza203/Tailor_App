@@ -17,7 +17,7 @@ export function SignUp() {
             alert("Password does not match");
         }
         else {
-            const promise = auth.createUserWithEmailAndPassword(email.value, password.value)
+            auth.createUserWithEmailAndPassword(email.value, password.value)
                 .then((user) => {
                     alert("Account is created successfully !!!");
                     dispatch(addTailor(user.user?.email))

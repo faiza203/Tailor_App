@@ -1,9 +1,8 @@
 import React from 'react';
-import { checkMeasurment, AddOrder, checkOrder, AlreadyMeasurment , history } from './index';
-import firebase from 'firebase';
+import {AddOrder, checkOrder, history } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
-import { checkStitch , checkDelivered, addUnstitched } from './store';
+import { checkStitch, checkDelivered, addUnstitched } from './store';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
@@ -14,41 +13,28 @@ export const AddDetail = () => {
     const saveDetail: any = (e: any) => {
         e.preventDefault();
 
-        const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders , sticthed , delivered , unStitched] = e.target;
-        const measurmentEle = {
-            Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
+        const [NewOrders, sticthed, delivered, unStitched] = e.target;
+        if (NewOrders.value > 0) { checkOrder(client, NewOrders.value, customerState.orders, dispatch) }
+        if (sticthed.value > 0) {
+            checkStitch(client, sticthed.value, customerState.stitch, dispatch)
         }
-
-        firebase.database().ref().on("child_added", snap => {
-            const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").doc(client).set({
-                measurmentEle
-            });
-            promise.then(() => {
-                alert("Data is updated");
-                checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
-                if (NewOrders.value > 0) { checkOrder(client, NewOrders.value, customerState.orders, dispatch) }
-                if(sticthed.value > 0){
-                    checkStitch(client  , sticthed.value , customerState.stitch , dispatch)
-                }
-                if(delivered.value > 0){
-                     checkDelivered(client , delivered.value , customerState.delivered , dispatch)
-                }
-                if(unStitched.value > 0){
-                   addUnstitched(client , unStitched.value)
-                }
-                history.push("/DashBoard");
-                history.replace("/DashBoard");
-            })
-            promise.catch((err) => {
-                alert(err.message)
-            })
-        });
+        if (delivered.value > 0) {
+            checkDelivered(client, delivered.value, customerState.delivered, dispatch)
+        }
+        if (unStitched.value > 0) {
+            addUnstitched(client, unStitched.value);            
+        }else{
+            console.log(unStitched.value);
+            
+        }
+        history.push("/DashBoard");
+        history.replace("/DashBoard");
     }
     return (
         <form onSubmit={saveDetail}>
             <div id="addDetail">
                 <AddOrder client={client} />
-                <Condition client={client} tailor={tailor}/>
+                <Condition client={client} tailor={tailor} />
             </div>
             <button id="saveDetail" className="btn btn-outline-primary" type="submit">Save Detail</button>
             <button className="btn btn-outline-success" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Save Without Changing</button>

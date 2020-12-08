@@ -171,7 +171,7 @@ export function addOrder(client: any, orders: string) {
 export function updateOrder(client: any, index: any, orders: number) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
-        const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
             orders: orders
         }).then().catch();
     });
@@ -299,14 +299,28 @@ export function updateDelivered(client: any, index: any, amount: any) {
 export function addUnstitched(client: any, amount: any) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Delivered").doc(client).set({
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("UnStitched").doc(client).set({
             unstitched: parseInt(amount)
         }).then().catch();
     });
-
     return {
         type: "Add_UnStitched",
         client,
         amount
     }
 }
+
+export function updateUnstitched(client: any, index: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("UnStitched").doc(client).set({
+            unstitched : parseInt(amount)
+        }).then().catch();
+    });
+    return {
+        type: "Update_UnStitched",
+        index,
+        amount
+    }
+}
+

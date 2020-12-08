@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import { checkStitch, checkDeliveredFirebase } from './store';
+import { checkStitch, checkDeliveredFirebase, addUnstitched } from './store';
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);
@@ -15,12 +15,20 @@ export const Condition = (props: any) => {
                     checkStitch(clientName, conditionAmount, customerState.stitch, dispatch)
                 })
             }).catch();
-        firebase.firestore().collection('Tailor App').doc(props.tailor).collection("Delivered").get()
+            firebase.firestore().collection('Tailor App').doc(props.tailor).collection("Delivered").get()
             .then(snapshot => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const conditionAmount = client.data().delivered;
                     checkDeliveredFirebase(clientName, conditionAmount, customerState.delivered, dispatch)
+                })
+            }).catch()   
+    firebase.firestore().collection('Tailor App').doc(props.tailor).collection("UnStitched").get()
+            .then(snapshot => {
+                snapshot.docs.forEach(client => {
+                    const clientName = client.id;
+                    const conditionAmount = client.data().unstitched;
+                    // addUnstitched(clientName, conditionAmount);
                 })
             }).catch()
     }
@@ -65,11 +73,15 @@ export const Condition = (props: any) => {
         {
             customerState.orders.length > 0 ?
                 customerState.unStitch.length > 0 ?
-                    customerState.unStitch.map((deliver: any[], index: number) => {
-                        if (deliver[0] === props.client) {
+                    customerState.unStitch.map((unStitch: any[], index: number) => {
+                        if (unStitch[0] === props.client) {
                             return (
-                                <p className="text-muted" key={index}>  {deliver[1]} orders are un stitched.</p>
+                                // <p  className="text-muted" key={index}>{unStitch[0]}  , {unStitch[1]}</p>
+                                <p className="text-muted" key={index}>  {unStitch[1]} orders are un stitched.</p>
                             )
+                        }else{
+                            console.log(unStitch[0] , props.client);
+                            
                         }
                     }) : null
                 : null

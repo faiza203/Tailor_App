@@ -27,7 +27,7 @@ export const AddOrder = (props: any) => {
             customerState.orders.map((order: any[], index: number) => {
                 if (order[0] === props.client) {
                     return (
-                        <p key={index} className="text-muted">Already Orders are {order[1]}</p>
+                        <p key={index} className="text-muted mt-1">Already Orders are {order[1]}</p>
                     )
                 }
             }) :

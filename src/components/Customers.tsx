@@ -32,6 +32,11 @@ export const Customers = (props: any) => {
                                 history.push("/Measurment");
                                 history.replace("/Measurment");
                             }}>Measurment</button>
+                            <button id={customer + "orders"} className="btn btn-outline-danger d-inline" onClick={() => {
+                                localStorage.setItem("customer", customer);
+                                history.push("/Orders");
+                                history.replace("/Orders");
+                            }}>Orders</button>
                         </div>)
                     }) :
                     null

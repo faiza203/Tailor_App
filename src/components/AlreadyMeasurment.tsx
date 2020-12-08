@@ -35,7 +35,7 @@ export function AlreadyMeasurment(props: any) {
                             </ul>)
                      }
                      }) :
-                    console.log(customerState)
+                    null
                 }
             </div>
         </div>

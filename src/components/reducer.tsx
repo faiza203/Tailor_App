@@ -5,7 +5,7 @@ export const initialState: stateType = {
     orders: [],
     stitch: [],
     delivered: [],
-    unStitch : [],   
+    unStitch: [],
 }
 type stateType = {
     tailors: any[],
@@ -14,7 +14,7 @@ type stateType = {
     orders: any[],
     stitch: any[],
     delivered: any[],
-    unStitch : any[]
+    unStitch: any[]
 }
 
 export default function TailorReducer(state: any = initialState, action: any) {
@@ -74,11 +74,16 @@ export default function TailorReducer(state: any = initialState, action: any) {
                 ...state,
                 Delivered: state.delivered[action.index][1] = action.amount,
             }
-            case "Add_UnStitched":
-                return {
-                    ...state ,
-                UnStitch : state.unStitch.push([action.client , action.amount])
-                }
+        case "Add_UnStitched":
+            return {
+                ...state,
+                UnStitch: state.unStitch.push([action.client, action.amount])
+            }
+        case "Update_UnStitched":
+            return {
+                ...state,
+                UnStitch: state.unStitch[action.index][1] = action.amount,
+            }
         default:
             return state
     }

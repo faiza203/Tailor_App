@@ -47,7 +47,6 @@ export const AddDetail = () => {
     return (
         <form onSubmit={saveDetail}>
             <div id="addDetail">
-                <AlreadyMeasurment client={client} />
                 <AddOrder client={client} />
                 <Condition client={client} tailor={tailor}/>
             </div>

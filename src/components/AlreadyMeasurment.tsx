@@ -1,11 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { AddMeasurment } from './index';
+import { useSelector , useDispatch} from 'react-redux';
+import { AddMeasurment , checkFirebaseMeasurment } from './index';
+import firebase from 'firebase';
+
 export function AlreadyMeasurment(props: any) {
+    const tailor: any = localStorage.getItem("tailor");
+    const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
+    const promise = () => {
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").get()
+            .then(snapshot => {
+                snapshot.docs.forEach(client => {
+                    const clientName = client.id;
+                    const measurment = client.data().measurmentEle;
+                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
+                })
+            }).catch()
+    }
+    promise();
+    
     return (
         <div >
-            <h1 className="h1 text-muted">Measurment</h1>
             <div id="Measurment">
                 {customerState.measurment.length > 0 ?
                     customerState.measurment.map((measurment: any[], index: number) => {
@@ -20,9 +35,8 @@ export function AlreadyMeasurment(props: any) {
                             </ul>)
                      }
                      }) :
-                    null
+                    console.log(customerState)
                 }
-                <AddMeasurment/>
             </div>
         </div>
     )

@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkFirebaseMeasurment } from './index';
-import { checkOrder } from './store';
-export function AddMeasurment(props: any) {
+import { checkFirebaseMeasurment, checkMeasurment } from './index';
+import { history } from './history';
+import { AlreadyMeasurment } from './AlreadyMeasurment';
+
+export function AddMeasurment() {
+    const client: any = localStorage.getItem("customer");
     const tailor: any = localStorage.getItem("tailor");
     const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
@@ -13,20 +16,52 @@ export function AddMeasurment(props: any) {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const measurment = client.data().measurmentEle;
-                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment)
+                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
                 })
             }).catch()
     }
     promise();
-    return (
 
-        <div className="mr-5">
-            <input className="form-control" type="number" placeholder="Length" required />
-            <input className="form-control mt-1" type="number" placeholder="Width" required />
-            <input className="form-control mt-1" type="number" placeholder="Neck" required />
-            <input className="form-control mt-1" type="number" placeholder="Waist" required />
-            <input className="form-control mt-1" type="number" placeholder="Middle" required />
-            <input className="form-control mt-1" type="number" placeholder="Leg Lenght" required />
+    const saveMeasurment: any = (e: any) => {
+        e.preventDefault();
+
+        const [Length, Width, Neck, Waist, Middle, LegLenght] = e.target;
+        const measurmentEle = {
+            Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
+        }
+
+        firebase.database().ref().on("child_added", snap => {
+            const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").doc(client).set({
+                measurmentEle
+            });
+            promise.then(() => {
+                alert("Data is updated");
+                checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
+                history.push("/DashBoard");
+                history.replace("/DashBoard");
+            })
+            promise.catch((err) => {
+                alert(err.message)
+            })
+        });
+    }
+
+    return (
+        <div>
+            <h1 className="h1 text-muted">Measurment</h1>
+            <div className="measurment">
+            <AlreadyMeasurment client={client} />        
+            <form className="mr-5 " onSubmit={saveMeasurment}>
+                <input className="form-control" type="number" placeholder="Length" required />
+                <input className="form-control mt-1" type="number" placeholder="Width" required />
+                <input className="form-control mt-1" type="number" placeholder="Neck" required />
+                <input className="form-control mt-1" type="number" placeholder="Waist" required />
+                <input className="form-control mt-1" type="number" placeholder="Middle" required />
+                <input className="form-control mt-1" type="number" placeholder="Leg Lenght" required />
+                <button className="btn btn-outline-success d-inline" type="submit">Save Measurment</button>
+                <button className="btn btn-outline-danger" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
+            </form>
+            </div>
         </div>
     )
 }

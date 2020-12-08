@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import firebase from 'firebase';
 import { history } from './index';
 import { useDispatch } from 'react-redux';
-import { addCustomerR, checkCustomer, checkCustomerFirebase } from "./store";
+import { checkCustomerFirebase } from "./store";
 
 
 export const Customers = (props: any) => {
@@ -29,9 +29,9 @@ export const Customers = (props: any) => {
                         return (<div key={index}><h3 className="h3 text-muted d-inline mt-2">{customer}</h3>
                             <button id={customer + "measurment"} className="btn btn-outline-success d-inline" onClick={() => {
                                 localStorage.setItem("customer", customer);
-                                history.push("/AddDetail");
-                                history.replace("/AddDetail")
-                            }}>Edit Detail</button>
+                                history.push("/Measurment");
+                                history.replace("/Measurment");
+                            }}>Measurment</button>
                         </div>)
                     }) :
                     null

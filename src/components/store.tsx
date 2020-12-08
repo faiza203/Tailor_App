@@ -252,8 +252,7 @@ export function checkDelivered(client: any, orders: string, customerStateOrders:
         customerStateOrders.forEach((customer: any, index: number) => {
             if (client !== undefined && orders !== null) {
                 if (customer[0] === client) {
-                    const order: number = parseInt(customer[1]) + parseInt(orders);
-                    dispatch(updateDelivered(client, index, order));
+                    dispatch(updateDelivered(client, index, orders));
                 }
             }
         })
@@ -295,6 +294,22 @@ export function updateDelivered(client: any, index: any, amount: any) {
 }
 
 
+export function checkUnStitch(client: any, amount: string, customerStateUnStitch: any, dispatch: any) {
+    if (customerStateUnStitch.length > 0) {
+        customerStateUnStitch.forEach((customer: any, index: number) => {
+            if (client !== undefined && amount !== null) {
+                if (customer[0] === client) {
+                    dispatch(updateUnstitched(client, index, amount));
+                }
+            }
+        })
+    }
+    else {
+        if (amount !== undefined) {
+            dispatch(addUnstitched(client, amount))
+        }
+    }
+}
 
 export function addUnstitched(client: any, amount: any) {
     firebase.database().ref().on("child_added", snap => {

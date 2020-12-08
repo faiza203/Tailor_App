@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import {  checkStitch } from './store';
+import { checkStitch, checkDeliveredFirebase } from './store';
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);
@@ -20,9 +20,9 @@ export const Condition = (props: any) => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const conditionAmount = client.data().delivered;
+                    checkDeliveredFirebase(clientName, conditionAmount, customerState.delivered, dispatch)
                 })
             }).catch()
-
     }
     promise();
 
@@ -42,9 +42,9 @@ export const Condition = (props: any) => {
                 customerState.stitch.length > 0 ?
                     customerState.stitch.map((stitch: any[], index: number) => {
                         if (stitch[0] === props.client) {
-                            return (<ul key={index} className="mr-5">
-                                <li className="text-muted">  {stitch[1]} orders has stitched.</li>
-                            </ul>)
+                            return (
+                                <p className="text-muted mb-1" key={index}>  {stitch[1]} orders has stitched.</p>
+                            )
                         }
                     }) : null
                 : null
@@ -54,9 +54,9 @@ export const Condition = (props: any) => {
                 customerState.delivered.length > 0 ?
                     customerState.delivered.map((deliver: any[], index: number) => {
                         if (deliver[0] === props.client) {
-                            return (<ul key={index} className="mr-5">
-                                <li className="text-muted">  {deliver[1]} orders has delivered.</li>
-                            </ul>)
+                            return (
+                                <p className="text-muted" key={index}>  {deliver[1]} orders has delivered.</p>
+                            )
                         }
                     }) : null
                 : null

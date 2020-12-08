@@ -230,6 +230,23 @@ export function updateStitch(client: any, index: any, amount: any) {
 
 
 
+
+export function checkDeliveredFirebase(client: any, amount: string, customerStateDelivered: any, dispatch: any) {
+    const arr = [];
+    if (customerStateDelivered.length > 0) {
+        customerStateDelivered.forEach((customer: any, index: number) => {
+            if (client !== undefined) {
+                if (customer[0] !== client) {
+                    arr.push("yes");
+                }
+            }
+        })
+    }
+    if (arr.length === customerStateDelivered.length) {
+        checkDelivered(client, amount, customerStateDelivered, dispatch,)
+    }
+}
+
 export function checkDelivered(client: any, orders: string, customerStateOrders: any, dispatch: any) {
     if (customerStateOrders.length > 0) {
         customerStateOrders.forEach((customer: any, index: number) => {
@@ -271,8 +288,10 @@ export function updateDelivered(client: any, index: any, amount: any) {
         }).then().catch();
     });
     return {
-        type: "Update_Dellivered",
+        type: "Update_Delivered",
         index,
         amount
     }
 }
+
+

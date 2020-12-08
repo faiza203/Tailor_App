@@ -65,12 +65,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Delivered":
             return {
                 ...state,
-                Delivered: state.deliverd.push([action.client, action.amount]),
+                Delivered: state.delivered.push([action.client, action.amount]),
             }
         case "Update_Delivered":
             return {
                 ...state,
-                Delivered: state.deliverd[action.index][1] = action.amount,
+                Delivered: state.delivered[action.index][1] = action.amount,
             }
         default:
             return state

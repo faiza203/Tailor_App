@@ -228,3 +228,32 @@ export function updateStitch(client: any, index: any, amount: any) {
     }
 }
 
+
+export function addDelivered(client: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Delivered").doc(client).set({
+            delivered: parseInt(amount)
+        }).then().catch();
+    });
+
+    return {
+        type: "Add_Delivered",
+        client,
+        amount
+    }
+}
+
+export function updateDelivered(client: any, index: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Delivered").doc(client).set({
+            delivered: parseInt(amount)
+        }).then().catch();
+    });
+    return {
+        type: "Update_Dellivered",
+        index,
+        amount
+    }
+}

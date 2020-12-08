@@ -3,7 +3,7 @@ import { checkMeasurment, AddOrder, checkOrder, AlreadyMeasurment , history } fr
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
-import { checkStitch } from './store';
+import { checkStitch , addDelivered } from './store';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export const AddDetail = () => {
     const saveDetail: any = (e: any) => {
         e.preventDefault();
 
-        const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders , sticthed] = e.target;
+        const [Length, Width, Neck, Waist, Middle, LegLenght, NewOrders , sticthed , delivered] = e.target;
         const measurmentEle = {
             Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
         }
@@ -29,6 +29,9 @@ export const AddDetail = () => {
                 if (NewOrders.value > 0) { checkOrder(client, NewOrders.value, customerState.orders, dispatch) }
                 if(sticthed.value > 0){
                     checkStitch(client  , sticthed.value , customerState.stitch , dispatch)
+                }
+                if(delivered.value > 0){
+                     addDelivered(client , delivered.value)
                 }
                 history.push("/DashBoard");
                 history.replace("/DashBoard");

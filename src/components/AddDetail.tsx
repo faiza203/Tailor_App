@@ -15,22 +15,41 @@ export const AddDetail = () => {
         e.preventDefault();
 
         const [NewOrders, sticthed, delivered, unStitched, lost] = e.target;
-        if (NewOrders.value > 0) { checkOrder(client, NewOrders.value, customerState.orders, dispatch) }
-        if (sticthed.value > 0) {
-            checkStitch(client, sticthed.value, customerState.stitch, dispatch)
+        if (NewOrders) {
+            if (NewOrders.value > 0) {
+                checkOrder(client, NewOrders.value, customerState.orders, dispatch)
+            }
         }
-        if (delivered.value > 0) {
-            checkDelivered(client, delivered.value, customerState.delivered, dispatch)
+
+        if (sticthed) {
+
+            if (sticthed.value > 0) {
+                checkStitch(client, sticthed.value, customerState.stitch, dispatch)
+            }
         }
+
+        if (delivered) {
+            if (delivered.value > 0) {
+                checkDelivered(client, delivered.value, customerState.delivered, dispatch)
+        }
+    }
+    if (unStitched) {
+     
         if (unStitched.value > 0) {
             checkUnStitch(client, unStitched.value, customerState.stitch, dispatch);
         }
+    }
+    if (lost) {
         if (lost.value > 0) {
-            firebase.firestore().collection('Tailor App').doc(tailor).collection("Lost").doc(client).set({
-                losted: parseInt(lost.value)
-            }).then().catch();
+            firebase.database().ref().on("child_added", snap => {
+                const tailor = snap.val();
+                firebase.firestore().collection('Tailor App').doc(tailor).collection("Losted").doc(client).set({
+                    losted: parseInt(lost.value)
+                }).then().catch();
+            });
             checkLost(client, lost.value, customerState.lost, dispatch)
         }
+    }
         history.push("/DashBoard");
         history.replace("/DashBoard");
     }

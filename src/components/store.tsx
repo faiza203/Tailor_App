@@ -384,7 +384,7 @@ export function checkLost(client: any, amount: string, customerStateLost: any, d
         })
     }
     else {
-        if (amount !== undefined) {
+        if (amount !== undefined && client !== undefined) {
             dispatch(addLost(client, amount))
         }
     }
@@ -398,7 +398,7 @@ export function addLost(client: any, amount: string) {
     }
 }
 
-export function updateLost(client: any, index: any, amount: any) {
+export function updateLost(client: any, index: any, amount: any) {    
     return {
         type: "Update_Lost",
         index,

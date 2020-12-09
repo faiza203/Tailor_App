@@ -31,7 +31,7 @@ export const AlreadyCondition = (props: any) => {
                     checkUnStitchFirebase(clientName, conditionAmount, customerState.unStitch, dispatch);
                 })
             }).catch()
-        firebase.firestore().collection('Tailor App').doc(props.tailor).collection("Lost").get()
+        firebase.firestore().collection('Tailor App').doc(props.tailor).collection("Losted").get()
             .then(snapshot => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;

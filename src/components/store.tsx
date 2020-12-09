@@ -445,7 +445,19 @@ export function checkOutOfOrder(tailor : any, client: any, amount: string, custo
     }
     else {
         if (amount !== undefined && client !== undefined) {
-            // dispatch(addOUtOfOrder(tailor , client, amount))
+            dispatch(addOutOfOrder(tailor , client, amount))
         }
+    }
+}
+
+export function addOutOfOrder(tailor: any, client: any, amount: string) {
+
+    firebase.firestore().collection('Tailor App').doc(tailor).collection("OutOfOrder").doc(client).set({
+        outOfOrder: amount
+    }).then().catch();
+    return {
+        type: "Add_OutOfOrder",
+        client,
+        amount
     }
 }

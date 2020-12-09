@@ -98,6 +98,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
                 ...state,
                 Losted: state.lost[action.index][1] = action.amount,
             }
+
+        case "Add_OutOfOrder":
+            return {
+                ...state,
+                Losted: state.outOfOrder.push([action.client, action.amount])
+            }
         default:
             return state
     }

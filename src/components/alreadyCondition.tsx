@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import { checkStitch, checkDeliveredFirebase, checkUnStitchFirebase, checkLostFirebase, checkOrderFirebase, checkLost } from './store';
+import { checkStitch, checkDeliveredFirebase, checkUnStitchFirebase, checkLostFirebase, checkOutOfOrder, checkLost, checkOutOfOrderFirebase } from './store';
 
 export const AlreadyCondition = (props: any) => {
     const dispatch = useDispatch();
@@ -39,22 +39,31 @@ export const AlreadyCondition = (props: any) => {
                     checkLostFirebase(props.tailor, clientName, conditionAmount, customerState.lost, dispatch);
                 })
             }).catch()
+        firebase.firestore().collection('Tailor App').doc(props.tailor).collection("OutOfOrder").get()
+            .then(snapshot => {
+                snapshot.docs.forEach(client => {
+                    const clientName = client.id;
+                    const conditionAmount = client.data().OutOfOrder;
+                    checkOutOfOrder(props.tailor, clientName, conditionAmount, customerState.outOfOrder, dispatch);
+                })
+            }).catch()
     }
     promise();
 
     return (
-        <div>        {
-            customerState.orders.length > 0 ?
-                customerState.stitch.length > 0 ?
-                    customerState.stitch.map((stitch: any[], index: number) => {
-                        if (stitch[0] === props.client) {
-                            return (
-                                <p className="text-muted mb-1" key={index}>  {stitch[1]} orders has stitched.</p>
-                            )
-                        }
-                    }) : null
-                : null
-        }
+        <div>
+            {/* {
+                customerState.orders.length > 0 ?
+                    customerState.stitch.length > 0 ?
+                        customerState.stitch.map((stitch: any[], index: number) => {
+                            if (stitch[0] === props.client) {
+                                return (
+                                    <p className="text-muted mb-1" key={index}>  {stitch[1]} orders has stitched.</p>
+                                )
+                            }
+                        }) : null
+                    : null
+            }
             {
                 customerState.orders.length > 0 ?
                     customerState.delivered.length > 0 ?
@@ -81,7 +90,7 @@ export const AlreadyCondition = (props: any) => {
                             }
                         }) : null
                     : null
-            }
+            } */}
             {
                 customerState.orders.length > 0 ?
                     customerState.lost.length > 0 ?
@@ -89,6 +98,18 @@ export const AlreadyCondition = (props: any) => {
                             if (losted[0] === props.client) {
                                 return (
                                     <p className="text-muted" key={index}> {losted[1]} orders has losted.</p>
+                                )
+                            }
+                        }) : null
+                    : null
+            } 
+            {
+                customerState.outOfOrder.length > 0 ?
+                    customerState.outOfOrder.length > 0 ?
+                        customerState.outOfOrder.map((outOfOrder: any, index: number) => {
+                            if (outOfOrder[0] === props.client) {
+                                return (
+                                    <p className="text-muted" key={index}> {outOfOrder[1]} orders has wrong stitched.</p>
                                 )
                             }
                         }) : null

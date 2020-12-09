@@ -2,7 +2,7 @@ import React from 'react';
 import { AddOrder, checkOrder, history, AlreadyCondition } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
-import { checkStitch, checkDelivered, checkUnStitch, checkLost, checkLostFirebase } from './store';
+import { checkStitch, checkDelivered, checkUnStitch, checkLost, checkOutOfOrder } from './store';
 import firebase from 'firebase';
 
 export const AddDetail = () => {
@@ -14,41 +14,41 @@ export const AddDetail = () => {
     const saveDetail: any = (e: any) => {
         e.preventDefault();
 
-        const [NewOrders, sticthed, delivered, unStitched, lost , outOfOrder] = e.target;
+        const [NewOrders, sticthed, delivered, unStitched, lost, outOfOrder] = e.target;
         if (NewOrders) {
             if (NewOrders.value > 0) {
                 checkOrder(client, NewOrders.value, customerState.orders, dispatch)
             }
         }
 
-        if (sticthed) {
+        // if (sticthed) {
 
-            if (sticthed.value > 0) {
-                checkStitch(client, sticthed.value, customerState.stitch, dispatch)
+        //     if (sticthed.value > 0) {
+        //         checkStitch(client, sticthed.value, customerState.stitch, dispatch)
+        //     }
+        // }
+
+        // if (delivered) {
+        //     if (delivered.value > 0) {
+        //         checkDelivered(client, delivered.value, customerState.delivered, dispatch)
+        //     }
+        // }
+        // if (unStitched) {
+
+        //     if (unStitched.value > 0) {
+        //         checkUnStitch(client, unStitched.value, customerState.stitch, dispatch);
+        //     }
+        // }
+        // if (lost) {
+        //     if (lost.value > 0) {
+        //         checkLost(tailor, client, lost.value, customerState.lost, dispatch)
+        //     }
+        // }
+        if (outOfOrder) {
+            if (outOfOrder.value > 0) {
+                checkOutOfOrder(tailor, client, outOfOrder.value, customerState.outOfOrder, dispatch)
             }
         }
-
-        if (delivered) {
-            if (delivered.value > 0) {
-                checkDelivered(client, delivered.value, customerState.delivered, dispatch)
-        }
-    }
-    if (unStitched) {
-     
-        if (unStitched.value > 0) {
-            checkUnStitch(client, unStitched.value, customerState.stitch, dispatch);
-        }
-    }
-    if (lost) {
-        if (lost.value > 0) {
-            checkLost(tailor,client, lost.value, customerState.lost, dispatch)
-        }
-    }
-        if (outOfOrder) {
-        if (outOfOrder.value > 0) {
-            // checkOUtOfOrder(tailor,client, outOfOrder.value, customerState.lost, dispatch)
-        }
-    }
         history.push("/DashBoard");
         history.replace("/DashBoard");
     }

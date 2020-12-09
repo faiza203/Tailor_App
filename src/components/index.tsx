@@ -8,7 +8,7 @@ export { DashBoard } from './DashBoard';
 export { Customers } from './Customers';
 export { AddMeasurment } from './AddMeasurment';
 export { history } from './history';
-export { addTailor, checkCustomer, checkOrder, checkMeasurment, checkCustomerFirebase, checkFirebaseMeasurment, checkOrderFirebase, checkDeliveredFirebase, checkUnStitch, checkUnStitchFirebase, checkLostFirebase, checkLost, store } from './store';
+export { addTailor, checkCustomer, checkOrder, checkMeasurment, checkCustomerFirebase, checkFirebaseMeasurment, checkOrderFirebase, checkDeliveredFirebase, checkUnStitch, checkUnStitchFirebase, checkLostFirebase, checkLost,checkOutOfOrder, store } from './store';
 export { AddDetail } from './AddDetail';
 export { AddOrder } from './AddOrder';
 export { AlreadyMeasurment } from './AlreadyMeasurment';

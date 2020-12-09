@@ -89,12 +89,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Lost":
             return {
                 ...state,
-                UnStitch: state.lost.push([action.client, action.amount])
+                Losted: state.lost.push([action.client, action.amount])
             }
         case "Update_Lost":
             return {
                 ...state,
-                UnStitch: state.lost[action.index][1] = action.amount,
+                Losted: state.lost[action.index][1] = action.amount,
             }
         default:
             return state

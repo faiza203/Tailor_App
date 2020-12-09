@@ -390,13 +390,7 @@ export function checkLost(client: any, amount: string, customerStateLost: any, d
     }
 }
 
-export function addLost(client: any, amount: any) {
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Lost").doc(client).set({
-            losted: parseInt(amount)
-        }).then().catch();
-    });
+export function addLost(client: any, amount: string) {
     return {
         type: "Add_Lost",
         client,
@@ -405,14 +399,8 @@ export function addLost(client: any, amount: any) {
 }
 
 export function updateLost(client: any, index: any, amount: any) {
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Lost").doc(client).set({
-            losted: parseInt(amount)
-        }).then().catch();
-    });
     return {
-        type: "Update_lost",
+        type: "Update_Lost",
         index,
         amount
     }

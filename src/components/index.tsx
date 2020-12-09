@@ -13,3 +13,4 @@ export { AddDetail } from './AddDetail';
 export { AddOrder } from './AddOrder';
 export { AlreadyMeasurment } from './AlreadyMeasurment';
 export { Condition } from './Condition';
+export { AlreadyCondition } from './alreadyCondition'

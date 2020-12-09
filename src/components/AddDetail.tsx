@@ -1,8 +1,9 @@
 import React from 'react';
-import { AddOrder, checkOrder, history } from './index';
+import { AddOrder, checkOrder, history, AlreadyCondition } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
 import { checkStitch, checkDelivered, checkUnStitch, checkLost } from './store';
+import firebase from 'firebase';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
@@ -25,6 +26,9 @@ export const AddDetail = () => {
             checkUnStitch(client, unStitched.value, customerState.stitch, dispatch);
         }
         if (lost.value > 0) {
+            firebase.firestore().collection('Tailor App').doc(tailor).collection("Lost").doc(client).set({
+                losted: parseInt(lost.value)
+            }).then().catch();
             checkLost(client, lost.value, customerState.lost, dispatch)
         }
         history.push("/DashBoard");
@@ -35,6 +39,7 @@ export const AddDetail = () => {
             <div id="addDetail">
                 <AddOrder client={client} />
                 <Condition client={client} tailor={tailor} />
+                <AlreadyCondition client={client} tailor={tailor} />
             </div>
             <button id="saveDetail" className="btn btn-outline-primary" type="submit">Save Detail</button>
             <button className="btn btn-outline-success" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Save Without Changing</button>

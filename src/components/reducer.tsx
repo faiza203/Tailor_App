@@ -7,6 +7,7 @@ export const initialState: stateType = {
     delivered: [],
     unStitch: [],
     lost: [],
+    outOfOrder : [],
 }
 type stateType = {
     tailors: any[],
@@ -17,6 +18,7 @@ type stateType = {
     delivered: any[],
     unStitch: any[],
     lost: any[],
+    outOfOrder : any[],
 }
 
 export default function TailorReducer(state: any = initialState, action: any) {

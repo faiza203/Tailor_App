@@ -413,3 +413,22 @@ export function updateLost(tailor: any, client: any, index: any, amount: any) {
     }
 }
 
+
+
+
+export function checkOutOfOrderFirebase(tailor : any , client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
+    const arr = [];
+    if (customerStateOutOfOrder.length > 0) {
+        customerStateOutOfOrder.forEach((customer: any, index: number) => {
+            if (client !== undefined) {
+                if (customer[0] !== client) {
+                    arr.push("yes");
+                }
+            }
+        })
+    }
+    if (arr.length === customerStateOutOfOrder.length) {
+        checkLost(tailor , client, amount, customerStateOutOfOrder, dispatch,)
+    }
+}
+

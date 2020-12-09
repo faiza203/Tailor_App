@@ -432,3 +432,20 @@ export function checkOutOfOrderFirebase(tailor : any , client: any, amount: stri
     }
 }
 
+
+export function checkOutOfOrder(tailor : any, client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
+    if (customerStateOutOfOrder.length > 0) {
+        customerStateOutOfOrder.forEach((customer: any, index: number) => {
+            if (client !== undefined && amount !== null) {
+                if (customer[0] === client) {
+                    // dispatch(updateOutOfOrder(tailor , client, index, amount));
+                }
+            }
+        })
+    }
+    else {
+        if (amount !== undefined && client !== undefined) {
+            // dispatch(addOUtOfOrder(tailor , client, amount))
+        }
+    }
+}

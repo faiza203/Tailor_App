@@ -2,7 +2,7 @@ import React from 'react';
 import { AddOrder, checkOrder, history, AlreadyCondition } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
-import { checkStitch, checkDelivered, checkUnStitch, checkLost } from './store';
+import { checkStitch, checkDelivered, checkUnStitch, checkLost, checkLostFirebase } from './store';
 import firebase from 'firebase';
 
 export const AddDetail = () => {
@@ -14,7 +14,7 @@ export const AddDetail = () => {
     const saveDetail: any = (e: any) => {
         e.preventDefault();
 
-        const [NewOrders, sticthed, delivered, unStitched, lost] = e.target;
+        const [NewOrders, sticthed, delivered, unStitched, lost , outOfOrder] = e.target;
         if (NewOrders) {
             if (NewOrders.value > 0) {
                 checkOrder(client, NewOrders.value, customerState.orders, dispatch)
@@ -41,13 +41,12 @@ export const AddDetail = () => {
     }
     if (lost) {
         if (lost.value > 0) {
-            firebase.database().ref().on("child_added", snap => {
-                const tailor = snap.val();
-                firebase.firestore().collection('Tailor App').doc(tailor).collection("Losted").doc(client).set({
-                    losted: parseInt(lost.value)
-                }).then().catch();
-            });
-            checkLost(client, lost.value, customerState.lost, dispatch)
+            checkLost(tailor,client, lost.value, customerState.lost, dispatch)
+        }
+    }
+        if (outOfOrder) {
+        if (outOfOrder.value > 0) {
+            // checkOUtOfOrder(tailor,client, outOfOrder.value, customerState.lost, dispatch)
         }
     }
         history.push("/DashBoard");

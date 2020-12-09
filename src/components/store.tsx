@@ -356,7 +356,7 @@ export function updateUnstitched(client: any, index: any, amount: any) {
 }
 
 
-export function checkLostFirebase(client: any, amount: string, customerStateLost: any, dispatch: any) {
+export function checkLostFirebase(tailor : any , client: any, amount: string, customerStateLost: any, dispatch: any) {
     const arr = [];
     if (customerStateLost.length > 0) {
         customerStateLost.forEach((customer: any, index: number) => {
@@ -368,29 +368,33 @@ export function checkLostFirebase(client: any, amount: string, customerStateLost
         })
     }
     if (arr.length === customerStateLost.length) {
-        checkLost(client, amount, customerStateLost, dispatch,)
+        checkLost(tailor , client, amount, customerStateLost, dispatch,)
     }
 }
 
 
-export function checkLost(client: any, amount: string, customerStateLost: any, dispatch: any) {
+export function checkLost(tailor : any, client: any, amount: string, customerStateLost: any, dispatch: any) {
     if (customerStateLost.length > 0) {
         customerStateLost.forEach((customer: any, index: number) => {
             if (client !== undefined && amount !== null) {
                 if (customer[0] === client) {
-                    dispatch(updateLost(client, index, amount));
+                    dispatch(updateLost(tailor , client, index, amount));
                 }
             }
         })
     }
     else {
         if (amount !== undefined && client !== undefined) {
-            dispatch(addLost(client, amount))
+            dispatch(addLost(tailor , client, amount))
         }
     }
 }
 
-export function addLost(client: any, amount: string) {
+export function addLost(tailor: any, client: any, amount: string) {
+
+    firebase.firestore().collection('Tailor App').doc(tailor).collection("Losted").doc(client).set({
+        losted: amount
+    }).then().catch();
     return {
         type: "Add_Lost",
         client,
@@ -398,7 +402,10 @@ export function addLost(client: any, amount: string) {
     }
 }
 
-export function updateLost(client: any, index: any, amount: any) {    
+export function updateLost(tailor: any, client: any, index: any, amount: any) {
+    firebase.firestore().collection('Tailor App').doc(tailor).collection("Losted").doc(client).set({
+        losted: amount
+    }).then().catch();
     return {
         type: "Update_Lost",
         index,

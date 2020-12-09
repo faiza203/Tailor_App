@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import { checkStitch, checkDeliveredFirebase, checkUnStitchFirebase, checkLostFirebase, checkOrderFirebase } from './store';
+import { checkStitch, checkDeliveredFirebase, checkUnStitchFirebase, checkLostFirebase, checkOrderFirebase, checkLost } from './store';
 
 export const AlreadyCondition = (props: any) => {
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export const AlreadyCondition = (props: any) => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const conditionAmount = client.data().losted;
-                    checkLostFirebase(clientName, conditionAmount, customerState.lost, dispatch);                    
+                    checkLostFirebase(props.tailor, clientName, conditionAmount, customerState.lost, dispatch);
                 })
             }).catch()
     }

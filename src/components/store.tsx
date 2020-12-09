@@ -345,11 +345,74 @@ export function updateUnstitched(client: any, index: any, amount: any) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
         firebase.firestore().collection('Tailor App').doc(tailor).collection("UnStitched").doc(client).set({
-            unstitched : parseInt(amount)
+            unstitched: parseInt(amount)
         }).then().catch();
     });
     return {
         type: "Update_UnStitched",
+        index,
+        amount
+    }
+}
+
+
+export function checkLostFirebase(client: any, amount: string, customerStateLost: any, dispatch: any) {
+    const arr = [];
+    if (customerStateLost.length > 0) {
+        customerStateLost.forEach((customer: any, index: number) => {
+            if (client !== undefined) {
+                if (customer[0] !== client) {
+                    arr.push("yes");
+                }
+            }
+        })
+    }
+    if (arr.length === customerStateLost.length) {
+        checkLost(client, amount, customerStateLost, dispatch,)
+    }
+}
+
+
+export function checkLost(client: any, amount: string, customerStateLost: any, dispatch: any) {
+    if (customerStateLost.length > 0) {
+        customerStateLost.forEach((customer: any, index: number) => {
+            if (client !== undefined && amount !== null) {
+                if (customer[0] === client) {
+                    dispatch(updateLost(client, index, amount));
+                }
+            }
+        })
+    }
+    else {
+        if (amount !== undefined) {
+            dispatch(addLost(client, amount))
+        }
+    }
+}
+
+export function addLost(client: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Lost").doc(client).set({
+            losted: parseInt(amount)
+        }).then().catch();
+    });
+    return {
+        type: "Add_Lost",
+        client,
+        amount
+    }
+}
+
+export function updateLost(client: any, index: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("Lost").doc(client).set({
+            losted: parseInt(amount)
+        }).then().catch();
+    });
+    return {
+        type: "Update_lost",
         index,
         amount
     }

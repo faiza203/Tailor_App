@@ -25,9 +25,9 @@ export function AddMeasurment() {
     const saveMeasurment: any = (e: any) => {
         e.preventDefault();
 
-        const [Length, Width, Neck, Waist, Middle, LegLenght] = e.target;
+        const [Length, Width, Neck, Chest, Waist, Bust, ArmLenght, ShoulderLenght, LegLenght] = e.target;
         const measurmentEle = {
-            Length: Length.value, Width: Width.value, Neck: Neck.value, Waist: Waist.value, Middle: Middle.value, LegLenght: LegLenght.value,
+            Length: Length.value, Width: Width.value, Chest: Chest.value, Waist: Waist.value, Neck: Neck.value, ArmLenght: ArmLenght.value, Shoulder: ShoulderLenght.value, LegLenght: LegLenght.value,
         }
 
         firebase.database().ref().on("child_added", snap => {
@@ -50,17 +50,20 @@ export function AddMeasurment() {
         <div>
             <h1 className="h1 text-muted">Measurment</h1>
             <div className="measurment">
-            <AlreadyMeasurment client={client} />        
-            <form className="mr-5 " onSubmit={saveMeasurment}>
-                <input className="form-control" type="number" placeholder="Length" required />
-                <input className="form-control mt-1" type="number" placeholder="Width" required />
-                <input className="form-control mt-1" type="number" placeholder="Neck" required />
-                <input className="form-control mt-1" type="number" placeholder="Waist" required />
-                <input className="form-control mt-1" type="number" placeholder="Middle" required />
-                <input className="form-control mt-1" type="number" placeholder="Leg Lenght" required />
-                <button className="btn btn-outline-success d-inline" type="submit">Save Measurment</button>
-                <button className="btn btn-outline-danger" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
-            </form>
+                <AlreadyMeasurment client={client} />
+                <form className="mr-5 " onSubmit={saveMeasurment}>
+                    <input className="form-control" type="number" placeholder="Length" required />
+                    <input className="form-control mt-1" type="number" placeholder="Width" required />
+                    <input className="form-control mt-1" type="number" placeholder="Neck" required />
+                    <input className="form-control mt-1" type="number" placeholder="Chest" required />
+                    <input className="form-control mt-1" type="number" placeholder="Waist" required />
+                    <input className="form-control mt-1" type="number" placeholder="Bust" required />
+                    <input className="form-control mt-1" type="number" placeholder="Arm Width" required />
+                    <input className="form-control mt-1" type="number" placeholder="Shoulder Width" required />
+                    <input className="form-control mt-1" type="number" placeholder="Leg Lenght" required />
+                    <button className="btn btn-outline-success d-inline" type="submit">Save Measurment</button>
+                    <button className="btn btn-outline-danger" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
+                </form>
             </div>
         </div>
     )

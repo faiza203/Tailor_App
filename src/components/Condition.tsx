@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import { checkStitch, checkDeliveredFirebase, addUnstitched } from './store';
+import { checkStitch, checkDeliveredFirebase, checkUnStitchFirebase } from './store';
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);
@@ -15,20 +15,20 @@ export const Condition = (props: any) => {
                     checkStitch(clientName, conditionAmount, customerState.stitch, dispatch)
                 })
             }).catch();
-            firebase.firestore().collection('Tailor App').doc(props.tailor).collection("Delivered").get()
+        firebase.firestore().collection('Tailor App').doc(props.tailor).collection("Delivered").get()
             .then(snapshot => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const conditionAmount = client.data().delivered;
                     checkDeliveredFirebase(clientName, conditionAmount, customerState.delivered, dispatch)
                 })
-            }).catch()   
-    firebase.firestore().collection('Tailor App').doc(props.tailor).collection("UnStitched").get()
+            }).catch()
+        firebase.firestore().collection('Tailor App').doc(props.tailor).collection("UnStitched").get()
             .then(snapshot => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const conditionAmount = client.data().unstitched;
-                    // addUnstitched(clientName, conditionAmount);
+                    checkUnStitchFirebase(clientName, conditionAmount, customerState.unStitch, dispatch);
                 })
             }).catch()
     }
@@ -40,9 +40,10 @@ export const Condition = (props: any) => {
                 <div className="condition">
                     <h1 className="h1 text-muted">Condition</h1>
                     <p className="text-muted">If you want to add Condition : </p>
-                    <input className="w-75 d-inline form-control" type="text" placeholder="Add stitched dress number" />
-                    <input className="w-75 d-inline mt-1 form-control" type="text" placeholder="Add develired dress number" />
-                    <input className="w-75 d-inline mt-1 form-control" type="text" placeholder="Add un stitched  dress number" />
+                    <input className="w-75 d-inline form-control" type="number" placeholder="Add stitched dress number" />
+                    <input className="w-75 d-inline mt-1 form-control" type="number" placeholder="Add develired dress number" />
+                    <input className="w-75 d-inline mt-1 form-control" type="number" placeholder="Add un stitched dress number" />
+                    <input className="w-75 d-inline mt-1 form-control" type="number" placeholder="Add lost dress number" />
                 </div> :
                 null
         }
@@ -79,9 +80,9 @@ export const Condition = (props: any) => {
                                 // <p  className="text-muted" key={index}>{unStitch[0]}  , {unStitch[1]}</p>
                                 <p className="text-muted" key={index}>  {unStitch[1]} orders are un stitched.</p>
                             )
-                        }else{
-                            console.log(unStitch[0] , props.client);
-                            
+                        } else {
+                            console.log(unStitch[0], props.client);
+
                         }
                     }) : null
                 : null

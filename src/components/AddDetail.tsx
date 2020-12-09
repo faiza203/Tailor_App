@@ -1,8 +1,8 @@
 import React from 'react';
-import {AddOrder, checkOrder, history } from './index';
+import { AddOrder, checkOrder, history } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
-import { checkStitch, checkDelivered, addUnstitched } from './store';
+import { checkStitch, checkDelivered, checkUnStitch, checkLost } from './store';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export const AddDetail = () => {
     const saveDetail: any = (e: any) => {
         e.preventDefault();
 
-        const [NewOrders, sticthed, delivered, unStitched] = e.target;
+        const [NewOrders, sticthed, delivered, unStitched, lost] = e.target;
         if (NewOrders.value > 0) { checkOrder(client, NewOrders.value, customerState.orders, dispatch) }
         if (sticthed.value > 0) {
             checkStitch(client, sticthed.value, customerState.stitch, dispatch)
@@ -22,10 +22,10 @@ export const AddDetail = () => {
             checkDelivered(client, delivered.value, customerState.delivered, dispatch)
         }
         if (unStitched.value > 0) {
-            addUnstitched(client, unStitched.value);            
-        }else{
-            console.log(unStitched.value);
-            
+            checkUnStitch(client, unStitched.value, customerState.stitch, dispatch);
+        }
+        if (lost.value > 0) {
+            checkLost(client, lost.value, customerState.lost, dispatch)
         }
         history.push("/DashBoard");
         history.replace("/DashBoard");

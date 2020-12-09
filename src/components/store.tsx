@@ -413,9 +413,6 @@ export function updateLost(tailor: any, client: any, index: any, amount: any) {
     }
 }
 
-
-
-
 export function checkOutOfOrderFirebase(tailor : any , client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
     const arr = [];
     if (customerStateOutOfOrder.length > 0) {
@@ -438,26 +435,42 @@ export function checkOutOfOrder(tailor : any, client: any, amount: string, custo
         customerStateOutOfOrder.forEach((customer: any, index: number) => {
             if (client !== undefined && amount !== null) {
                 if (customer[0] === client) {
-                    // dispatch(updateOutOfOrder(tailor , client, index, amount));
+                    dispatch(updateOutOfOrder(client, index, amount));
                 }
             }
         })
     }
     else {
         if (amount !== undefined && client !== undefined) {
-            dispatch(addOutOfOrder(tailor , client, amount))
+            dispatch(addOutOfOrder( client, amount))
         }
     }
 }
 
-export function addOutOfOrder(tailor: any, client: any, amount: string) {
+export function addOutOfOrder( client: any, amount: string) {
 
-    firebase.firestore().collection('Tailor App').doc(tailor).collection("OutOfOrder").doc(client).set({
-        outOfOrder: amount
-    }).then().catch();
-    return {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("OutOfOrder").doc(client).set({
+            OutOfOrder: parseInt(amount)
+        }).then().catch();
+    });
+  return {
         type: "Add_OutOfOrder",
         client,
+        amount
+    }
+}
+export function updateOutOfOrder( client: any, index: any, amount: any) {
+    firebase.database().ref().on("child_added", snap => {
+        const tailor = snap.val();
+        firebase.firestore().collection('Tailor App').doc(tailor).collection("OutOfOrder").doc(client).set({
+            OutOfOrder: parseInt(amount)
+        }).then().catch();
+    });
+    return {
+        type: "Update_Lost",
+        index,
         amount
     }
 }

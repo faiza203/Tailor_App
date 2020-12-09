@@ -51,14 +51,14 @@ export const AlreadyCondition = (props: any) => {
     promise();
 
     return (
-        <div>
+        <div id="condition">
             {
                 customerState.orders.length > 0 ?
                     customerState.stitch.length > 0 ?
                         customerState.stitch.map((stitch: any[], index: number) => {
                             if (stitch[0] === props.client) {
                                 return (
-                                    <p className="text-muted mb-1" key={index}>  {stitch[1]} orders has stitched.</p>
+                                    <p className="text-muted" key={index}>  {stitch[1]} orders has stitched.</p>
                                 )
                             }
                         }) : null
@@ -102,7 +102,7 @@ export const AlreadyCondition = (props: any) => {
                             }
                         }) : null
                     : null
-            } 
+            }
             {
                 customerState.outOfOrder.length > 0 ?
                     customerState.outOfOrder.length > 0 ?

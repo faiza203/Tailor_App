@@ -5,7 +5,7 @@ import { checkStitch, checkDeliveredFirebase, checkUnStitchFirebase } from './st
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);
-    return (<div>
+    return (<div id="addCondition">
         {
             customerState.orders.length > 0 ?
                 <div className="condition">

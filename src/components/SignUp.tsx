@@ -13,8 +13,12 @@ export function SignUp() {
         e.preventDefault();
         const [email, password, confirmPassword]: any[] = e.target;
         const auth = firebase.auth();
+
         if (password.value !== confirmPassword.value) {
             alert("Password does not match");
+        }
+        else if (email.value === password.value) {
+            alert("You have written email as password . Please change it for secure account")
         }
         else {
             auth.createUserWithEmailAndPassword(email.value, password.value)

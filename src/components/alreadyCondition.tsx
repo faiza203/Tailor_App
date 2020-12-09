@@ -52,7 +52,7 @@ export const AlreadyCondition = (props: any) => {
 
     return (
         <div>
-            {/* {
+            {
                 customerState.orders.length > 0 ?
                     customerState.stitch.length > 0 ?
                         customerState.stitch.map((stitch: any[], index: number) => {
@@ -90,7 +90,7 @@ export const AlreadyCondition = (props: any) => {
                             }
                         }) : null
                     : null
-            } */}
+            }
             {
                 customerState.orders.length > 0 ?
                     customerState.lost.length > 0 ?

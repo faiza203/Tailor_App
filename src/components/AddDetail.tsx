@@ -21,29 +21,29 @@ export const AddDetail = () => {
             }
         }
 
-        // if (sticthed) {
+        if (sticthed) {
 
-        //     if (sticthed.value > 0) {
-        //         checkStitch(client, sticthed.value, customerState.stitch, dispatch)
-        //     }
-        // }
+            if (sticthed.value > 0) {
+                checkStitch(client, sticthed.value, customerState.stitch, dispatch)
+            }
+        }
 
-        // if (delivered) {
-        //     if (delivered.value > 0) {
-        //         checkDelivered(client, delivered.value, customerState.delivered, dispatch)
-        //     }
-        // }
-        // if (unStitched) {
+        if (delivered) {
+            if (delivered.value > 0) {
+                checkDelivered(client, delivered.value, customerState.delivered, dispatch)
+            }
+        }
+        if (unStitched) {
 
-        //     if (unStitched.value > 0) {
-        //         checkUnStitch(client, unStitched.value, customerState.stitch, dispatch);
-        //     }
-        // }
-        // if (lost) {
-        //     if (lost.value > 0) {
-        //         checkLost(tailor, client, lost.value, customerState.lost, dispatch)
-        //     }
-        // }
+            if (unStitched.value > 0) {
+                checkUnStitch(client, unStitched.value, customerState.unStitch, dispatch);
+            }
+        }
+        if (lost) {
+            if (lost.value > 0) {
+                checkLost(tailor, client, lost.value, customerState.lost, dispatch)
+            }
+        }
         if (outOfOrder) {
             if (outOfOrder.value > 0) {
                 checkOutOfOrder(tailor, client, outOfOrder.value, customerState.outOfOrder, dispatch)

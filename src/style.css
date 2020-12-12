@@ -66,3 +66,11 @@ form button {
     margin-top: 20px;
     width: 100%;
 }
+
+
+ul {
+    text-align: left;
+    list-style-type: none;
+    font-size: 20px;
+    line-height: 35px;
+}

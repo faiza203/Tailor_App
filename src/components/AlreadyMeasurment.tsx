@@ -52,13 +52,13 @@ export function AlreadyMeasurment(props: any) {
                     if (measurment[0] === props.client) {
                         const handleChange = (event: any) => {
                             console.log(event.target.value);
-                        };
 
+                        };
                         return (<div key={index} className="mr-5">
                             <div key={index} id="editM" className="d-none">
                                 <form className="mr-5 editForm" onSubmit={saveMeasurment}>
-                                    <input className="form-control" type="number" id="form1" placeholder="Length" value={measurment[1].Length} onChange={handleChange} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Width" value={measurment[1].Width} required />
+                                    <input className="form-control" type="number" id="form1" placeholder="Length" value={measurment[1].Length} required />
+                                    <input className="form-control mt-1" type="number" placeholder="Width" value={measurment[1].Width} onChange={handleChange} required />
                                     <input className="form-control mt-1" type="number" placeholder="Neck" value={measurment[1].Neck} required />
                                     <input className="form-control mt-1" type="number" placeholder="Chest" value={measurment[1].Chest} required />
                                     <input className="form-control mt-1" type="number" placeholder="Waist" value={measurment[1].Waist} required />
@@ -80,9 +80,10 @@ export function AlreadyMeasurment(props: any) {
                                 <li className="text-muted"> Arm Lenght : {measurment[1].ArmLenght}</li>
                                 <li className="text-muted"> Shoulder Length : {measurment[1].Shoulder}</li>
                                 <li className="text-muted"> Leg Lenght : {measurment[1].LegLenght}</li>
-                                <button className="btn btn-outline-danger" onClick={() => document.getElementById("editM")?.classList.remove("d-none")} >Edit</button>
-                                <button className="btn btn-outline-success">Cancle</button>
                             </ul>
+                            <button className="btn btn-outline-danger" onClick={() => document.getElementById("editM")?.classList.remove("d-none")
+                            } >Edit</button>
+                            <button className="btn btn-outline-success">Cancle</button>
                         </div>)
                     }
                 }) :

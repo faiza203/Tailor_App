@@ -53,14 +53,17 @@ export function Measurment() {
                 customerState.measurment.map((measurment: any[], index: number) => {
                     if (measurment[0] === client) {
                         return (<AlreadyMeasurment client={client} />)
-                    } else {
-                        arr.push("yes")
-                    } if (arr.length === customerState.measurment.length) {
-                        <AddMeasurment />
-                    }
+                    } else { arr.push("yes") }
                 })
                 : <AddMeasurment />
             }
+            { customerState.measurment.length > 0 ?
+                arr.length === customerState.measurment.length ?
+                    <AddMeasurment />
+                    : null
+                : null
+            }
+
         </div>
     )
 }

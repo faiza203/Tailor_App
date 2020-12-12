@@ -8,7 +8,7 @@ export function DashBoard() {
     const dispatch = useDispatch();
     const addCustomer = (e: any) => {
         e.preventDefault();
-        const customer: String = e.target[0].value;
+        const customer: string = e.target[0].value;
         checkCustomer(customer, customerState.clients, dispatch);
         e.target[0].value = "";
     }

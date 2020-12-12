@@ -28,7 +28,7 @@ export const Customers = (props: any) => {
                         return (<div key={index}>
                             <h3 className="h3 text-muted d-inline mt-2">{customer}</h3>
                             <button id={customer + "measurment"} className="btn btn-outline-success d-inline" onClick={() => {
-                                localStorage.setItem("customer", customer);
+                                localStorage.setItem("customer", customer)
                                 history.push("/Measurment");
                                 history.replace("/Measurment");
                             }}>Measurment</button>

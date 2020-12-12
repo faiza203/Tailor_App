@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkMeasurment, checkFirebaseMeasurment } from './index';
 import firebase from 'firebase';
 import { history } from './index';
-import { isAnyOf } from '@reduxjs/toolkit';
 
 export function AlreadyMeasurment(props: any) {
     const tailor: any = localStorage.getItem("tailor");
@@ -48,29 +47,14 @@ export function AlreadyMeasurment(props: any) {
     return (
         <div >
             {customerState.measurment.length > 0 ?
-                customerState.measurment.map((measurment: any[], index: number) => {
+                customerState.measurment.map((measurment: any ,  index: number) => {
                     if (measurment[0] === props.client) {
                         const handleChange = (event: any) => {
                             console.log(event.target.value);
 
                         };
                         return (<div key={index} className="mr-5">
-                            <div key={index} id="editM" className="d-none">
-                                <form className="mr-5 editForm" onSubmit={saveMeasurment}>
-                                    <input className="form-control" type="number" id="form1" placeholder="Length" value={measurment[1].Length} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Width" value={measurment[1].Width} onChange={handleChange} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Neck" value={measurment[1].Neck} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Chest" value={measurment[1].Chest} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Waist" value={measurment[1].Waist} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Bust" value={measurment[1].Bust} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Arm Width" value={measurment[1].ArmLenght} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Shoulder Width" value={measurment[1].Shoulder} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Leg Lenght" value={measurment[1].LegLenght} required />
-                                    <button className="btn btn-outline-success d-inline" type="submit">Save Measurment</button>
-                                    <button className="btn btn-outline-danger" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
-                                </form>
-                            </div>
-                            <ul className="measurment">
+                            <ul key={index} className="measurment">
                                 <li className="text-muted"> Length : {measurment[1].Length}</li>
                                 <li className="text-muted"> Width : {measurment[1].Width}</li>
                                 <li className="text-muted"> Neck : {measurment[1].Neck}</li>
@@ -81,8 +65,10 @@ export function AlreadyMeasurment(props: any) {
                                 <li className="text-muted"> Shoulder Length : {measurment[1].Shoulder}</li>
                                 <li className="text-muted"> Leg Lenght : {measurment[1].LegLenght}</li>
                             </ul>
-                            <button className="btn btn-outline-danger" onClick={() => document.getElementById("editM")?.classList.remove("d-none")
-                            } >Edit</button>
+                            <button className="btn btn-outline-danger" onClick={() => {
+                                history.push('/EditMeasurment')
+                                history.replace('/EditMeasurment');
+                            }} >Edit</button>
                             <button className="btn btn-outline-success">Cancle</button>
                         </div>)
                     }

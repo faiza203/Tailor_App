@@ -6,7 +6,7 @@ export { configFirebase } from './firebase';
 export { NotFound } from './NotFound';
 export { DashBoard } from './DashBoard';
 export { Customers } from './Customers';
-export { AddMeasurment } from './AddMeasurment';
+export { AddMeasurment , Measurment } from './AddMeasurment';
 export { history } from './history';
 export { addTailor, checkCustomer, checkOrder, checkMeasurment, checkCustomerFirebase, checkFirebaseMeasurment, checkOrderFirebase, checkDeliveredFirebase, checkUnStitch, checkUnStitchFirebase, checkLostFirebase, checkLost,checkOutOfOrder, store } from './store';
 export { AddDetail } from './AddDetail';

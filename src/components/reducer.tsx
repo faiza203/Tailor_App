@@ -26,7 +26,7 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Tailor":
             return {
                 ...state,
-                Tailors: state.tailors.push(action.tailor)
+                Tailors: state.tailors[0]  = (action.tailor)
             }
         case "Add_Customer":
             return {

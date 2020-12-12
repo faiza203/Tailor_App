@@ -23,10 +23,10 @@ export function SignUp() {
         else {
             auth.createUserWithEmailAndPassword(email.value, password.value)
                 .then((user) => {
-                    alert("Account is created successfully !!!");
-                    dispatch(addTailor(user.user?.email))
-                    history.push('/SignIn');
-                    history.replace('./SignIn')
+                    alert("Account is login successfully !!!");
+                    history.push('/DashBoard');
+                    history.replace('/DashBoard');
+                    dispatch(addTailor(user.user?.email));
                 })
                 .catch((err) => {
                     alert(err.message);

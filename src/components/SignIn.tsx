@@ -14,26 +14,16 @@ export function SignIn() {
     const auth = firebase.auth();
     auth.signInWithEmailAndPassword(email.value, password.value)
       .then(() => {
-        sendToFirebaseTailor(e)
+        dispatch(addTailor(e.target[0].value));
+        alert("Account is login successfully !!!");
+        history.push('/DashBoard');
+        history.replace('/DashBoard');
       })
       .catch((err) => {
         alert(err.message);
       })
   }
 
-  const sendToFirebaseTailor = (e: any) => {
-    const promise = firebase.database().ref().set({ signIn: e.target[0].value })
-    promise.then(() => {
-      dispatch(addTailor(e.target[0].value));
-      localStorage.setItem("tailor", e.target[0].value)
-      alert("Account is login successfully !!!");
-      history.push('/DashBoard');
-      history.replace('/DashBoard');
-    })
-      .catch((err: any) => {
-        alert(err.message);
-      })
-  }
   return (
     <form onSubmit={signIn}>
       <label className="text-dark">Email :</label>

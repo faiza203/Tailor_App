@@ -20,29 +20,24 @@ export function DashBoard() {
         });
     }
     promiseOne();
-
-    const tailor = localStorage.getItem("tailor");
-    if (customerState.tailors.length === 0) {
-        dispatch(addTailor(tailor))
-    }
      
     return (
         <div>
             {
-                tailor ?
+                customerState.tailors[0] ?
                     <div>
                         <h1 className="h1 font-italic text-muted">
-                            {tailor}
+                            {customerState.tailors[0]}
                         </h1>
                         <form onSubmit={addCustomer}>
                             <input type="text" className="form-control" placeholder="Add Customer Name Here" required />
                             <button className="btn btn-outline-danger">Add customer
             </button>
                         </form>
-                        <Customers name={tailor} />
+                        <Customers name={customerState.tailors[0]} />
                     </div>
                     : <h1 className="h1 font-italic text-muted">
-                        loading
+                        Please login first
                         </h1>
             }
         </div>

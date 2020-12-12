@@ -25,12 +25,14 @@ export function SignIn() {
   }
 
   return (
-    <form onSubmit={signIn}>
-      <label className="text-dark">Email :</label>
-      <input className="form-control" type="email" placeholder="Please write email here" required />
-      <label className="text-dark">Password :</label>
-      <input className="form-control" type="password" placeholder="Enter password here" required />
-      <button className="btn btn-outline-danger" type="submit">Sign In</button>
-    </form>
+    <div className="main">
+      <form onSubmit={signIn} className="form">
+        <label>Email :</label>
+        <input type="email" placeholder="Please write email here" required />
+        <label>Password :</label>
+        <input type="password" placeholder="Enter password here" required />
+        <button type="submit">Sign In</button>
+      </form >
+    </div>
   )
 }

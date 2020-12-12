@@ -26,7 +26,6 @@ export const Customers = (props: any) => {
                 customerState.clients.length > 0 ?
                     customerState.clients.map((customer: any, index: number) => {
                         return (<div key={index}>
-                            <h2 className="h2 text-muted">Customers</h2>
                             <h3 className="h3 text-muted d-inline mt-2">{customer}</h3>
                             <button id={customer + "measurment"} className="btn btn-outline-success d-inline" onClick={() => {
                                 localStorage.setItem("customer", customer);

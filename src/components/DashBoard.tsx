@@ -1,8 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
-import { Customers, checkCustomer } from './index';
+import { Customers, checkCustomer, history } from './index';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTailor } from './store';
 
 export function DashBoard() {
     const customerState = useSelector((state: any) => state);
@@ -20,7 +19,7 @@ export function DashBoard() {
         });
     }
     promiseOne();
-     
+
     return (
         <div>
             {
@@ -36,9 +35,18 @@ export function DashBoard() {
                         </form>
                         <Customers name={customerState.tailors[0]} />
                     </div>
-                    : <h1 className="h1 font-italic text-muted">
-                        Please login first
-                        </h1>
+                    :
+                    <div>
+                        <h1 className="h1 font-italic text-muted">
+                            Please login first
+                         </h1>
+                        <button className="btn btn-outline-danger" onClick={
+                            () => { history.push('/SignIn')
+                        history.replace('/SignIn') }
+                        }>
+                            Go to Sign In
+                         </button>
+                    </div>
             }
         </div>
     )

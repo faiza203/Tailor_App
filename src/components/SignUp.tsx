@@ -1,4 +1,3 @@
-import React from 'react';
 import firebase from 'firebase';
 import { configFirebase } from './firebase';
 import { history } from './history';
@@ -36,13 +35,6 @@ export function SignUp() {
     return (
         <div className="main">
             <form onSubmit={signUpFun} className="form">
-                {/* <label className="text-dark">Email :</label>
-            <input className="form-control" type="email" placeholder="Please write email here" required />
-            <label className="text-dark">Password :</label>
-            <input className="form-control" type="password" placeholder="Enter password here" required />
-            <label className="text-dark">Confirm Password :</label>
-            <input className="form-control" type="password" placeholder="Rewrite password here" required />
-       <button className="btn btn-outline-warning" type="submit">SignUp</button> */}
                 <h2>Register With Us</h2>
                 <label>Email :</label>
                 <input type="email" placeholder="Please write email here" required />

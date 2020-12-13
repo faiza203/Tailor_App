@@ -90,9 +90,9 @@ export const AddMeasurment = () => {
     const saveMeasurment: any = (e: any) => {
         e.preventDefault();
 
-        const [Length, Width, Neck, Chest, Waist, Bust, ArmLenght, ShoulderLenght, LegLenght] = e.target;
+        const [Length, Width, Neck, Chest, Waist, Bust, ArmLenght, ShoulderLenght, LegLenght, Hip] = e.target;
         const measurmentEle = {
-            Length: Length.value, Width: Width.value, Chest: Chest.value, Bust: Bust.value, Waist: Waist.value, Neck: Neck.value, ArmLenght: ArmLenght.value, Shoulder: ShoulderLenght.value, LegLenght: LegLenght.value,
+            Length: Length.value, Width: Width.value, Chest: Chest.value, Bust: Bust.value, Waist: Waist.value, Neck: Neck.value, ArmLenght: ArmLenght.value, Shoulder: ShoulderLenght.value, LegLenght: LegLenght.value, Hip: Hip.value,
         }
 
         firebase.database().ref().on("child_added", snap => {
@@ -122,7 +122,8 @@ export const AddMeasurment = () => {
                 <input className="form-control mt-1" type="number" placeholder="Bust" required />
                 <input className="form-control mt-1" type="number" placeholder="Arm Width" required />
                 <input className="form-control mt-1" type="number" placeholder="Shoulder Width" required />
-                <input className="form-control mt-1" type="number" placeholder="Leg Lenght" required />
+                <input className="form-control mt-1" type="number" placeholder="Shoulder Width" required />
+                <input className="form-control mt-1" type="number" placeholder="Hip" required />
                 <button className="btn btn-outline-success d-inline" type="submit">Save Measurment</button>
                 <button className="btn btn-outline-danger" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
             </form>

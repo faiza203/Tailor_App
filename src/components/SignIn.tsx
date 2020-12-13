@@ -1,4 +1,3 @@
-import React from 'react';
 import firebase from 'firebase';
 import { history } from './history';
 import { useDispatch } from 'react-redux';

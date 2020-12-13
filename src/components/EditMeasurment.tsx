@@ -32,36 +32,87 @@ export function EditMeasurment() {
             })
         });
     }
-    const measurment: any = localStorage.getItem("measurment");
-    console.log(customerState);
-
     return (
         <div >
             <div className="mr-5">
                 <div id="editM">
                     {customerState.measurment.length > 0 ?
                         customerState.measurment.map((measurment: any, index: number) => {
+                            let Length = measurment[1].Length;
+                            const handleLength = (event: any) => {
+                                Length = "";
+                                console.log(Length, event.target.value);
+                            };
                             if (measurment[0] === client) {
-                                return (<form>{measurment[0]}
-                                    <input className="form-control" type="number" placeholder="Length" value={measurment[0].Length} required />
-                                    <input className="form-control mt-1" type="number" placeholder="Width" required value={measurment[0].Length} />
-                                    <input className="form-control mt-1" type="number" placeholder="Neck" required value={measurment[0].Lenght} />
-                                    <input className="form-control mt-1" type="number" placeholder="Chest" required value={measurment[0].Lenght} />
-                                    <input className="form-control mt-1" type="number" placeholder="Waist" required value={measurment[0].Lenght} />
-                                    <input className="form-control mt-1" type="number" placeholder="Bust" required value={measurment[0].Lenght} />
-                                    <input className="form-control mt-1" type="number" placeholder="Arm Width" required value={measurment[0].Lenght} />
-                                    <input className="form-control mt-1" type="number" placeholder="Shoulder Width" required value={measurment[0].Lenght} />
-                                    <input className="form-control mt-1" type="number" placeholder="Leg Lenght" required value={measurment[0].Lenght} />
-                                    <button className="btn btn-outline-success d-inline" type="submit">Save Measurment</button>
-                                    <button className="btn btn-outline-danger" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
+                                return (<form onSubmit={saveMeasurment}>
+                                    <div className="EditM">
+                                        <div>
+                                            <label>Length</label>
+                                            <input className="mt-1" type="number" placeholder="Length" onChange={(e) => {
+                                                Length = "";
+                                                e.target.value = ""
+                                            console.log(e.target.value);
+                                            
+                                            }} value={Length} required />
+                                        </div>
+                                        <div>
+                                            <label>Width</label>
+                                            <input className="mt-1" type="number" placeholder="Width" required value={measurment[1].Width} />
+                                        </div>
+                                        <div> <label>Chest</label>
+                                            <input className="mt-1" type="number" placeholder="Chest" required value={measurment[1].Chest} />
+                                        </div>
+                                    </div>
+                                    <div className="EditM">
+                                        <div>
+                                            <label>Waist</label>
+                                            <input className="mt-1" type="number" placeholder="Waist" required value={measurment[1].Waist} />
+                                        </div>
+                                        <div>
+                                            <label>Bust</label>
+                                            <input className="mt-1" type="number" placeholder="Bust" required value={measurment[1].Bust} />
+                                        </div>
+                                        <div>
+                                            <label>Arm</label>
+                                            <input className="mt-1" type="number" placeholder="Arm Lenght" required value={measurment[1].ArmLenght} />
+                                        </div>
+                                    </div>
+                                    <div className="EditM">
+                                        <div>
+                                            <label>Shoulder</label>
+                                            <input className="mt-1" type="number" placeholder="Shoulder Lenght" required value={measurment[1].Shoulder} />
+                                        </div>
+                                        <div>
+                                            <label>Neck</label>
+                                            <input className="mt-1" type="number" placeholder="Neck" required value={measurment[1].Neck} />
+                                        </div>
+                                        <div>
+                                            <label>Leg Length</label>
+                                            <input className="mt-1" type="number" placeholder="Leg Lenght" required value={measurment[1].LegLenght} />
+                                        </div>
+                                    </div>
+                                    <button className="btn btn-outline-success d-inline m-0 mt-1 w-25" type="submit">Edit Measurment</button>
+                                    <button className="btn btn-outline-danger d-inline m-0 mt-1 ml-1 w-25" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
                                 </form>)
                             }
                         })
-                        : null
+                        : <div>
+                            <h1 className="h1 font-italic text-muted">
+                                Please login first
+                         </h1>
+                            <button className="btn btn-outline-danger" onClick={
+                                () => {
+                                    history.push('/SignIn')
+                                    history.replace('/SignIn')
+                                }
+                            }>
+                                Go to Sign In
+                         </button>
+                        </div>
                     }
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

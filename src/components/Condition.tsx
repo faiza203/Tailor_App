@@ -1,7 +1,4 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import firebase from 'firebase';
-import { checkStitch, checkDeliveredFirebase, checkUnStitchFirebase } from './store';
+import { useSelector} from 'react-redux';
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);

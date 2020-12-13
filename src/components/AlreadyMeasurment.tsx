@@ -47,12 +47,8 @@ export function AlreadyMeasurment(props: any) {
     return (
         <div >
             {customerState.measurment.length > 0 ?
-                customerState.measurment.map((measurment: any ,  index: number) => {
+                customerState.measurment.map((measurment: any, index: number) => {
                     if (measurment[0] === props.client) {
-                        const handleChange = (event: any) => {
-                            console.log(event.target.value);
-
-                        };
                         return (<div key={index} className="mr-5">
                             <ul key={index} className="measurment">
                                 <li className="text-muted"> Length : {measurment[1].Length}</li>
@@ -69,7 +65,11 @@ export function AlreadyMeasurment(props: any) {
                                 history.push('/EditMeasurment')
                                 history.replace('/EditMeasurment');
                             }} >Edit</button>
-                            <button className="btn btn-outline-success">Cancle</button>
+                            <button className="btn btn-outline-success" onClick={() => {
+                                history.push('/Dashboard')
+                                history.replace('/Dashboard');
+                            }}
+                            >Cancle</button>
                         </div>)
                     }
                 }) :

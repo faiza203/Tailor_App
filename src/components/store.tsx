@@ -10,35 +10,36 @@ export function addTailor(tailor: any) {
     }
 }
 
-export const checkCustomer = (client: any, customerStateClient: any, dispatch: any) => {
+export const checkCustomer = (client: any, customerState: any, dispatch: any) => {
     let arr = [];
-    if (customerStateClient.length > 0) {
-        customerStateClient.forEach((customer: any) => {
-            if (customer !== client) {
-                arr.push("yes");
-            }
-        })
-    }
-    if (arr.length === customerStateClient.length) {
-        dispatch(addCustomerR(client))
-    }
-    else {
-        alert("You have already this user")
+    if (client.trim() === "") {
+        alert("Please add a value")
+    } else {
+        if (customerState.clients.length > 0) {
+            customerState.clients.forEach((customer: any) => {
+                if (customer !== client) {
+                    arr.push("yes");
+                }
+            })
+        }
+        if (arr.length === customerState.clients.length) {
+            dispatch(addCustomerR(client, customerState.tailors[0]))
+        }
+        else {
+            alert("You have already this user")
+        }
     }
 }
 
-export function addCustomerR(customer: any) {
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        const promise = firebase.firestore().collection('Tailor App').doc('Tailor').collection(tailor).doc(uuid()).set({
-            id: customer
-        });
-        promise.then(() => {
-        })
-        promise.catch((err) => {
-            alert(err.message)
-        })
-    });
+export function addCustomerR(customer: any, tailor: any) {
+    const promise = firebase.firestore().collection('Tailors').doc(tailor).collection('Customers').doc(customer).set({
+        id: customer + " Measurment"
+    })
+    promise.then(() => {
+    })
+    promise.catch((err) => {
+        alert(err.message)
+    })
     return {
         type: "Add_Customer",
         customer,
@@ -46,26 +47,21 @@ export function addCustomerR(customer: any) {
 }
 
 
-export function checkCustomerFirebase(client: any, customerStateClient: any, dispatch: any) {
-    let arr = [];
-    if (customerStateClient.length > 0) {
-        customerStateClient.forEach((customer: any) => {
+export function checkCustomerFirebase(client: any, customerState: any, dispatch: any) {
+    const arr  = [];
+    if (customerState.clients.length > 0) {
+        customerState.clients.forEach((customer: any) => {
             if (customer !== client) {
                 arr.push("yes");
             }
         })
     }
-    if (arr.length === customerStateClient.length) {
-        dispatch(addFirebaseCustomer(client))
+    if (arr.length === customerState.clients.length) {
+        checkCustomer(client, customerState, dispatch);
     }
 }
 
-export function addFirebaseCustomer(client: any) {
-    return {
-        type: "Fecth_Customer",
-        client
-    }
-}
+
 
 export const checkMeasurment = (client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
     if (client !== undefined) {
@@ -356,7 +352,7 @@ export function updateUnstitched(client: any, index: any, amount: any) {
 }
 
 
-export function checkLostFirebase(tailor : any , client: any, amount: string, customerStateLost: any, dispatch: any) {
+export function checkLostFirebase(tailor: any, client: any, amount: string, customerStateLost: any, dispatch: any) {
     const arr = [];
     if (customerStateLost.length > 0) {
         customerStateLost.forEach((customer: any, index: number) => {
@@ -368,24 +364,24 @@ export function checkLostFirebase(tailor : any , client: any, amount: string, cu
         })
     }
     if (arr.length === customerStateLost.length) {
-        checkLost(tailor , client, amount, customerStateLost, dispatch,)
+        checkLost(tailor, client, amount, customerStateLost, dispatch,)
     }
 }
 
 
-export function checkLost(tailor : any, client: any, amount: string, customerStateLost: any, dispatch: any) {
+export function checkLost(tailor: any, client: any, amount: string, customerStateLost: any, dispatch: any) {
     if (customerStateLost.length > 0) {
         customerStateLost.forEach((customer: any, index: number) => {
             if (client !== undefined && amount !== null) {
                 if (customer[0] === client) {
-                    dispatch(updateLost(tailor , client, index, amount));
+                    dispatch(updateLost(tailor, client, index, amount));
                 }
             }
         })
     }
     else {
         if (amount !== undefined && client !== undefined) {
-            dispatch(addLost(tailor , client, amount))
+            dispatch(addLost(tailor, client, amount))
         }
     }
 }
@@ -413,7 +409,7 @@ export function updateLost(tailor: any, client: any, index: any, amount: any) {
     }
 }
 
-export function checkOutOfOrderFirebase(tailor : any , client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
+export function checkOutOfOrderFirebase(tailor: any, client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
     const arr = [];
     if (customerStateOutOfOrder.length > 0) {
         customerStateOutOfOrder.forEach((customer: any, index: number) => {
@@ -425,30 +421,30 @@ export function checkOutOfOrderFirebase(tailor : any , client: any, amount: stri
         })
     }
     if (arr.length === customerStateOutOfOrder.length) {
-        checkLost(tailor , client, amount, customerStateOutOfOrder, dispatch,)
+        checkLost(tailor, client, amount, customerStateOutOfOrder, dispatch,)
     }
 }
 
 
-export function checkOutOfOrder(tailor : any, client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
+export function checkOutOfOrder(tailor: any, client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
     if (customerStateOutOfOrder.length > 0) {
         customerStateOutOfOrder.forEach((customer: any, index: number) => {
             if (client !== undefined && amount !== null) {
                 if (customer[0] === client) {
                     dispatch(updateOutOfOrder(client, index, amount));
-                    
+
                 }
             }
         })
     }
     else {
         if (amount !== undefined && client !== undefined) {
-            dispatch(addOutOfOrder( client, amount))
+            dispatch(addOutOfOrder(client, amount))
         }
     }
 }
 
-export function addOutOfOrder( client: any, amount: string) {
+export function addOutOfOrder(client: any, amount: string) {
 
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
@@ -456,19 +452,19 @@ export function addOutOfOrder( client: any, amount: string) {
             OutOfOrder: parseInt(amount)
         }).then().catch();
     });
-  return {
+    return {
         type: "Add_OutOfOrder",
         client,
         amount
     }
 }
-export function updateOutOfOrder( client: any, index: any, amount: any) {
+export function updateOutOfOrder(client: any, index: any, amount: any) {
     firebase.database().ref().on("child_added", snap => {
         const tailor = snap.val();
         firebase.firestore().collection('Tailor App').doc(tailor).collection("OutOfOrder").doc(client).set({
             OutOfOrder: parseInt(amount)
         }).then().catch();
-    });    
+    });
     return {
         type: "Update_OutOfOrder",
         index: index,

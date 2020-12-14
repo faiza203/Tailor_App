@@ -38,7 +38,7 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Delete_Client":
             return {
                 ...state,
-                Clients: state.clients.splice(action.customerIndex , 1 )
+                Clients: state.clients.splice(action.customerIndex, 1)
             }
         case "Add_Measurment":
             return {

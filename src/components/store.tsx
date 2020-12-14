@@ -139,6 +139,8 @@ export function checkOrder(client: any, orders: string, customerState: any, disp
                 if (customer[0] === client) {
                     const order: number = parseInt(customer[1]) + parseInt(orders);
                     dispatch(updateOrder(client, index, order, customerState.tailors[0]));
+                }else{
+                    dispatch(addOrder(client , orders , customerState.tailors[0]))
                 }
             }
         })
@@ -485,13 +487,15 @@ export function updateOutOfOrder(client: any, index: any, amount: any) {
 }
 
 export const addClient = (customer: any) => {
-    return {
+    console.log("I am added" , customer);
+        return {
         type: "Add_Customer",
         customer
     }
 }
 
 export const deleteClient = () => {
+    console.log("I am delete");
     return {
         type: "Delete_Customer",
     }

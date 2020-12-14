@@ -28,8 +28,6 @@ export const Customers = (props: any) => {
                             }}>Orders</button>
                             <button id={customer + "delete"} className="btn btn-outline-primary d-inline m-1 mr-5" onClick={() => {
                                 dispatch(deleteCustomer(customer, customerState));
-                                // history.push("/Orders");
-                                // history.replace("/Orders");
                             }}>Delete</button>
                         </div>)
                     }) :

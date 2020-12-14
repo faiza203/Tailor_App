@@ -5,12 +5,12 @@ import firebase from 'firebase';
 import { history } from './index';
 
 export function AlreadyMeasurment(props: any) {
-    const tailor: any = localStorage.getItem("tailor");
-    const client: any = localStorage.getItem("customer");
-    const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
+    const tailor: any = customerState.tailors[0];
+    const client: any = customerState.customer[0];
+    const dispatch = useDispatch();
     const promise = () => {
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").get()
+        firebase.firestore().collection('Measurments').doc(tailor).collection("Customer").get()
             .then(snapshot => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
@@ -46,9 +46,9 @@ export function AlreadyMeasurment(props: any) {
 
     return (
         <div >
-            {customerState.measurment.length > 0 ?
+            {customerState.tailors.length > 0 ?
                 customerState.measurment.map((measurment: any, index: number) => {
-                    if (measurment[0] === props.client) {
+                    if (measurment[0] === client) {
                         return (<div key={index} className="mr-5">
                             <ul key={index} className="measurment">
                                 <li className="text-muted"> Length : {measurment[1].Length}</li>
@@ -73,7 +73,27 @@ export function AlreadyMeasurment(props: any) {
                         </div>)
                     }
                 }) :
-                null
+                <div>
+                    <h1 className="h1 font-italic text-muted">
+                        Please login first
+                 </h1>
+                    <button className="btn btn-outline-danger" onClick={
+                        () => {
+                            history.push('/SignIn')
+                            history.replace('/SignIn')
+                        }
+                    }>
+                        Go to Sign In
+                 </button>
+                    <button className="btn btn-outline-success" onClick={
+                        () => {
+                            history.push('/SignUp')
+                            history.replace('/SignUp')
+                        }
+                    }>
+                        Go to Sign Up
+                 </button>
+                </div>
             }
         </div>
     )

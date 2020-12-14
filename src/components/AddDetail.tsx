@@ -52,19 +52,43 @@ export const AddDetail = () => {
         history.push("/DashBoard");
         history.replace("/DashBoard");
         dispatch(deleteClient());
-        console.log(customerState);
-        
     }
     return (
-        <form onSubmit={saveDetail}>
-            <div id="addDetail">
-                <AddOrder client={client} />
-                <Condition client={client} tailor={tailor} />
-                <AlreadyCondition client={client} tailor={tailor} />
-            </div>
-            <button id="saveDetail" className="btn btn-outline-primary" type="submit" >Save Detail</button>
-            <button className="btn btn-outline-success" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard'); dispatch(deleteClient()) }
-            }>Save Without Changing</button>
-        </form >
+        <div>     {
+            customerState.tailors[0] ?
+                <form onSubmit={saveDetail}>
+                    <div id="addDetail">
+                        <AddOrder />
+                        <Condition />
+                        <AlreadyCondition />
+                    </div>
+                    <button id="saveDetail" className="btn btn-outline-primary d-inline w-25" type="submit" >Add</button>
+                    <button className="btn btn-outline-success d-inline w-50" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard'); dispatch(deleteClient()) }
+                    }>Cancle</button>
+                </form > :
+                <div>
+                    <h1 className="h1 font-italic text-muted">
+                        Please login first
+                         </h1>
+                    <button className="btn btn-outline-danger" onClick={
+                        () => {
+                            history.push('/SignIn')
+                            history.replace('/SignIn')
+                        }
+                    }>
+                        Go to Sign In
+                         </button>
+                    <button className="btn btn-outline-success" onClick={
+                        () => {
+                            history.push('/SignUp')
+                            history.replace('/SignUp')
+                        }
+                    }>
+                        Go to Sign Up
+                         </button>
+                </div>
+        }
+        </div>
+
     )
 }

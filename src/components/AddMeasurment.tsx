@@ -5,12 +5,12 @@ import { checkFirebaseMeasurment, checkMeasurment } from './index';
 import { history } from './history';
 import { AlreadyMeasurment } from './AlreadyMeasurment';
 export function Measurment() {
-    const client: any = localStorage.getItem("customer");
-    const tailor: any = localStorage.getItem("tailor");
-    const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
+    const client: any = customerState.customer[0];
+    const tailor: any = customerState.tailors[0];
+    const dispatch = useDispatch();
     const promise = () => {
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").get()
+        firebase.firestore().collection('Measurments').doc(tailor).collection("Customer").get()
             .then(snapshot => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
@@ -51,7 +51,7 @@ export function Measurment() {
             {customerState.measurment.length > 0 ?
                 customerState.measurment.map((measurment: any[], index: number) => {
                     if (measurment[0] === client) {
-                        return (<AlreadyMeasurment client={client} />)
+                        return (<AlreadyMeasurment />)
                     } else { arr.push("yes") }
                 })
                 : <AddMeasurment />
@@ -72,10 +72,10 @@ export function Measurment() {
 export const AddMeasurment = () => {
     const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
-    const tailor: any = customerState.tailors[0];
+    const tailor = customerState.tailors[0];
     const client = customerState.customer[0];
     const promise = () => {
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").get()
+        firebase.firestore().collection('Measurments').doc(tailor).collection("Customer").get()
             .then(snapshot => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
@@ -93,22 +93,17 @@ export const AddMeasurment = () => {
         const measurmentEle = {
             Length: Length.value, Width: Width.value, Chest: Chest.value, Bust: Bust.value, Waist: Waist.value, Neck: Neck.value, ArmLenght: ArmLenght.value, Shoulder: ShoulderLenght.value, LegLenght: LegLenght.value, Hip: Hip.value,
         }
-        console.log(client);
-
-        // firebase.database().ref().on("child_added", snap => {
-        //     const promise = firebase.firestore().collection('Customers').doc(tailor).collection(client).doc("Measurment").set({
-        //         measurmentEle
-        //     });
-        //     promise.then(() => {
-        //         alert("Data is updated");
-        //         checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
-        //         history.push("/DashBoard");
-        //         history.replace("/DashBoard");
-        //     })
-        //     promise.catch((err) => {
-        //         alert(err.message)
-        //     })
-        // });
+        const promise = firebase.firestore().collection('Measurments').doc(tailor).collection("Customer").doc(client).set({
+            measurmentEle
+        });
+        promise.then(() => {
+            checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
+            history.push("/DashBoard");
+            history.replace("/DashBoard");
+        })
+        promise.catch((err) => {
+            alert(err.message)
+        })
     }
 
     return (<div>

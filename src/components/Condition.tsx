@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-export const Condition = (props: any) => {
+export const Condition = () => {
     const customerState = useSelector((state: any) => state);
     return (<div id="addCondition">
         {

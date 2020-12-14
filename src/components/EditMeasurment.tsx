@@ -5,10 +5,10 @@ import firebase from 'firebase';
 import { history } from './index';
 
 export function EditMeasurment() {
-    const tailor: any = localStorage.getItem("tailor");
-    const client: any = localStorage.getItem("customer");
-    const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
+    const client: any = customerState.customer[0];
+    const tailor: any = customerState.tailors[0];
+    const dispatch = useDispatch();
     const saveMeasurment: any = (e: any) => {
         e.preventDefault();
 
@@ -51,8 +51,8 @@ export function EditMeasurment() {
                                             <input className="mt-1" type="number" placeholder="Length" onChange={(e) => {
                                                 Length = "";
                                                 e.target.value = ""
-                                            console.log(e.target.value);
-                                            
+                                                console.log(e.target.value);
+
                                             }} value={Length} required />
                                         </div>
                                         <div>
@@ -96,10 +96,11 @@ export function EditMeasurment() {
                                 </form>)
                             }
                         })
-                        : <div>
+                        :
+                        <div>
                             <h1 className="h1 font-italic text-muted">
                                 Please login first
-                         </h1>
+                             </h1>
                             <button className="btn btn-outline-danger" onClick={
                                 () => {
                                     history.push('/SignIn')
@@ -107,7 +108,15 @@ export function EditMeasurment() {
                                 }
                             }>
                                 Go to Sign In
-                         </button>
+                             </button>
+                            <button className="btn btn-outline-success" onClick={
+                                () => {
+                                    history.push('/SignUp')
+                                    history.replace('/SignUp')
+                                }
+                            }>
+                                Go to Sign Up
+                             </button>
                         </div>
                     }
                 </div>

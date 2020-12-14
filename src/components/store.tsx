@@ -424,12 +424,12 @@ export function checkOutOfOrderFirebase(tailor: any, client: any, amount: string
     }
 }
 
-export const deleteCustomer = (client: any, state: any ) => {
+export const deleteCustomer = (client: any, state: any) => {
     let customerIndex;
     state.clients.forEach((customer: any, index: number) => {
         if (client === customer) {
             customerIndex = index;
-            deleteFromFirebase(client , state)
+            deleteFromFirebase(client, state)
         }
     })
     return {
@@ -439,9 +439,9 @@ export const deleteCustomer = (client: any, state: any ) => {
 
 }
 
-export const deleteFromFirebase = (customer : any, state : any) => {
+export const deleteFromFirebase = (customer: any, state: any) => {
     firebase.firestore().collection('Tailors').doc(state.tailors[0]).collection('Customers').doc(customer).
-    delete();
+        delete();
 }
 
 export function checkOutOfOrder(tailor: any, client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {

@@ -1,8 +1,6 @@
 import React from 'react';
-import firebase from 'firebase';
 import { Customers, checkCustomer, history } from './index';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkCustomerFirebase } from './store';
 
 export function DashBoard() {
     const customerState = useSelector((state: any) => state);
@@ -10,7 +8,7 @@ export function DashBoard() {
     const addCustomer = (e: any) => {
         e.preventDefault();
         const customer: string = e.target[0].value;
-        checkCustomer(customer, customerState, dispatch);
+        checkCustomer(customer.toUpperCase(), customerState, dispatch);
         e.target[0].value = "";
     }
 
@@ -24,7 +22,7 @@ export function DashBoard() {
                         </h1>
                         <form onSubmit={addCustomer}>
                             <input className="d-inline " type="text" placeholder="Add Customer Name Here" required />
-                            <button className="btn btn-outline-primary d-inline mt-1 w-50">Add customer
+                            <button className="btn btn-outline-secondary d-inline mt-1 w-50">Add customer
             </button>
                         </form>
                         <Customers name={customerState.tailors[0]} />
@@ -41,6 +39,14 @@ export function DashBoard() {
                             }
                         }>
                             Go to Sign In
+                         </button>
+                        <button className="btn btn-outline-success" onClick={
+                            () => {
+                                history.push('/SignUp')
+                                history.replace('/SignUp')
+                            }
+                        }>
+                            Go to Sign Up
                          </button>
                     </div>
             }

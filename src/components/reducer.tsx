@@ -8,6 +8,7 @@ export const initialState: stateType = {
     unStitch: [],
     lost: [],
     outOfOrder: [],
+    customer: [],
 }
 type stateType = {
     tailors: any[],
@@ -19,6 +20,7 @@ type stateType = {
     unStitch: any[],
     lost: any[],
     outOfOrder: any[],
+    customer: any[];
 }
 
 export default function TailorReducer(state: any = initialState, action: any) {
@@ -26,12 +28,17 @@ export default function TailorReducer(state: any = initialState, action: any) {
         case "Add_Tailor":
             return {
                 ...state,
-                Tailors: state.tailors[0]  = (action.tailor)
+                Tailors: state.tailors[0] = (action.tailor)
             }
-        case "Add_Customer":
+        case "Add_Client":
             return {
                 ...state,
                 Clients: state.clients.push(action.customer)
+            }
+        case "Delete_Client":
+            return {
+                ...state,
+                Clients: state.clients.splice(action.customerIndex , 1 )
             }
         case "Add_Measurment":
             return {
@@ -103,6 +110,16 @@ export default function TailorReducer(state: any = initialState, action: any) {
             return {
                 ...state,
                 OutOfOrders: state.outOfOrder[action.index][1] = action.amount,
+            }
+        case "Add_Customer":
+            return {
+                ...state,
+                Customer: state.customer[0] = action.customer,
+            }
+        case "Delete_Customer":
+            return {
+                ...state,
+                Customer: state.customer = [],
             }
         default:
             return state

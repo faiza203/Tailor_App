@@ -1,6 +1,5 @@
 import { createStore } from 'redux';
 import TailorReducer from './reducer';
-import { v4 as uuid } from 'uuid';
 import firebase from 'firebase';
 export const store = createStore(TailorReducer);
 export function addTailor(tailor: any) {
@@ -33,7 +32,7 @@ export const checkCustomer = (client: any, customerState: any, dispatch: any) =>
 
 export function addCustomerR(customer: any, tailor: any) {
     const promise = firebase.firestore().collection('Tailors').doc(tailor).collection('Customers').doc(customer).set({
-        id: customer + " Measurment"
+        measurmentId: customer + " MEASURMENT"
     })
     promise.then(() => {
     })
@@ -41,14 +40,14 @@ export function addCustomerR(customer: any, tailor: any) {
         alert(err.message)
     })
     return {
-        type: "Add_Customer",
+        type: "Add_Client",
         customer,
     }
 }
 
 
 export function checkCustomerFirebase(client: any, customerState: any, dispatch: any) {
-    const arr  = [];
+    const arr = [];
     if (customerState.clients.length > 0) {
         customerState.clients.forEach((customer: any) => {
             if (customer !== client) {
@@ -425,6 +424,21 @@ export function checkOutOfOrderFirebase(tailor: any, client: any, amount: string
     }
 }
 
+export const deleteCustomer = (client: any, customers: any) => {
+    let customerIndex;
+    customers.forEach((customer: any, index: number) => {
+        if (client === customer) {
+            customerIndex = index;
+        }
+    })
+    return {
+        type : "Delete_Client",
+        customerIndex
+    }
+
+}
+
+
 
 export function checkOutOfOrder(tailor: any, client: any, amount: string, customerStateOutOfOrder: any, dispatch: any) {
     if (customerStateOutOfOrder.length > 0) {
@@ -469,5 +483,18 @@ export function updateOutOfOrder(client: any, index: any, amount: any) {
         type: "Update_OutOfOrder",
         index: index,
         amount
+    }
+}
+
+export const addClient = (customer: any) => {
+    return {
+        type: "Add_Customer",
+        customer
+    }
+}
+
+export const deleteClient = () => {
+    return {
+        type: "Delete_Customer",
     }
 }

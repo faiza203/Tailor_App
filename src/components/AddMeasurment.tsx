@@ -96,7 +96,7 @@ export const AddMeasurment = () => {
         }
 
         firebase.database().ref().on("child_added", snap => {
-            const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").doc(client).set({
+            const promise = firebase.firestore().collection('Customers').doc(tailor).collection(client).doc("Measurment").set({
                 measurmentEle
             });
             promise.then(() => {
@@ -114,16 +114,18 @@ export const AddMeasurment = () => {
     return (<div>
         <div className="measurment">
             <form className="mr-5 " onSubmit={saveMeasurment}>
+                <div className="EditM"></div>
                 <input className="form-control" type="number" placeholder="Length" required />
                 <input className="form-control mt-1" type="number" placeholder="Width" required />
                 <input className="form-control mt-1" type="number" placeholder="Neck" required />
-                <input className="form-control mt-1" type="number" placeholder="Chest" required />
+                <div className="EditM"></div>
                 <input className="form-control mt-1" type="number" placeholder="Waist" required />
                 <input className="form-control mt-1" type="number" placeholder="Bust" required />
                 <input className="form-control mt-1" type="number" placeholder="Arm Width" required />
+                <div className="EditM"></div>
+                <input className="form-control mt-1" type="number" placeholder="Waist" required />
+                <input className="form-control mt-1" type="number" placeholder="Chest" required />
                 <input className="form-control mt-1" type="number" placeholder="Shoulder Width" required />
-                <input className="form-control mt-1" type="number" placeholder="Shoulder Width" required />
-                <input className="form-control mt-1" type="number" placeholder="Hip" required />
                 <button className="btn btn-outline-success d-inline" type="submit">Save Measurment</button>
                 <button className="btn btn-outline-danger" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
             </form>

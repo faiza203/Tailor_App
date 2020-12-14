@@ -18,7 +18,7 @@ export function EditMeasurment() {
         }
 
         firebase.database().ref().on("child_added", snap => {
-            const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").doc(client).set({
+            const promise = firebase.firestore().collection('Customers').doc(tailor).collection(client).doc("Measurment").set({
                 measurmentEle
             });
             promise.then(() => {

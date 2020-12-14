@@ -1,13 +1,14 @@
 import firebase from 'firebase';
 import { configFirebase } from './firebase';
 import { history } from './history';
-import { useDispatch } from 'react-redux';
-import { addTailor } from './store';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTailor, checkCustomerFirebase } from './store';
 
 configFirebase();
 
 export function SignUp() {
     const dispatch = useDispatch();
+    const customerState = useSelector((state: any) => state);
     const signUpFun = (e: any) => {
         e.preventDefault();
         const [email, password, confirmPassword]: any[] = e.target;
@@ -22,10 +23,19 @@ export function SignUp() {
         else {
             auth.createUserWithEmailAndPassword(email.value, password.value)
                 .then((user) => {
-                    alert("Account is login successfully !!!");
-                    history.push('/DashBoard');
-                    history.replace('/DashBoard');
                     dispatch(addTailor(user.user?.email));
+                    firebase.firestore().collection('Tailors').doc(e.target[0].value).collection('Customers').get()
+                        .then(snapshot => {
+                            snapshot.docs.forEach(clientsData => {
+                                snapshot.docs.forEach(clientData => {
+                                    const client = clientData.id;
+                                    checkCustomerFirebase(client, customerState, dispatch);
+                                });
+                            })
+                            history.push('/DashBoard');
+                            history.replace('/DashBoard');
+                            alert("Account is login successfully !!!");
+                        }).catch()
                 })
                 .catch((err) => {
                     alert(err.message);

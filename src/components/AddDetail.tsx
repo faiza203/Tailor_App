@@ -2,7 +2,7 @@ import React from 'react';
 import { AddOrder, checkOrder, history, AlreadyCondition } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
-import { checkStitch, checkDelivered, checkUnStitch, checkLost, checkOutOfOrder } from './store';
+import { checkStitch, checkDelivered, checkUnStitch, checkLost, checkOutOfOrder, deleteClient } from './store';
 import firebase from 'firebase';
 
 export const AddDetail = () => {
@@ -51,6 +51,9 @@ export const AddDetail = () => {
         }
         history.push("/DashBoard");
         history.replace("/DashBoard");
+        dispatch(deleteClient());
+        console.log(customerState);
+        
     }
     return (
         <form onSubmit={saveDetail}>
@@ -59,8 +62,9 @@ export const AddDetail = () => {
                 <Condition client={client} tailor={tailor} />
                 <AlreadyCondition client={client} tailor={tailor} />
             </div>
-            <button id="saveDetail" className="btn btn-outline-primary" type="submit">Save Detail</button>
-            <button className="btn btn-outline-success" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Save Without Changing</button>
-        </form>
+            <button id="saveDetail" className="btn btn-outline-primary" type="submit" >Save Detail</button>
+            <button className="btn btn-outline-success" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard'); dispatch(deleteClient()) }
+            }>Save Without Changing</button>
+        </form >
     )
 }

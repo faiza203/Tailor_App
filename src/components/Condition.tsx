@@ -1,4 +1,4 @@
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export const Condition = (props: any) => {
     const customerState = useSelector((state: any) => state);

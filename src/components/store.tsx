@@ -116,10 +116,10 @@ type measurment = {
 
 }
 
-export function checkOrderFirebase(client: any, orders: string, customerStateOrders: any, dispatch: any) {
+export function checkOrderFirebase(client: any, orders: string, customerState: any, dispatch: any) {
     const arr = [];
-    if (customerStateOrders.length > 0) {
-        customerStateOrders.forEach((customer: any, index: number) => {
+    if (customerState.orders.length > 0) {
+        customerState.orders.forEach((customer: any, index: number) => {
             if (client !== undefined) {
                 if (customer[0] !== client) {
                     arr.push("yes");
@@ -127,35 +127,32 @@ export function checkOrderFirebase(client: any, orders: string, customerStateOrd
             }
         })
     }
-    if (arr.length === customerStateOrders.length) {
-        checkOrder(client, orders, customerStateOrders, dispatch,)
+    if (arr.length === customerState.orders.length) {
+        checkOrder(client, orders, customerState, dispatch,)
     }
 }
 
-export function checkOrder(client: any, orders: string, customerStateOrders: any, dispatch: any) {
-    if (customerStateOrders.length > 0) {
-        customerStateOrders.forEach((customer: any, index: number) => {
+export function checkOrder(client: any, orders: string, customerState: any, dispatch: any) {
+    if (customerState.orders.length > 0) {
+        customerState.orders.forEach((customer: any, index: number) => {
             if (client !== undefined && orders !== null) {
                 if (customer[0] === client) {
                     const order: number = parseInt(customer[1]) + parseInt(orders);
-                    dispatch(updateOrder(client, index, order));
+                    dispatch(updateOrder(client, index, order, customerState.tailors[0]));
                 }
             }
         })
     }
     else {
         if (orders !== undefined) {
-            dispatch(addOrder(client, orders))
+            dispatch(addOrder(client, orders, customerState.tailors[0]))
         }
     }
 }
-export function addOrder(client: any, orders: string) {
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
-            orders: parseInt(orders)
-        }).then().catch();
-    });
+export function addOrder(client: any, orders: string, tailor: string) {
+    firebase.firestore().collection('Orders').doc(tailor).collection("Customer").doc(client).set({
+        orders: parseInt(orders)
+    }).then().catch();
     const order = parseInt(orders)
     return {
         type: "Add_Order",
@@ -163,13 +160,10 @@ export function addOrder(client: any, orders: string) {
         orders: order
     }
 }
-export function updateOrder(client: any, index: any, orders: number) {
-    firebase.database().ref().on("child_added", snap => {
-        const tailor = snap.val();
-        firebase.firestore().collection('Tailor App').doc(tailor).collection("Orders").doc(client).set({
-            orders: orders
-        }).then().catch();
-    });
+export function updateOrder(client: any, index: any, orders: number, tailor: any) {
+    firebase.firestore().collection('Orders').doc(tailor).collection("Customer").doc(client).set({
+        orders: orders
+    }).then().catch();
     return {
         type: "Update_Order",
         client,

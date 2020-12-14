@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import firebase from 'firebase';
 import { history } from './index';
 import { useDispatch } from 'react-redux';
-import { addClient, deleteCustomer } from "./store";
+import { addClient, deleteClient, deleteCustomer } from "./store";
 
 
 export const Customers = (props: any) => {
@@ -28,6 +28,7 @@ export const Customers = (props: any) => {
                             }}>Orders</button>
                             <button id={customer + "delete"} className="btn btn-outline-primary d-inline m-1 mr-5" onClick={() => {
                                 dispatch(deleteCustomer(customer, customerState));
+                                dispatch(deleteClient());
                             }}>Delete</button>
                         </div>)
                     }) :

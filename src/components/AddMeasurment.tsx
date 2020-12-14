@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { checkFirebaseMeasurment, checkMeasurment } from './index';
 import { history } from './history';
 import { AlreadyMeasurment } from './AlreadyMeasurment';
+import { deleteClient } from './store';
 export function Measurment() {
     const customerState = useSelector((state: any) => state);
     const client: any = customerState.customer[0];
@@ -100,9 +101,11 @@ export const AddMeasurment = () => {
             checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
             history.push("/DashBoard");
             history.replace("/DashBoard");
+            dispatch(deleteClient());
         })
         promise.catch((err) => {
-            alert(err.message)
+            alert(err.message);
+            dispatch(deleteClient());
         })
     }
 

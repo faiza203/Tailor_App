@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkMeasurment, checkFirebaseMeasurment } from './index';
+import { checkMeasurment, checkFirebaseMeasurment , deleteClient , history} from './index';
 import firebase from 'firebase';
-import { history } from './index';
 
 export function AlreadyMeasurment(props: any) {
     const customerState = useSelector((state: any) => state);
@@ -37,9 +36,11 @@ export function AlreadyMeasurment(props: any) {
                 checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
                 history.push("/DashBoard");
                 history.replace("/DashBoard");
+                dispatch(deleteClient());
             })
             promise.catch((err) => {
-                alert(err.message)
+                alert(err.message);
+                dispatch(deleteClient());
             })
         });
     }
@@ -68,6 +69,7 @@ export function AlreadyMeasurment(props: any) {
                             <button className="btn btn-outline-success" onClick={() => {
                                 history.push('/Dashboard')
                                 history.replace('/Dashboard');
+                                dispatch(deleteClient());
                             }}
                             >Cancle</button>
                         </div>)

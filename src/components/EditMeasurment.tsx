@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkMeasurment, checkFirebaseMeasurment } from './index';
+import { checkMeasurment, deleteClient } from './index';
 import firebase from 'firebase';
 import { history } from './index';
 
@@ -26,9 +26,11 @@ export function EditMeasurment() {
                 checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
                 history.push("/DashBoard");
                 history.replace("/DashBoard");
+                dispatch(deleteClient());
             })
             promise.catch((err) => {
-                alert(err.message)
+                alert(err.message);
+                dispatch(deleteClient());
             })
         });
     }
@@ -92,7 +94,10 @@ export function EditMeasurment() {
                                         </div>
                                     </div>
                                     <button className="btn btn-outline-success d-inline m-0 mt-1 w-25" type="submit">Edit Measurment</button>
-                                    <button className="btn btn-outline-danger d-inline m-0 mt-1 ml-1 w-25" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard') }}>Cancle</button>
+                                    <button className="btn btn-outline-danger d-inline m-0 mt-1 ml-1 w-25" type="button" onClick={() => {
+                                        history.push("/DashBoard"); history.replace('/DashBoard')
+                                        dispatch(deleteClient());
+                                    }}>Cancle</button>
                                 </form>)
                             }
                         })

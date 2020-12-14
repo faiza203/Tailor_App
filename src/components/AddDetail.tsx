@@ -3,13 +3,12 @@ import { AddOrder, checkOrder, history, AlreadyCondition } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
 import { checkStitch, checkDelivered, checkUnStitch, checkLost, checkOutOfOrder, deleteClient } from './store';
-import firebase from 'firebase';
 
 export const AddDetail = () => {
     const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
-    const client: any = localStorage.getItem("customer");
-    const tailor: any = localStorage.getItem("tailor");
+    const client: any = customerState.customer[0];
+    const tailor: any = customerState.tailors[0];
 
     const saveDetail: any = (e: any) => {
         e.preventDefault();
@@ -17,7 +16,7 @@ export const AddDetail = () => {
         const [NewOrders, sticthed, delivered, unStitched, lost, outOfOrder] = e.target;
         if (NewOrders) {
             if (NewOrders.value > 0) {
-                checkOrder(client, NewOrders.value, customerState.orders, dispatch)
+                checkOrder(client, NewOrders.value, customerState, dispatch)
             }
         }
 
@@ -57,7 +56,7 @@ export const AddDetail = () => {
         <div>     {
             customerState.tailors[0] ?
                 <form onSubmit={saveDetail}>
-                    <div id="addDetail">
+                    <div id="addDetail w-100">
                         <AddOrder />
                         <Condition />
                         <AlreadyCondition />

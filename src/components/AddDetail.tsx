@@ -8,12 +8,12 @@ export const AddDetail = () => {
     const dispatch = useDispatch();
     const customerState = useSelector((state: any) => state);
     const client: any = customerState.customer[0];
-    const tailor: any = customerState.tailors[0];
 
     const saveDetail: any = (e: any) => {
         e.preventDefault();
-
         const [NewOrders, sticthed, delivered, unStitched, lost, outOfOrder] = e.target;
+        if(NewOrders.value > 0 && sticthed.value > 0 && delivered.value > 0 && unStitched.value > 0 && lost.value > 0 && outOfOrder.value > 0  )
+        {console.log("yes")}
         if (NewOrders) {
             if (NewOrders.value > 0) {
                 checkOrder(client, NewOrders.value, customerState, dispatch)
@@ -23,29 +23,29 @@ export const AddDetail = () => {
         if (sticthed) {
 
             if (sticthed.value > 0) {
-                checkStitch(client, sticthed.value, customerState.stitch, dispatch)
+                checkStitch(client, sticthed.value, customerState, dispatch)
             }
         }
 
         if (delivered) {
             if (delivered.value > 0) {
-                checkDelivered(client, delivered.value, customerState.delivered, dispatch)
+                checkDelivered(client, delivered.value, customerState, dispatch)
             }
         }
         if (unStitched) {
 
             if (unStitched.value > 0) {
-                checkUnStitch(client, unStitched.value, customerState.unStitch, dispatch);
+                checkUnStitch(client, unStitched.value, customerState, dispatch);
             }
         }
         if (lost) {
             if (lost.value > 0) {
-                checkLost(tailor, client, lost.value, customerState.lost, dispatch)
+                checkLost(client, lost.value, customerState, dispatch)
             }
         }
         if (outOfOrder) {
             if (outOfOrder.value > 0) {
-                checkOutOfOrder(tailor, client, outOfOrder.value, customerState.outOfOrder, dispatch)
+                checkOutOfOrder(client, outOfOrder.value, customerState, dispatch)
             }
         }
         history.push("/DashBoard");
@@ -62,7 +62,7 @@ export const AddDetail = () => {
                         <AlreadyCondition />
                     </div>
                     <button id="saveDetail" className="btn btn-outline-primary d-inline w-25" type="submit" >Add</button>
-                    <button className="btn btn-outline-success d-inline w-50" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard'); dispatch(deleteClient()) }
+                    <button className="btn btn-outline-success d-inline w-25" type="button" onClick={() => { history.push("/DashBoard"); history.replace('/DashBoard'); dispatch(deleteClient()) }
                     }>Cancle</button>
                 </form > :
                 <div>

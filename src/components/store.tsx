@@ -133,22 +133,24 @@ export function checkOrderFirebase(client: any, orders: string, customerState: a
 }
 
 export function checkOrder(client: any, orders: string, customerState: any, dispatch: any) {
+    const arr = [];
+
     if (customerState.orders.length > 0) {
         customerState.orders.forEach((customer: any, index: number) => {
-            if (client !== undefined && orders !== null) {
-                if (customer[0] === client) {
-                    const order: number = parseInt(customer[1]) + parseInt(orders);
-                    dispatch(updateOrder(client, index, order, customerState.tailors[0]));
-                }else{
-                    dispatch(addOrder(client , orders , customerState.tailors[0]))
-                }
+            console.log(customer[0], client);
+            if (customer[0] === client) {
+                const order: number = parseInt(customer[1]) + parseInt(orders);
+                dispatch(updateOrder(client, index, order, customerState.tailors[0]));
+            } else {
+                arr.push("yes");
             }
         })
-    }
-    else {
-        if (orders !== undefined) {
-            dispatch(addOrder(client, orders, customerState.tailors[0]))
+        if (arr.length === customerState.orders.length) {
+            dispatch(addOrder(client, orders, customerState.tailors[0]));
         }
+    }
+    if (customerState.orders.length === 0) {
+        dispatch(addOrder(client, orders, customerState.tailors[0]));
     }
 }
 export function addOrder(client: any, orders: string, tailor: string) {
@@ -173,6 +175,7 @@ export function updateOrder(client: any, index: any, orders: number, tailor: any
         index
     }
 }
+
 
 export function checkStitch(client: any, amount: any, customerStateStitch: any, dispatch: any) {
     if (customerStateStitch.length > 0) {
@@ -422,21 +425,40 @@ export function checkOutOfOrderFirebase(tailor: any, client: any, amount: string
 
 export const deleteCustomer = (client: any, state: any) => {
     let customerIndex;
+    let measurmentIndex;
+    let orderIndex;
     state.clients.forEach((customer: any, index: number) => {
         if (client === customer) {
             customerIndex = index;
             deleteFromFirebase(client, state)
         }
     })
+    state.measurment.forEach((customer: any[], index: number) => {
+        if (client === customer[0]) {
+            measurmentIndex = index;
+        }
+    })
+    state.orders.forEach((customer: any[], index: number) => {
+        if (client === customer[0]) {
+            orderIndex = index;
+        }
+    })
     return {
         type: "Delete_Client",
-        customerIndex
+        customerIndex,
+        measurmentIndex,
+        orderIndex
     }
 
 }
 
 export const deleteFromFirebase = (customer: any, state: any) => {
-    firebase.firestore().collection('Tailors').doc(state.tailors[0]).collection('Customers').doc(customer).
+    const tailor = state.tailors[0];
+    firebase.firestore().collection('Tailors').doc(tailor).collection('Customers').doc(customer).
+        delete();
+    firebase.firestore().collection('Measurments').doc(tailor).collection("Customer").doc(customer).
+        delete();
+    firebase.firestore().collection('Orders').doc(tailor).collection("Customer").doc(customer).
         delete();
 }
 
@@ -487,15 +509,13 @@ export function updateOutOfOrder(client: any, index: any, amount: any) {
 }
 
 export const addClient = (customer: any) => {
-    console.log("I am added" , customer);
-        return {
+    return {
         type: "Add_Customer",
         customer
     }
 }
 
 export const deleteClient = () => {
-    console.log("I am delete");
     return {
         type: "Delete_Customer",
     }

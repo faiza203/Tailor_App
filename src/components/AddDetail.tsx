@@ -56,7 +56,7 @@ export const AddDetail = () => {
         <div>     {
             customerState.tailors[0] ?
                 <form onSubmit={saveDetail}>
-                    <div id="addDetail w-100">
+                    <div className="d-flex w-100">
                         <AddOrder />
                         <Condition />
                         <AlreadyCondition />

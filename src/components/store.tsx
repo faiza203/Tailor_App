@@ -62,23 +62,23 @@ export function checkCustomerFirebase(client: any, customerState: any, dispatch:
 
 
 
-export const checkMeasurment = (client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
+export const checkMeasurment = (tailor: any, client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
     if (client !== undefined) {
         if (customerStateMeasurment.length > 0) {
             customerStateMeasurment.forEach((customer: any, index: number) => {
                 if (customer[0] === client) {
-                    dispatch(updateMeasurmentR(client, measurment, index))
+                    dispatch(updateMeasurmentR(tailor, client, measurment, index))
                 } else {
-                    dispatch(addMeasurmentR(client, measurment));
+                    dispatch(addMeasurmentR(tailor, client, measurment));
                 }
             })
         } else {
-            dispatch(addMeasurmentR(client, measurment))
+            dispatch(addMeasurmentR(tailor, client, measurment))
         }
     }
 }
 
-export const checkFirebaseMeasurment = (client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
+export const checkFirebaseMeasurment = (tailor: any, client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
     const arr = [];
     if (customerStateMeasurment.length > 0) {
         customerStateMeasurment.forEach((customer: any, index: number) => {
@@ -90,11 +90,24 @@ export const checkFirebaseMeasurment = (client: any, measurment: any, dispatch: 
         })
     }
     if (arr.length === customerStateMeasurment.length) {
-        checkMeasurment(client, measurment, dispatch, customerStateMeasurment)
+        checkMeasurment(tailor, client, measurment, dispatch, customerStateMeasurment)
     }
 }
 
-export function addMeasurmentR(client: any, measurment: measurment) {
+export function addMeasurmentR(tailor: any, client: any, measurment: measurment) {
+
+    firebase.database().ref().on("child_added", snap => {
+        const promise = firebase.firestore().collection('Measurment').doc(tailor).collection("Customers").doc(client).set({
+            measurment
+        });
+        promise.then(() => {
+        })
+        promise.catch((err) => {
+            console.log(err.meassage);
+
+        })
+    });
+
     return {
         type: "Add_Measurment",
         client,
@@ -102,7 +115,19 @@ export function addMeasurmentR(client: any, measurment: measurment) {
     }
 }
 
-export function updateMeasurmentR(client: any, measurment: measurment, index: number) {
+export function updateMeasurmentR(tailor: any, client: any, measurment: measurment, index: number) {
+
+    firebase.database().ref().on("child_added", snap => {
+        const promise = firebase.firestore().collection('Measurment').doc(tailor).collection("Customers").doc(client).set({
+            measurment
+        });
+        promise.then(() => {
+        })
+        promise.catch((err) => {
+            console.log(err.meassage);
+
+        })
+    });
     return {
         type: "Update_Measurment",
         client,

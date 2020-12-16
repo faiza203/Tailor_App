@@ -16,7 +16,7 @@ export function Measurment() {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const measurment = client.data().measurmentEle;
-                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
+                    checkFirebaseMeasurment(tailor, clientName, measurment, dispatch, customerState.measurment);
                 })
             }).catch()
     }
@@ -36,7 +36,7 @@ export function Measurment() {
             });
             promise.then(() => {
                 alert("Data is updated");
-                checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
+                checkMeasurment(tailor , client, measurmentEle, dispatch, customerState.measurment);
                 history.push("/DashBoard");
                 history.replace("/DashBoard");
             })
@@ -81,7 +81,7 @@ export const AddMeasurment = () => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const measurment = client.data().measurmentEle;
-                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
+                    checkFirebaseMeasurment(tailor , clientName, measurment, dispatch, customerState.measurment);
                 })
             }).catch()
     }
@@ -98,7 +98,7 @@ export const AddMeasurment = () => {
             measurmentEle
         });
         promise.then(() => {
-            checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
+            checkMeasurment(tailor , client, measurmentEle, dispatch, customerState.measurment);
             history.push("/DashBoard");
             history.replace("/DashBoard");
             dispatch(deleteClient());

@@ -14,7 +14,7 @@ export function AlreadyMeasurment(props: any) {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const measurment = client.data().measurmentEle;
-                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
+                    checkFirebaseMeasurment(tailor , clientName, measurment, dispatch, customerState.measurment);
                 })
             }).catch()
     }
@@ -26,16 +26,14 @@ export function AlreadyMeasurment(props: any) {
         const measurmentEle = {
             Length: Length.value, Width: Width.value, Chest: Chest.value, Bust: Bust.value, Waist: Waist.value, Neck: Neck.value, ArmLenght: ArmLenght.value, Shoulder: ShoulderLenght.value, LegLenght: LegLenght.value,
         }
-
         firebase.database().ref().on("child_added", snap => {
-            const promise = firebase.firestore().collection('Tailor App').doc(tailor).collection("Measurment").doc(client).set({
+            const promise = firebase.firestore().collection('Measurment').doc(tailor).collection("Customers").doc(client).set({
                 measurmentEle
             });
             promise.then(() => {
-                alert("Data is updated");
-                checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
-                history.push("/DashBoard");
-                history.replace("/DashBoard");
+                checkMeasurment(tailor , client, measurmentEle, dispatch, customerState.measurment);
+                history.push("/Measurment");
+                history.replace("/Measurment");
                 dispatch(deleteClient());
             })
             promise.catch((err) => {
@@ -44,23 +42,22 @@ export function AlreadyMeasurment(props: any) {
             })
         });
     }
-
     return (
         <div >
             {customerState.tailors.length > 0 ?
                 customerState.measurment.map((measurment: any, index: number) => {
                     if (measurment[0] === client) {
                         return (<div key={index} className="mr-5">
-                            <ul key={index} className="measurment">
-                                <li className="text-muted"> Length : {measurment[1].Length}</li>
-                                <li className="text-muted"> Width : {measurment[1].Width}</li>
-                                <li className="text-muted"> Neck : {measurment[1].Neck}</li>
-                                <li className="text-muted"> Waist : {measurment[1].Waist}</li>
-                                <li className="text-muted"> Bust : {measurment[1].Bust}</li>
-                                <li className="text-muted"> Chest : {measurment[1].Chest}</li>
-                                <li className="text-muted"> Arm Lenght : {measurment[1].ArmLenght}</li>
-                                <li className="text-muted"> Shoulder Length : {measurment[1].Shoulder}</li>
-                                <li className="text-muted"> Leg Lenght : {measurment[1].LegLenght}</li>
+                            <ul key={index + 10} className="measurment">
+                                <li  key={index + 1} className="text-muted"> Length : {measurment[1].Length}</li>
+                                <li    key={index + 2} className="text-muted"> Width : {measurment[1].Width}</li>
+                                <li  key={index + 3}  className="text-muted"> Neck : {measurment[1].Neck}</li>
+                                <li  key={index + 4}  className="text-muted"> Waist : {measurment[1].Waist}</li>
+                                <li   key={index + 5} className="text-muted"> Bust : {measurment[1].Bust}</li>
+                                <li  key={index + 6}  className="text-muted"> Chest : {measurment[1].Chest}</li>
+                                <li   key={index + 7} className="text-muted"> Arm Lenght : {measurment[1].ArmLenght}</li>
+                                <li  key={index + 8}  className="text-muted"> Shoulder Length : {measurment[1].Shoulder}</li>
+                                <li  key={index + 9}  className="text-muted"> Leg Lenght : {measurment[1].LegLenght}</li>
                             </ul>
                             <button className="btn btn-outline-danger" onClick={() => {
                                 history.push('/EditMeasurment')

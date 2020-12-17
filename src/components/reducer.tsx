@@ -30,6 +30,21 @@ export default function TailorReducer(state: any = initialState, action: any) {
                 ...state,
                 Tailors: state.tailors[0] = (action.tailor)
             }
+        case "Delete_Tailor":
+            return {
+                ...state,
+                tailors: state.tailors = [],
+                clients: state.clients = [],
+                measurment: state.measurment = [],
+                orders: state.orders = [],
+                stitch: state.stitch = [],
+                delivered: state.delivered = [],
+                unStitch: state.unStitch = [],
+                lost: state.lost = [],
+                outOfOrder: state.outOfOrder = [],
+                customer: state.customer = [],
+            }
+
         case "Add_Client":
             return {
                 ...state,
@@ -41,7 +56,12 @@ export default function TailorReducer(state: any = initialState, action: any) {
                 Clients: state.clients.splice(action.customerIndex, 1),
                 Measurments: state.measurment.splice(action.measurmentIndex, 1),
                 Orders: state.orders.splice(action.orderIndex, 1),
-
+                Stitched: state.stitch.splice(action.stitchIndex, 1),
+                Delivered: state.delivered.splice(action.deliveredIndex, 1),
+                unStitch: state.unStitch.splice(action.unStitchIndex, 1),
+                Losted: state.lost.splice(action.lostIndex, 1),
+                OutOfOrders: state.outOfOrder.splice(action.outOfOrderIndex, 1),
+                Customer: state.customer = [],
             }
         case "Add_Measurment":
             return {

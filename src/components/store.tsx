@@ -8,6 +8,13 @@ export function addTailor(tailor: any) {
         tailor
     }
 }
+export function deleteTailor() {
+    console.log("Sign Out");
+    
+    return {
+        type: "Delete_Tailor"
+    }
+}
 
 export const checkCustomer = (client: any, customerState: any, dispatch: any) => {
     let arr = [];

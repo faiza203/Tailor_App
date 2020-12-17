@@ -10,7 +10,7 @@ export const Customers = (props: any) => {
     const dispatch = useDispatch();
 
     return (
-        <div>
+        <div className="text-right">
             {
                 customerState.clients.length > 0 ?
                     customerState.clients.map((customer: any, index: number) => {

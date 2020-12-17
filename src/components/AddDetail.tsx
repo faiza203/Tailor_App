@@ -19,7 +19,7 @@ export const AddDetail = () => {
             }
         }
         if (customerState.orders.length > 0) {
-            customerState.orders.foreach((order: any) => {
+            customerState.orders.forEach((order: any) => {
                 if (order[0] === client) {
                     if (sticthed) {
                         if (sticthed.value > 0) {

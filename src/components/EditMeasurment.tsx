@@ -22,7 +22,7 @@ export function EditMeasurment() {
                     measurmentEle
                 });
                 promise.then(() => {
-                    checkMeasurment(tailor, client, measurmentEle, dispatch, customerState.measurment);
+                    checkMeasurment( client, measurmentEle, dispatch, customerState.measurment);
                     history.push("/Measurment");
                     history.replace("/Measurment");
                     dispatch(deleteClient());

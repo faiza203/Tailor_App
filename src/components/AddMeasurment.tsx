@@ -16,7 +16,7 @@ export function Measurment() {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const measurment = client.data().measurmentEle;
-                    checkFirebaseMeasurment(tailor, clientName, measurment, dispatch, customerState.measurment);
+                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
                 })
             }).catch()
     }
@@ -36,9 +36,9 @@ export function Measurment() {
             });
             promise.then(() => {
                 alert("Data is updated");
-                checkMeasurment(tailor , client, measurmentEle, dispatch, customerState.measurment);
-                history.push("/DashBoard");
-                history.replace("/DashBoard");
+                checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
+                history.push("/Measurment");
+                history.replace("/Measurment");
             })
             promise.catch((err) => {
                 alert(err.message)
@@ -81,7 +81,7 @@ export const AddMeasurment = () => {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const measurment = client.data().measurmentEle;
-                    checkFirebaseMeasurment(tailor , clientName, measurment, dispatch, customerState.measurment);
+                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
                 })
             }).catch()
     }
@@ -90,15 +90,15 @@ export const AddMeasurment = () => {
     const saveMeasurment: any = (e: any) => {
         e.preventDefault();
 
-        const [Length, Width, Neck, Chest, Waist, Bust, ArmLenght, ShoulderLenght, LegLenght, Hip] = e.target;
+        const [Length, Width, Neck, Chest, Waist, Bust, ArmLenght, ShoulderLenght, LegLenght] = e.target;
         const measurmentEle = {
-            Length: Length.value, Width: Width.value, Chest: Chest.value, Bust: Bust.value, Waist: Waist.value, Neck: Neck.value, ArmLenght: ArmLenght.value, Shoulder: ShoulderLenght.value, LegLenght: LegLenght.value, Hip: Hip.value,
+            Length: Length.value, Width: Width.value, Chest: Chest.value, Bust: Bust.value, Waist: Waist.value, Neck: Neck.value, ArmLenght: ArmLenght.value, Shoulder: ShoulderLenght.value, LegLenght: LegLenght.value
         }
         const promise = firebase.firestore().collection('Measurments').doc(tailor).collection("Customer").doc(client).set({
             measurmentEle
         });
         promise.then(() => {
-            checkMeasurment(tailor , client, measurmentEle, dispatch, customerState.measurment);
+            checkMeasurment(client, measurmentEle, dispatch, customerState.measurment);
             history.push("/DashBoard");
             history.replace("/DashBoard");
             dispatch(deleteClient());

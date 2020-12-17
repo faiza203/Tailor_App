@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkMeasurment, checkFirebaseMeasurment , deleteClient , history} from './index';
+import { checkMeasurment, checkFirebaseMeasurment, deleteClient, history } from './index';
 import firebase from 'firebase';
 
 export function AlreadyMeasurment(props: any) {
@@ -14,7 +14,7 @@ export function AlreadyMeasurment(props: any) {
                 snapshot.docs.forEach(client => {
                     const clientName = client.id;
                     const measurment = client.data().measurmentEle;
-                    checkFirebaseMeasurment(tailor , clientName, measurment, dispatch, customerState.measurment);
+                    checkFirebaseMeasurment(clientName, measurment, dispatch, customerState.measurment);
                 })
             }).catch()
     }
@@ -31,7 +31,7 @@ export function AlreadyMeasurment(props: any) {
                 measurmentEle
             });
             promise.then(() => {
-                checkMeasurment(tailor , client, measurmentEle, dispatch, customerState.measurment);
+                checkMeasurment( client, measurmentEle, dispatch, customerState.measurment);
                 history.push("/Measurment");
                 history.replace("/Measurment");
                 dispatch(deleteClient());
@@ -49,15 +49,15 @@ export function AlreadyMeasurment(props: any) {
                     if (measurment[0] === client) {
                         return (<div key={index} className="mr-5">
                             <ul key={index + 10} className="measurment">
-                                <li  key={index + 1} className="text-muted"> Length : {measurment[1].Length}</li>
-                                <li    key={index + 2} className="text-muted"> Width : {measurment[1].Width}</li>
-                                <li  key={index + 3}  className="text-muted"> Neck : {measurment[1].Neck}</li>
-                                <li  key={index + 4}  className="text-muted"> Waist : {measurment[1].Waist}</li>
-                                <li   key={index + 5} className="text-muted"> Bust : {measurment[1].Bust}</li>
-                                <li  key={index + 6}  className="text-muted"> Chest : {measurment[1].Chest}</li>
-                                <li   key={index + 7} className="text-muted"> Arm Lenght : {measurment[1].ArmLenght}</li>
-                                <li  key={index + 8}  className="text-muted"> Shoulder Length : {measurment[1].Shoulder}</li>
-                                <li  key={index + 9}  className="text-muted"> Leg Lenght : {measurment[1].LegLenght}</li>
+                                <li key={index + 1} className="text-muted"> Length : {measurment[1].Length}</li>
+                                <li key={index + 2} className="text-muted"> Width : {measurment[1].Width}</li>
+                                <li key={index + 3} className="text-muted"> Neck : {measurment[1].Neck}</li>
+                                <li key={index + 4} className="text-muted"> Waist : {measurment[1].Waist}</li>
+                                <li key={index + 5} className="text-muted"> Bust : {measurment[1].Bust}</li>
+                                <li key={index + 6} className="text-muted"> Chest : {measurment[1].Chest}</li>
+                                <li key={index + 7} className="text-muted"> Arm Lenght : {measurment[1].ArmLenght}</li>
+                                <li key={index + 8} className="text-muted"> Shoulder Length : {measurment[1].Shoulder}</li>
+                                <li key={index + 9} className="text-muted"> Leg Lenght : {measurment[1].LegLenght}</li>
                             </ul>
                             <button className="btn btn-outline-danger" onClick={() => {
                                 history.push('/EditMeasurment')

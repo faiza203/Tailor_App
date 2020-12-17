@@ -62,23 +62,23 @@ export function checkCustomerFirebase(client: any, customerState: any, dispatch:
 
 
 
-export const checkMeasurment = (tailor: any, client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
+export const checkMeasurment = (client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
     if (client !== undefined) {
         if (customerStateMeasurment.length > 0) {
             customerStateMeasurment.forEach((customer: any, index: number) => {
                 if (customer[0] === client) {
-                    dispatch(updateMeasurmentR(tailor, client, measurment, index))
+                    dispatch(updateMeasurmentR(client, measurment, index))
                 } else {
-                    dispatch(addMeasurmentR(tailor, client, measurment));
+                    dispatch(addMeasurmentR(client, measurment));
                 }
             })
         } else {
-            dispatch(addMeasurmentR(tailor, client, measurment))
+            dispatch(addMeasurmentR(client, measurment))
         }
     }
 }
 
-export const checkFirebaseMeasurment = (tailor: any, client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
+export const checkFirebaseMeasurment = (client: any, measurment: any, dispatch: any, customerStateMeasurment: any) => {
     const arr = [];
     if (customerStateMeasurment.length > 0) {
         customerStateMeasurment.forEach((customer: any, index: number) => {
@@ -90,24 +90,11 @@ export const checkFirebaseMeasurment = (tailor: any, client: any, measurment: an
         })
     }
     if (arr.length === customerStateMeasurment.length) {
-        checkMeasurment(tailor, client, measurment, dispatch, customerStateMeasurment)
+        checkMeasurment(client, measurment, dispatch, customerStateMeasurment)
     }
 }
 
-export function addMeasurmentR(tailor: any, client: any, measurment: measurment) {
-
-    firebase.database().ref().on("child_added", snap => {
-        const promise = firebase.firestore().collection('Measurment').doc(tailor).collection("Customers").doc(client).set({
-            measurment
-        });
-        promise.then(() => {
-        })
-        promise.catch((err) => {
-            console.log(err.meassage);
-
-        })
-    });
-
+export function addMeasurmentR(client: any, measurment: measurment) {
     return {
         type: "Add_Measurment",
         client,
@@ -115,19 +102,7 @@ export function addMeasurmentR(tailor: any, client: any, measurment: measurment)
     }
 }
 
-export function updateMeasurmentR(tailor: any, client: any, measurment: measurment, index: number) {
-
-    firebase.database().ref().on("child_added", snap => {
-        const promise = firebase.firestore().collection('Measurment').doc(tailor).collection("Customers").doc(client).set({
-            measurment
-        });
-        promise.then(() => {
-        })
-        promise.catch((err) => {
-            console.log(err.meassage);
-
-        })
-    });
+export function updateMeasurmentR(client: any, measurment: measurment, index: number) {
     return {
         type: "Update_Measurment",
         client,
@@ -431,6 +406,11 @@ export const deleteCustomer = (client: any, state: any) => {
     let customerIndex;
     let measurmentIndex;
     let orderIndex;
+    let stitchIndex;
+    let deliveredIndex;
+    let unStitchIndex;
+    let lostIndex;
+    let outOfOrderIndex;
     state.clients.forEach((customer: any, index: number) => {
         if (client === customer) {
             customerIndex = index;
@@ -445,6 +425,31 @@ export const deleteCustomer = (client: any, state: any) => {
     state.orders.forEach((customer: any[], index: number) => {
         if (client === customer[0]) {
             orderIndex = index;
+        }
+    })
+    state.stitch.forEach((customer: any[], index: number) => {
+        if (client === customer[0]) {
+            stitchIndex = index;
+        }
+    })
+    state.delivered.forEach((customer: any[], index: number) => {
+        if (client === customer[0]) {
+            deliveredIndex = index;
+        }
+    })
+    state.unStitch.forEach((customer: any[], index: number) => {
+        if (client === customer[0]) {
+            unStitchIndex = index;
+        }
+    })
+    state.lost.forEach((customer: any[], index: number) => {
+        if (client === customer[0]) {
+            lostIndex = index;
+        }
+    })
+    state.outOfOrder.forEach((customer: any[], index: number) => {
+        if (client === customer[0]) {
+            outOfOrderIndex = index;
         }
     })
     return {
@@ -463,6 +468,16 @@ export const deleteFromFirebase = (customer: any, state: any) => {
     firebase.firestore().collection('Measurments').doc(tailor).collection("Customer").doc(customer).
         delete();
     firebase.firestore().collection('Orders').doc(tailor).collection("Customer").doc(customer).
+        delete();
+    firebase.firestore().collection('Condition').doc(tailor).collection("Delivered").doc(customer).
+        delete();
+    firebase.firestore().collection('Condition').doc(tailor).collection("Losted").doc(customer).
+        delete();
+    firebase.firestore().collection('Condition').doc(tailor).collection("OutOfOrder").doc(customer).
+        delete();
+    firebase.firestore().collection('Condition').doc(tailor).collection("Sticthed").doc(customer).
+        delete();
+    firebase.firestore().collection('Condition').doc(tailor).collection("UnStitched").doc(customer).
         delete();
 }
 
@@ -486,7 +501,6 @@ export function checkOutOfOrder(client: any, amount: string, customerState: any,
 }
 
 export function addOutOfOrder(client: any, amount: string, tailor: any) {
-
     firebase.firestore().collection('Condition').doc(tailor).collection("OutOfOrder").doc(client).set({
         OutOfOrder: parseInt(amount)
     }).then().catch();
@@ -497,7 +511,7 @@ export function addOutOfOrder(client: any, amount: string, tailor: any) {
     }
 }
 export function updateOutOfOrder(client: any, index: any, amount: any, tailor: any) {
-    firebase.firestore().collection('Tailor App').doc(tailor).collection("OutOfOrder").doc(client).set({
+    firebase.firestore().collection('Condition').doc(tailor).collection("OutOfOrder").doc(client).set({
         OutOfOrder: parseInt(amount)
     }).then().catch();
     return {

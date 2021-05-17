@@ -1,9 +1,8 @@
-import firebase from 'firebase';
-import { history } from './history';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTailor } from './store';
-import { checkCustomerFirebase } from './index'
-
+import firebase from "firebase";
+import { history } from "./history";
+import { useDispatch, useSelector } from "react-redux";
+import { addTailor } from "./store";
+import { checkCustomerFirebase } from "./index";
 
 export function SignIn() {
   const customerState = useSelector((state: any) => state);
@@ -12,36 +11,44 @@ export function SignIn() {
     e.preventDefault();
     const [email, password]: any[] = e.target;
     const auth = firebase.auth();
-    auth.signInWithEmailAndPassword(email.value, password.value)
+    auth
+      .signInWithEmailAndPassword(email.value, password.value)
       .then(() => {
         dispatch(addTailor(e.target[0].value));
-        firebase.firestore().collection('Tailors').doc(e.target[0].value).collection('Customers').get()
-          .then(snapshot => {
-            snapshot.docs.forEach(clientsData => {
-              snapshot.docs.forEach(clientData => {
+        firebase
+          .firestore()
+          .collection("Tailors")
+          .doc(e.target[0].value)
+          .collection("Customers")
+          .get()
+          .then((snapshot) => {
+            snapshot.docs.forEach((clientsData) => {
+              snapshot.docs.forEach((clientData) => {
                 const client = clientData.id;
                 checkCustomerFirebase(client, customerState, dispatch);
               });
-            })
-          }).catch()
+            });
+          })
+          .catch();
         alert("Account is login successfully !!!");
-        history.push('/DashBoard');
-        history.replace('/DashBoard');
+        history.push("/DashBoard");
+        history.replace("/DashBoard");
       })
       .catch((err) => {
         alert(err.message);
-      })
-  }
+      });
+  };
 
   return (
     <div className="main">
+      <h1>Sign In</h1>
       <form onSubmit={signIn} className="form">
-        <label>Email :</label>
+        <label className="mt-3">Email :</label>
         <input type="email" placeholder="Please write email here" required />
-        <label>Password :</label>
+        <label className="mt-3">Password :</label>
         <input type="password" placeholder="Enter password here" required />
         <button type="submit">Sign In</button>
-      </form >
+      </form>
     </div>
-  )
+  );
 }

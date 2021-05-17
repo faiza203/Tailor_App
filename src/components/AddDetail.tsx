@@ -1,4 +1,3 @@
-import React from 'react';
 import { AddOrder, checkOrder, history, AlreadyCondition } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Condition } from './Condition';
